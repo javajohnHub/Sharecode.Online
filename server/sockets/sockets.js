@@ -61,8 +61,9 @@ getRandomColor = ranges => {
 };
 
 checkUserName = (people, name) => {
-  console.log(people)
+
   _.find(people, key => {
+    console.log(people, key.name)
     if (key.name.toLowerCase() === name.toLowerCase()){
       return false;
     }else{
