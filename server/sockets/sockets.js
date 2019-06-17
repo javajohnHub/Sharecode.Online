@@ -65,9 +65,9 @@ checkUserName = (people, name) => {
   _.find(people, key => {
     console.log(people, key.name)
     if (key.name.toLowerCase() === name.toLowerCase()){
-      return false;
-    }else{
       return true;
+    }else{
+      return false;
     }
 
   });
