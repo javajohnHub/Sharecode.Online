@@ -4,15 +4,17 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
-  <ng-container *ngFor="let message of messages">
+  <div *ngFor="let message of messages">
   <span *ngIf="person" [ngStyle]="{'color': person.color}">{{person.peerId}}:</span> {{message}}
-  </ng-container>
-
-  <input (keydown.enter)="sendMessage()" pInputText type="text" class="ui-g-9" placeholder="Your message" id="msg"
+  </div>
+<div>
+<input (keydown.enter)="sendMessage()" pInputText type="text" class="ui-g-9" placeholder="Your message" id="msg"
                 name="message" [(ngModel)]="message">
+                <button id="send" class="ui-g-3" type="submit" (click)="sendMessage()" [disabled]="message.length < 1 || message.length > 80">Send</button>
+</div>
 
-            <button pButton id="send" class="ui-g-3" type="submit" (click)="sendMessage()" [disabled]="message.length < 1 || message.length > 80"
-                label="Send"></button>
+
+
   `
 })
 export class PingComponent {
