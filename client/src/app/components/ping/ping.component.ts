@@ -4,17 +4,8 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
-  <div *ngFor="let message of messages">
-  <span *ngIf="person" [ngStyle]="{'color': person.color}">{{person.peerId}}:</span> {{message}}
-  </div>
-<div>
-<input (keydown.enter)="sendMessage()" pInputText type="text" class="ui-g-9" placeholder="Your message" id="msg"
-                name="message" [(ngModel)]="message">
-                <button id="send" class="ui-g-3" type="submit" (click)="sendMessage()" [disabled]="message.length < 1 || message.length > 80">Send</button>
-</div>
-
-
-
+  <input [(ngModel)]="name"/>
+  <button type="button" (click)="sendName()">Send Name</button>
   `
 })
 export class PingComponent {
@@ -25,6 +16,8 @@ export class PingComponent {
   person;
   messages = [];
   message;
+  name;
+  device;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -37,18 +30,27 @@ export class PingComponent {
     this.peer.on("open", () => {
       this.socket.emit('peerId', this.peer.id);
     });
+
     this.socket.on('update-people', (people) => {
       this.people = people;
       this.person = people[this.socket.socket.id];
     });
 
-    this.socket.on("message", message => {
-      this.messages.push(message);
+    this.socket.on("exists", proposedName => {
+      this.name = proposedName;
     });
+
+  }
+  sendName(){
+    this.device = "desktop";
+    if (
+      navigator.userAgent.match(
+        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i
+      )
+    ) {
+      this.device = "mobile";
+    }
+    this.socket.emit('send name', {name: this.name, device: this.device})
   }
 
-  sendMessage() {
-    this.socket.emit('message', this.message);
-    this.message = "";
-  }
 }

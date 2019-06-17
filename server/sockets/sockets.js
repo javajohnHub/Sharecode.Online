@@ -1,4 +1,6 @@
 module.exports = io => {
+  let sanitize = require("validator");
+  let _ = require("underscore")._;
   let people = {};
   let rooms = {};
   let sockets = [];
@@ -13,14 +15,31 @@ module.exports = io => {
       socket.emit('update-people', people)
     })
 
+    socket.on('send name', (data) => {
+      let clean_name = decodeURI(sanitize.escape(data.name));
+
+      if(checkUserName(people, clean_name)){
+        let randomNumber = Math.floor(Math.random() * 1001);
+        let proposedName = clean_name + randomNumber;
+        socket.emit("exists", {
+          msg: "The username already exists, please pick another one.",
+          proposedName: proposedName
+        });
+      }else{
+        people[socket.id] = {
+          name: clean_name,
+          owns: null,
+          inroom: null,
+          device: data.device
+        };
+        io.sockets.emit("update-people", people);
+      }
+    })
     socket.on('disconnect', () => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);
     })
 
-    socket.on('message', (message) => {
-      io.sockets.emit('message', message)
-    })
   })
 
 
@@ -39,3 +58,14 @@ getRandomColor = ranges => {
   color = "rgb(" + g() + "," + g() + "," + g() + ")";
   return color;
 };
+
+checkUserName = (people, name) => {
+  _.find(people, key => {
+    if (key.name.toLowerCase() === name.toLowerCase()){
+      return false;
+    }else{
+      return true;
+    }
+
+  });
+}
