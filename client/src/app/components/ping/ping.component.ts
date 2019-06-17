@@ -4,7 +4,7 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
-   <span [ngStyle]="{'color': color}">{{this.people | json}}</span>
+   <span [ngStyle]="{'color': this.color}">{{this.people | json}}</span>
   `
 })
 export class PingComponent {
