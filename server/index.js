@@ -45,11 +45,11 @@ httpServer.listen(80, function() {
 
 let io = require("socket.io").listen(httpsServer);
 require("./sockets/sockets")(io);
-app.use(express.static(__dirname + "./dist"));
+app.use(express.static(__dirname + "/dist"));
 
 app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: "./dist" });
+  res.sendFile("index.html", { root: "/dist" });
 });
 app2.get("/", httpsRedirect(true), (req, res) => {
-  res.sendFile("index.html", { root: "./dist" });
+  res.sendFile("index.html", { root: "/dist" });
 });
