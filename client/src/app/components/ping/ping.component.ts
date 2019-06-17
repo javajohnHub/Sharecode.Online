@@ -4,7 +4,7 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
-   {{this.people}}
+   {{this.people | json}}
   `
 })
 export class PingComponent {
