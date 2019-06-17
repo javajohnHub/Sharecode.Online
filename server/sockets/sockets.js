@@ -11,7 +11,8 @@ module.exports = io => {
     socket.on('peerId', (id) => {
       people[socket.id] = {
         peerId: id,
-        color: getRandomColor()
+        color: getRandomColor(),
+        name: ''
       };
       socket.emit('update-people', people)
     })
