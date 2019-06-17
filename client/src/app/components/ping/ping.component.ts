@@ -28,7 +28,7 @@ export class PingComponent {
     });
     this.socket.on('update-people', (people) => {
       this.people = people;
-      console.log(people[this.socketId])
+      console.log(people, this.socketId)
     })
   }
 }
