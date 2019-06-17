@@ -1,6 +1,7 @@
+let sanitize = require("validator");
+let _ = require("underscore")._;
 module.exports = io => {
-  let sanitize = require("validator");
-  let _ = require("underscore")._;
+
   let people = {};
   let rooms = {};
   let sockets = [];
