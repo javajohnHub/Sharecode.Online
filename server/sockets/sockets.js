@@ -10,7 +10,7 @@ module.exports = io => {
         peerId: id,
         color: getRandomColor()
       };
-      console.log(people)
+      socket.emit('update-people', people)
     })
   })
 }
