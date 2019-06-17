@@ -18,6 +18,10 @@ module.exports = io => {
       io.sockets.emit("update-people", people);
     })
   })
+
+  socket.on('message', (message) => {
+    socket.emit('message', message)
+  })
 }
 
 getRandomColor = ranges => {
