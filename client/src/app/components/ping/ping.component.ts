@@ -4,7 +4,7 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
-   {{people | json}}
+   {{person.color}} {{people | json}}
   `
 })
 export class PingComponent {
@@ -12,6 +12,7 @@ export class PingComponent {
   peer;
   people;
   color;
+  person;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -26,7 +27,7 @@ export class PingComponent {
     });
     this.socket.on('update-people', (people) => {
       this.people = people;
-      console.log(people, this.socket.socket.id, people[this.socket.socket.id])
+      this.person = people[this.socket.socket.id];
     })
   }
 }
