@@ -6,8 +6,10 @@ module.exports = io => {
 
   io.sockets.on("connection", socket => {
     socket.on('peerId', (id) => {
-      people[socket.id].peerId = id;
-      people[socket.id].color = getRandomColor();
+      people[socket.id] = {
+        peerId: id,
+        color: getRandomColor()
+      };
       console.log(people)
     })
   })
