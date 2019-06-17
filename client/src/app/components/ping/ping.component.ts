@@ -21,7 +21,7 @@ export class PingComponent {
       debug: 3
     });
     this.peer.on("open", () => {
-      console.log(this.peer.id);
+      this.socket.emit('peerId', this.peer.id);
     });
   }
 }
