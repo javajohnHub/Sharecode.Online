@@ -25,11 +25,9 @@ export class PingComponent {
     this.peer.on("open", () => {
       this.socket.emit('peerId', this.peer.id);
     });
-    this.socket.on('connection', () => {
-      console.log('connected', this.socket.id)
-    })
     this.socket.on('update-people', (people) => {
       this.people = people;
+      console.log(this.socket.id)
     })
   }
 }
