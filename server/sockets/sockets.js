@@ -19,7 +19,7 @@ module.exports = io => {
     })
 
     socket.on('message', (message) => {
-      socket.emit('message', message)
+      io.sockets.emit('message', message)
     })
   })
 
