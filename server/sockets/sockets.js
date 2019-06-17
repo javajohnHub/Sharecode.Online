@@ -17,11 +17,13 @@ module.exports = io => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);
     })
+
+    socket.on('message', (message) => {
+      socket.emit('message', message)
+    })
   })
 
-  socket.on('message', (message) => {
-    socket.emit('message', message)
-  })
+
 }
 
 getRandomColor = ranges => {
