@@ -50,6 +50,7 @@ export class PingComponent {
     ) {
       this.device = "mobile";
     }
+    console.log(this.name, this.device)
     this.socket.emit('send name', {name: this.name, device: this.device})
   }
 
