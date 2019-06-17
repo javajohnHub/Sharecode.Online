@@ -12,10 +12,8 @@ export class PingComponent {
   peer;
   people;
   color;
-  socketId;
   constructor() {
     this.socket = SocketService.getInstance();
-    this.socketId = this.socket.socket.id;
     this.peer = new Peer({
       host: "sharecode.online",
       port: "9000",
@@ -28,7 +26,7 @@ export class PingComponent {
     });
     this.socket.on('update-people', (people) => {
       this.people = people;
-      console.log(people, this.socketId)
+      console.log(people, this.socket.socket.id)
     })
   }
 }
