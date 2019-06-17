@@ -12,6 +12,11 @@ module.exports = io => {
       };
       socket.emit('update-people', people)
     })
+
+    socket.on('disconnect', () => {
+      delete people[socket.id];
+      io.sockets.emit("update-people", people);
+    })
   })
 }
 
