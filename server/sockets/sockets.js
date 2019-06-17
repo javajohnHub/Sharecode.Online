@@ -6,14 +6,10 @@ module.exports = io => {
   let rooms = {};
   let sockets = [];
   let history = {};
-
+let peerId;
   io.sockets.on("connection", socket => {
     socket.on('peerId', (id) => {
-      people[socket.id] = {
-        peerId: id,
-        color: getRandomColor(),
-        name: ''
-      };
+      peerId = id;
       socket.emit('update-people', people)
     })
 
@@ -32,8 +28,11 @@ module.exports = io => {
           name: clean_name,
           owns: null,
           inroom: null,
-          device: data.device
+          device: data.device,
+          peerId: peerId,
+          color: getRandomColor(),
         };
+
         io.sockets.emit("update-people", people);
       }
     })
