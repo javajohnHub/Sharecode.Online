@@ -21,8 +21,9 @@ let peerId;
           return (exists = true);
       });
       if(exists){
+        let randomNumber = Math.floor(Math.random() * 1001);
         do {
-          proposedName = clean_name + randomNumber;
+          let proposedName = clean_name + randomNumber;
           //check if proposed username exists
           _.find(people, key => {
             if (key.name.toLowerCase() === proposedName.toLowerCase())
