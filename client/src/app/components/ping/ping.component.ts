@@ -32,7 +32,7 @@ export class PingComponent {
   roomCount;
   rooms;
   room;
-  limit;
+  limit = 2;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
