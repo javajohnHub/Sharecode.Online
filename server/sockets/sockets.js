@@ -90,7 +90,7 @@ module.exports = io => {
         msg: "Welcome to " + room.name
       });
 
-      io.sockets.emit("update rooms", { rooms, roomCount });
+      io.sockets.emit("update-rooms", {rooms, roomCount});
     } else {
       socket.emit("admin chat", {
         from: "Admin",
