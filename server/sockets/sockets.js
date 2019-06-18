@@ -1,7 +1,7 @@
 let sanitize = require("validator");
 let _ = require("underscore")._;
 let uuid = require("node-uuid");
-let Room = require("./room.js");
+let Room = require("../room.js");
 
 module.exports = io => {
 
