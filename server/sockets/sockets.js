@@ -99,7 +99,7 @@ module.exports = io => {
 
     socket.on("remove room", (id) => {
       let rms = Object.values(rooms)
-      console.log(Object.keys(rms[0]))
+      console.log(rms[0].owner)
       if (socket.id === room.owner) {
         delete rooms[people[socket.id]];
       } else {
