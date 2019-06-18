@@ -1,12 +1,15 @@
 let sanitize = require("validator");
 let _ = require("underscore")._;
+let uuid = require("node-uuid");
+let Room = require("./room.js");
+
 module.exports = io => {
 
   let people = {};
   let rooms = {};
   let sockets = [];
   let history = {};
-let peerId;
+  let peerId;
   io.sockets.on("connection", socket => {
 
 
@@ -59,6 +62,39 @@ let peerId;
         peopleCount = _.size(people);
         io.sockets.emit("update-people", {people, peopleCount});
       }
+    })
+
+    socket.on('create room', (roomName) => {
+      if (people[socket.id].inroom) {
+        socket.emit("admin chat", {
+          from: "Admin",
+          msg: "You are already in a room. Please leave it first to create your own."
+        });
+      } else if (!people[socket.id].owns) {
+        let id = uuid.v4();
+        let clean_name = sanitize.escape(roomName);
+        let room = new Room(clean_name, id, socket.id);
+        rooms[id] = room;
+        roomCount = _.size(rooms);
+
+        room.peopleLimit = roomData.peopleLimit;
+      socket.room = clean_name;
+      socket.join(socket.room);
+      people[socket.id].owns = id;
+      people[socket.id].inroom = id;
+      room.addPerson(socket.id);
+      socket.emit("admin chat", {
+        from: "Admin",
+        msg: "Welcome to " + room.name
+      });
+
+      io.sockets.emit("update rooms", { rooms, roomCount });
+    } else {
+      socket.emit("admin chat", {
+        from: "Admin",
+        msg: "You have already created a room."
+      });
+    }
     })
     socket.on('disconnect', () => {
       delete people[socket.id];
