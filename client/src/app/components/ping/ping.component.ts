@@ -56,7 +56,6 @@ export class PingComponent {
     this.socket.on('update-rooms', (rooms) => {
       this.rooms = rooms.rooms;
       this.roomCount = rooms.roomCount;
-      console.log(rooms)
     });
 
     this.socket.on("exists", proposedName => {
@@ -85,6 +84,6 @@ export class PingComponent {
   }
 
   removeRoom(){
-    this.socket.emit('remove room', this.room.id)
+    this.socket.emit('remove room', this.rooms)
   }
 }
