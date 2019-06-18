@@ -11,11 +11,12 @@ import * as Peer from "peerjs_fork_firefox40";
     <li *ngFor="let msg of messages">{{msg.from}} {{msg.msg}}</li>
     </ul>
   </div>
-  People: {{peopleCount}} {{people | json}}<br/>
-  Rooms: {{roomCount}} {{rooms | json}}<br/>
+
   <input type="text" [(ngModel)]="room"/>
   <input type="number" [(ngModel)]="limit"/>
   <button type="button" (click)="sendRoom()">Create room</button><br/>
+  People: {{peopleCount}} {{people | json}}<br/>
+  Rooms: {{roomCount}} {{rooms | json}}<br/><button type="button" (click)="removeRoom()">Remove room</button>
   `
 })
 export class PingComponent {
@@ -83,4 +84,7 @@ export class PingComponent {
     this.socket.emit('create room', {name: this.room, limit: this.limit})
   }
 
+  removeRoom(){
+    this.socket.emit('remove room', this.room.id)
+  }
 }

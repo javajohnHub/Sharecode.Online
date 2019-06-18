@@ -96,6 +96,21 @@ module.exports = io => {
         });
       }
     });
+
+    socket.on("remove room", (id) => {
+      let room = rooms[id];
+      if (socket.id === room.owner) {
+        delete rooms[people[socket.id].owns];
+      } else {
+        socket.emit("admin chat", {
+          from: "Admin",
+          msg: "Only the owner can remove a room."
+        });
+      }
+      let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
+    });
+
     socket.on("disconnect", () => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);
