@@ -15,10 +15,20 @@ let peerId;
 
     socket.on('send name', (data) => {
       let clean_name = decodeURI(sanitize.escape(data.name));
-
-      if(checkUserName(people, clean_name)){
-        let randomNumber = Math.floor(Math.random() * 1001);
-        let proposedName = clean_name + randomNumber;
+      let exists = false;
+      _.find(people, key => {
+        if (key.name.toLowerCase() === clean_name.toLowerCase())
+          return (exists = true);
+      });
+      if(exists){
+        do {
+          proposedName = clean_name + randomNumber;
+          //check if proposed username exists
+          _.find(people, key => {
+            if (key.name.toLowerCase() === proposedName.toLowerCase())
+              return (exists = true);
+          });
+        } while (!exists);
         socket.emit("exists", {
           msg: "The username already exists, please pick another one.",
           proposedName: proposedName
@@ -59,16 +69,3 @@ getRandomColor = ranges => {
   color = "rgb(" + g() + "," + g() + "," + g() + ")";
   return color;
 };
-
-checkUserName = (people, name) => {
-
-  _.find(people, key => {
-    console.log(people, key.name)
-    if (key.name.toLowerCase() === name.toLowerCase()){
-      return true;
-    }else{
-      return false;
-    }
-
-  });
-}
