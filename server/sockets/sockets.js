@@ -16,7 +16,9 @@ module.exports = io => {
     socket.on('peerId', (id) => {
       peerId = id;
       let peopleCount = _.size(people);
+      let roomCount = _.size(rooms);
       io.sockets.emit("update-people", {people, peopleCount});
+      io.sockets.emit("update-rooms", {rooms, roomCount});
     })
 
     socket.on('send name', (data) => {

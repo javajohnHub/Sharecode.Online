@@ -53,6 +53,7 @@ export class PingComponent {
     this.socket.on('update-rooms', (rooms) => {
       this.rooms = rooms.rooms;
       this.roomCount = rooms.roomCount;
+      console.log(rooms)
     });
 
     this.socket.on("exists", proposedName => {
