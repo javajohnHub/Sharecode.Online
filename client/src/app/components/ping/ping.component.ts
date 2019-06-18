@@ -6,6 +6,7 @@ import * as Peer from "peerjs_fork_firefox40";
   template: `
   <input [(ngModel)]="name"/>
   <button type="button" (click)="sendName()">Send Name</button>
+  {{people | json}}
   `
 })
 export class PingComponent {
