@@ -52,7 +52,9 @@ let peerId;
           from: "Admin",
           msg: people[socket.id].name + " is online."
         });
-        io.sockets.emit("update-people", people);
+
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", {people, peopleCount});
       }
     })
     socket.on('disconnect', () => {

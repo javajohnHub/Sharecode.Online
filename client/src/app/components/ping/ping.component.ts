@@ -11,6 +11,7 @@ import * as Peer from "peerjs_fork_firefox40";
     <li *ngFor="let msg of messages">{{msg.from}} {{msg.msg}}</li>
     </ul>
   </div>
+  People: {{peopleCount}}
   {{people | json}}
   `
 })
@@ -24,6 +25,7 @@ export class PingComponent {
   message;
   name;
   device;
+  peopleCount;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -38,7 +40,8 @@ export class PingComponent {
     });
 
     this.socket.on('update-people', (people) => {
-      this.people = people;
+      this.people = people.people;
+      this.peopleCount = people.peopleCount;
       this.person = people[this.socket.socket.id];
     });
 
