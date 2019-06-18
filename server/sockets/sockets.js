@@ -47,9 +47,11 @@ let peerId;
         socket.emit("admin chat",{
           msg: "You have connected to the server.",
           from: 'Admin'
-        }
-
-        );
+        });
+        io.sockets.emit("admin chat", {
+          from: "Admin",
+          msg: people[socket.id].name + " is online."
+        });
         io.sockets.emit("update-people", people);
       }
     })
