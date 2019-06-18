@@ -8,11 +8,12 @@ module.exports = io => {
   let history = {};
 let peerId;
   io.sockets.on("connection", socket => {
-    let peopleCount = _.size(people);
-    io.sockets.emit("update-people", {people, peopleCount});
+
+
     socket.on('peerId', (id) => {
       peerId = id;
-      socket.emit('update-people', people)
+      let peopleCount = _.size(people);
+      io.sockets.emit("update-people", {people, peopleCount});
     })
 
     socket.on('send name', (data) => {
