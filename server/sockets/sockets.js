@@ -71,7 +71,7 @@ module.exports = io => {
           msg:
             "You are already in a room. Please leave it first to create your own."
         });
-      } else if (!people[socket.id].owns) {
+      } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
         let clean_name = sanitize.escape(roomData.name);
         let room = new Room(clean_name, id, socket.id);
