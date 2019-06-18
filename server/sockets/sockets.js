@@ -99,16 +99,19 @@ module.exports = io => {
 
     socket.on("remove room", (id) => {
       let rms = Object.values(rooms)
-      if (socket.id === rms[0].owner) {
-        delete rooms[rms[0].id];
-        people[socket.id].owns = null;
-        people[socket.id].inroom = null;
-      } else {
-        socket.emit("admin chat", {
-          from: "Admin",
-          msg: "Only the owner can remove a room."
-        });
-      }
+      rms.forEach((room) => {
+        if (socket.id === room.owner) {
+          delete rooms[room.id];
+          people[socket.id].owns = null;
+          people[socket.id].inroom = null;
+        } else {
+          socket.emit("admin chat", {
+            from: "Admin",
+            msg: "Only the owner can remove a room."
+          });
+        }
+      })
+
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
