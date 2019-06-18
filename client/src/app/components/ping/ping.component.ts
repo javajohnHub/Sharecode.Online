@@ -5,7 +5,7 @@ import * as Peer from "peerjs_fork_firefox40";
   selector: 'app-ping',
   template: `
   <input [(ngModel)]="name"/>
-  <button type="button" (click)="sendName()">Send Name</button>
+  <button type="button" (click)="sendName()">Send Name</button><br/>
   {{people | json}}
   `
 })
@@ -39,6 +39,7 @@ export class PingComponent {
 
     this.socket.on("exists", proposedName => {
       this.name = proposedName.proposedName;
+      alert('name exists try ' + this.name)
     });
 
   }
