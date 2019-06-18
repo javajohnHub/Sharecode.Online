@@ -66,7 +66,7 @@ module.exports = io => {
       }
     })
 
-    socket.on('create room', (roomName) => {
+    socket.on('create room', (roomData) => {
       if (people[socket.id].inroom) {
         socket.emit("admin chat", {
           from: "Admin",
@@ -74,12 +74,12 @@ module.exports = io => {
         });
       } else if (!people[socket.id].owns) {
         let id = uuid.v4();
-        let clean_name = sanitize.escape(roomName);
+        let clean_name = sanitize.escape(roomData.name);
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
         roomCount = _.size(rooms);
 
-        room.peopleLimit = roomData.peopleLimit;
+        room.peopleLimit = roomData.limit;
       socket.room = clean_name;
       socket.join(socket.room);
       people[socket.id].owns = id;
