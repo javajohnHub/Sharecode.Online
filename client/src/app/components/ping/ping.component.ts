@@ -19,6 +19,7 @@ import * as Peer from "peerjs_fork_firefox40";
   Rooms: {{roomCount}}<br/>
   <div *ngFor="let room of rms">
     <button type="button" (click)="joinRoom(room.id)" >Join {{room.name}}</button>
+    <button type="button" (click)="leaveRoom(room.id)" >leave {{room.name}}</button>
   </div>
   <button type="button" (click)="removeRoom()">Remove room</button>
   `
@@ -99,5 +100,9 @@ export class PingComponent {
 
   joinRoom(id){
     this.socket.emit('join room', id)
+  }
+
+  leaveRoom(id){
+    this.socket.emit('leave room', id)
   }
 }

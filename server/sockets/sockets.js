@@ -7,7 +7,6 @@ module.exports = io => {
   let people = {};
   let rooms = {};
   let sockets = [];
-  let history = {};
   let peerId;
   io.sockets.on("connection", socket => {
     socket.on("peerId", id => {
@@ -60,11 +59,14 @@ module.exports = io => {
 
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
+        roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
       }
+
+      sockets.push(socket);
     });
 
     socket.on("create room", roomData => {
-
       if (people[socket.id] && people[socket.id].inroom) {
         socket.emit("admin chat", {
           from: "Admin",
@@ -99,8 +101,8 @@ module.exports = io => {
     });
 
     socket.on("remove room", () => {
-      let rms = Object.values(rooms)
-      rms.forEach((room) => {
+      let rms = Object.values(rooms);
+      rms.forEach(room => {
         if (socket.id === room.owner) {
           delete rooms[room.id];
           people[socket.id].owns = null;
@@ -111,39 +113,39 @@ module.exports = io => {
             msg: "Only the owner can remove a room."
           });
         }
-      })
+      });
 
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
 
-    socket.on("join room", (id) => {
+    socket.on("join room", id => {
       if (typeof people[socket.id] !== "undefined") {
-      let room = rooms[id];
-      if (socket.id === room.owner) {
-        socket.emit("admin chat", {
-          from: "Admin",
-          msg:
-            "You are the owner of this room and you have already been joined."
-        });
-      } else {
-        if (_.contains(room.people, socket.id)) {
+        let room = rooms[id];
+        if (socket.id === room.owner) {
           socket.emit("admin chat", {
             from: "Admin",
-            msg: "You have already joined this room."
+            msg:
+              "You are the owner of this room and you have already been joined."
           });
-        }else {
-          if (people[socket.id].inroom !== null) {
+        } else {
+          if (_.contains(room.people, socket.id)) {
             socket.emit("admin chat", {
               from: "Admin",
-              msg:
-                "You are already in a room (" +
-                decodeURI(rooms[people[socket.id].inroom].name) +
-                "), please leave it first to join another room."
+              msg: "You have already joined this room."
             });
-          }
-          if (room.people.length < room.limit) {
-            room.addPerson(socket.id);
+          } else {
+            if (people[socket.id].inroom !== null) {
+              socket.emit("admin chat", {
+                from: "Admin",
+                msg:
+                  "You are already in a room (" +
+                  decodeURI(rooms[people[socket.id].inroom].name) +
+                  "), please leave it first to join another room."
+              });
+            }
+            if (room.people.length < room.limit) {
+              room.addPerson(socket.id);
               people[socket.id].inroom = id;
               socket.room = room.name;
               socket.join(socket.room);
@@ -156,24 +158,59 @@ module.exports = io => {
                 from: "Admin",
                 msg: "Welcome to " + decodeURI(room.name) + "."
               });
-          }else {
-            socket.emit("admin chat", {
-              from: "Admin",
-              msg: "The room is full."
-            });
+            } else {
+              socket.emit("admin chat", {
+                from: "Admin",
+                msg: "The room is full."
+              });
+            }
           }
         }
+      } else {
+        socket.emit("admin chat", {
+          from: "Admin",
+          msg: "Please enter a valid name first."
+        });
       }
-    }else{
-      socket.emit("admin chat", {
-        from: "Admin",
-        msg: "Please enter a valid name first."
-      });
-    }
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
+    });
 
-    })
+    socket.on("leave room", id => {
+      let room = rooms[id];
+      if (room) {
+        if (socket.id === room.owner) {
+          io.sockets.in(socket.room).emit("admin chat", {
+            from: "Admin",
+            msg:
+              "The owner (" +
+              people[socket.id].name +
+              ") has left the room. The room is removed and you have been disconnected from it as well."
+          });
+        }
+
+        let socketids = [];
+        for (let i = 0; i < sockets.length; i++) {
+          socketids.push(sockets[i].id);
+          if ((_.contains(socketids), room.people)) {
+            sockets[i].leave(room.name);
+          }
+        }
+
+        if ((_.contains(room.people), socket.id)) {
+          for (let i = 0; i < room.people.length; i++) {
+            people[room.people[i]].inroom = null;
+          }
+        }
+        delete rooms[people[socket.id].owns];
+        people[socket.id].owns = null;
+        room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
+
+        let roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
+      }
+    });
+
     socket.on("disconnect", () => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);
