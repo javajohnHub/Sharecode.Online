@@ -142,7 +142,7 @@ module.exports = io => {
                 "), please leave it first to join another room."
             });
           }
-          if (room.people.length < room.peopleLimit) {
+          if (room.people.length < room.limit) {
             room.addPerson(socket.id);
               people[socket.id].inroom = id;
               socket.room = room.name;
