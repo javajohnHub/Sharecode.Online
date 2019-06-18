@@ -117,10 +117,61 @@ module.exports = io => {
     });
 
     socket.on("join room", (id) => {
+      if (typeof people[socket.id] !== "undefined") {
       let room = rooms[id];
+      if (socket.id === room.owner) {
+        socket.emit("admin chat", {
+          from: "Admin",
+          msg:
+            "You are the owner of this room and you have already been joined."
+        });
+      } else {
+        if (_.contains(room.people, socket.id)) {
+          socket.emit("admin chat", {
+            from: "Admin",
+            msg: "You have already joined this room."
+          });
+        }else {
+          if (people[socket.id].inroom !== null) {
+            socket.emit("admin chat", {
+              from: "Admin",
+              msg:
+                "You are already in a room (" +
+                decodeURI(rooms[people[socket.id].inroom].name) +
+                "), please leave it first to join another room."
+            });
+          }
+          if (room.people.length < room.peopleLimit) {
+            room.addPerson(socket.id);
+              people[socket.id].inroom = id;
+              socket.room = room.name;
+              socket.join(socket.room);
+              user = people[socket.id];
+              io.sockets.in(socket.room).emit("admin chat", {
+                from: "Admin",
+                msg: user.name + " has connected to " + decodeURI(room.name)
+              });
+              socket.emit("admin chat", {
+                from: "Admin",
+                msg: "Welcome to " + decodeURI(room.name) + "."
+              });
+          }else {
+            socket.emit("admin chat", {
+              from: "Admin",
+              msg: "The room is full."
+            });
+          }
+        }
+      }
+    }else{
+      socket.emit("admin chat", {
+        from: "Admin",
+        msg: "Please enter a valid name first."
+      });
+    }
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
-      console.log(room)
+
     })
     socket.on("disconnect", () => {
       delete people[socket.id];
