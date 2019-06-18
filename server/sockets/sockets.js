@@ -97,7 +97,7 @@ module.exports = io => {
       }
     });
 
-    socket.on("remove room", (id) => {
+    socket.on("remove room", () => {
       let rms = Object.values(rooms)
       rms.forEach((room) => {
         if (socket.id === room.owner) {
@@ -116,6 +116,12 @@ module.exports = io => {
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
 
+    socket.on("join room", (id) => {
+      let room = rooms[id];
+      let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
+      console.log(room)
+    })
     socket.on("disconnect", () => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);

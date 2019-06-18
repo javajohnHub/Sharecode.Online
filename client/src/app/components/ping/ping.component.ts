@@ -16,7 +16,11 @@ import * as Peer from "peerjs_fork_firefox40";
   <input type="number" [(ngModel)]="limit"/>
   <button type="button" (click)="sendRoom()">Create room</button><br/>
   People: {{peopleCount}} {{people | json}}<br/>
-  Rooms: {{roomCount}} {{rooms | json}}<br/><button type="button" (click)="removeRoom()">Remove room</button>
+  Rooms: {{roomCount}}<br/>
+  <div *ngFor="let room of rms">
+    <button type="button" (click)="joinRoom(room.id)" >Join {{room.name}}</button>
+  </div>
+  <button type="button" (click)="removeRoom()">Remove room</button>
   `
 })
 export class PingComponent {
@@ -34,6 +38,8 @@ export class PingComponent {
   rooms;
   room;
   limit = 2;
+  rms;
+  peeps;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -51,11 +57,13 @@ export class PingComponent {
       this.people = people.people;
       this.peopleCount = people.peopleCount;
       this.person = people[this.socket.socket.id];
+      this.peeps = Object.values(this.people);
     });
 
     this.socket.on('update-rooms', (rooms) => {
       this.rooms = rooms.rooms;
       this.roomCount = rooms.roomCount;
+      this.rms = Object.values(this.rooms);
     });
 
     this.socket.on("exists", proposedName => {
@@ -66,6 +74,8 @@ export class PingComponent {
     this.socket.on("admin chat", msg => {
       this.messages.push(msg);
     });
+
+
   }
   sendName(){
     this.device = "desktop";
@@ -84,6 +94,10 @@ export class PingComponent {
   }
 
   removeRoom(){
-    this.socket.emit('remove room', this.rooms)
+    this.socket.emit('remove room')
+  }
+
+  joinRoom(id){
+    this.socket.emit('join room', id)
   }
 }
