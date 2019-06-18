@@ -6,6 +6,11 @@ import * as Peer from "peerjs_fork_firefox40";
   template: `
   <input [(ngModel)]="name"/>
   <button type="button" (click)="sendName()">Send Name</button><br/>
+  <div *ngIf="messages.length > 0">
+    <ul>
+    <li *ngFor="let msg of messages">{{msg.from}} {{msg.msg}}</li>
+    </ul>
+  </div>
   {{people | json}}
   `
 })
@@ -42,6 +47,9 @@ export class PingComponent {
       alert('name exists try ' + this.name)
     });
 
+    this.socket.on("admin chat", msg => {
+      this.messages.push(msg);
+    });
   }
   sendName(){
     this.device = "desktop";

@@ -44,7 +44,12 @@ let peerId;
           peerId: peerId,
           color: getRandomColor(),
         };
+        socket.emit("admin chat",{
+          msg: "You have connected to the server.",
+          from: 'Admin'
+        }
 
+        );
         io.sockets.emit("update-people", people);
       }
     })
