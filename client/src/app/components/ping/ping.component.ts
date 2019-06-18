@@ -78,7 +78,7 @@ export class PingComponent {
   }
 
   sendRoom(){
-    this.socket.emit('create room', {room: this.room})
+    this.socket.emit('create room', this.room)
   }
 
 }
