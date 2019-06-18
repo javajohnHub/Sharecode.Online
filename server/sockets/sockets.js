@@ -98,7 +98,7 @@ module.exports = io => {
     });
 
     socket.on("remove room", (id) => {
-      let rms = Object.keys(rooms)
+      let rms = Object.values(rooms)
       console.log(rms)
       if (socket.id === room.owner) {
         delete rooms[people[socket.id]];
