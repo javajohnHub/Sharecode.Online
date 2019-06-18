@@ -37,7 +37,7 @@ export class PingComponent {
     });
 
     this.socket.on("exists", proposedName => {
-      this.name = proposedName;
+      this.name = proposedName.proposedName;
     });
 
   }
