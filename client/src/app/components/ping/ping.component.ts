@@ -11,8 +11,8 @@ import * as Peer from "peerjs_fork_firefox40";
     <li *ngFor="let msg of messages">{{msg.from}} {{msg.msg}}</li>
     </ul>
   </div>
-  People: {{peopleCount}}<br/>
-  Rooms: {{roomCount}} {{rooms}}<br/>
+  People: {{peopleCount}} {{people | json}}<br/>
+  Rooms: {{roomCount}} {{rooms | json}}<br/>
   <input [(ngModel)]="room"/>
   <button type="button" (click)="sendRoom()">Create room</button><br/>
   `
