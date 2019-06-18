@@ -65,7 +65,7 @@ module.exports = io => {
 
     socket.on("create room", roomData => {
 
-      if (people[socket.id]) {
+      if (people[socket.id] && people[socket.id].inroom) {
         socket.emit("admin chat", {
           from: "Admin",
           msg:
