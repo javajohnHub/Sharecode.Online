@@ -273,11 +273,12 @@ module.exports = io => {
       let rms = Object.values(rooms);
       rms.forEach((room) => {
         if(_.contains(room.people, socket.id)){
+          room.people[0].owns =
           room.people = _.without(room.people, socket.id);
-          people[socket.id].inroom = null;
           if(room.owner == socket.id){
-
             delete rooms[room.id]
+          }else{
+            console.log(room.people)
           }
         }
 
