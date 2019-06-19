@@ -17,7 +17,10 @@ import * as Peer from "peerjs_fork_firefox40";
   <input type="text" [(ngModel)]="room"/>
   <input type="number" [(ngModel)]="limit"/>
   <button type="button" (click)="sendRoom()">Create room</button><br/>
+  <div *ngIf="people">
   People: {{peopleCount}} <pre><code>{{people | json}}</code></pre><br/>
+  </div>
+
   Rooms: {{roomCount}} <pre><code>{{rooms | json}}</code></pre><br/>
   <div *ngFor="let room of rms">
     <button type="button" (click)="joinRoom(room.id)" >Join {{room.name}}</button>
