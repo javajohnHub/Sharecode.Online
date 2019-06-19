@@ -273,11 +273,11 @@ module.exports = io => {
       let rms = Object.values(rooms);
       rms.forEach((room) => {
         if(_.contains(room.people, socket.id)){
-          delete room.people[socket.id]
+          room.people = _.without(room.people, people[socket.id].inroom);
         }
 
       })
-      room.people = _.without(room.people, people[socket.id].inroom);
+
       delete people[socket.id];
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
