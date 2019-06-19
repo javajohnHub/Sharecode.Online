@@ -192,6 +192,7 @@ module.exports = io => {
                 time: d.getHours() + ":" + d.getMinutes()
               });
             } else {
+              let d = new Date();
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "The room is full.",
