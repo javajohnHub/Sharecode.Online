@@ -293,7 +293,7 @@ module.exports = io => {
         if(_.contains(room.people, socket.id)){
           room.people = _.without(room.people, socket.id);
           if(room.owner == socket.id){
-            people[socket.id].inroom = null;
+            socket.leave();
             delete rooms[room.id]
           }
         }
