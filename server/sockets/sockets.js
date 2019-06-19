@@ -9,7 +9,7 @@ module.exports = io => {
   let sockets = [];
   let adminColor = "rgb(100,100,100)";
   let peerId;
-
+  let peerIdFlag = false;
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
       let roomCount = _.size(rooms);
@@ -18,6 +18,7 @@ module.exports = io => {
 
     socket.on("peerId", id => {
       peerId = id;
+      peerIdFlag = true;
     });
 
     socket.on("send name", data => {
@@ -43,33 +44,34 @@ module.exports = io => {
           proposedName: proposedName
         });
       } else {
-          setTimeout(() => {
-            people[socket.id] = {
-              name: clean_name,
-              owns: null,
-              inroom: null,
-              device: data.device,
-              peerId: peerId,
-              color: getRandomColor()
-            };
-            let d = new Date();
-            socket.emit("admin chat", {
-              msg: "You have connected to the server.",
-              from: "Admin",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
-            });
-            io.sockets.emit("admin chat", {
-              from: "Admin",
-              msg: people[socket.id].name + " is online.",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
-            });
-            peopleCount = _.size(people);
-            io.sockets.emit("update-people", { people, peopleCount });
-            roomCount = _.size(rooms);
-            io.sockets.emit("update-rooms", { rooms, roomCount });
-          },2000)
+
+        do{
+          people[socket.id] = {
+            name: clean_name,
+            owns: null,
+            inroom: null,
+            device: data.device,
+            peerId: peerId,
+            color: getRandomColor()
+          };
+          let d = new Date();
+          socket.emit("admin chat", {
+            msg: "You have connected to the server.",
+            from: "Admin",
+            color: adminColor,
+            time: d.getHours() + ":" + d.getMinutes()
+          });
+          io.sockets.emit("admin chat", {
+            from: "Admin",
+            msg: people[socket.id].name + " is online.",
+            color: adminColor,
+            time: d.getHours() + ":" + d.getMinutes()
+          });
+          peopleCount = _.size(people);
+          io.sockets.emit("update-people", { people, peopleCount });
+          roomCount = _.size(rooms);
+          io.sockets.emit("update-rooms", { rooms, roomCount });
+        }while(peerIdFlag)
 
       }
 
