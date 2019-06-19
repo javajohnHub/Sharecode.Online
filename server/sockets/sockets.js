@@ -17,66 +17,60 @@ module.exports = io => {
 
     socket.on("peerId", id => {
       peerId = id;
-    });
-
-    socket.on("send name", data => {
-      let clean_name = decodeURI(sanitize.escape(data.name));
-      let exists = false;
-      _.find(people, key => {
-        if (key.name.toLowerCase() === clean_name.toLowerCase())
-          return (exists = true);
-      });
-      if (exists) {
-        let randomNumber = Math.floor(Math.random() * 1001);
-        let proposedName;
-        do {
-          proposedName = clean_name + randomNumber;
-          //check if proposed username exists
-          _.find(people, key => {
-            if (key.name.toLowerCase() === proposedName.toLowerCase())
-              return (exists = true);
-          });
-        } while (!exists);
-        socket.emit("exists", {
-          msg: "The username already exists, please pick another one.",
-          proposedName: proposedName
+      socket.on("send name", data => {
+        let clean_name = decodeURI(sanitize.escape(data.name));
+        let exists = false;
+        _.find(people, key => {
+          if (key.name.toLowerCase() === clean_name.toLowerCase())
+            return (exists = true);
         });
-      } else {
-        (async ()=>{
-          people[socket.id] = {
-            name: clean_name,
-            owns: null,
-            inroom: null,
-            device: data.device,
-            peerId: peerId,
-            color: getRandomColor()
-          };
-          let d = new Date();
-          socket.emit("admin chat", {
-            msg: "You have connected to the server.",
-            from: "Admin",
-            color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+        if (exists) {
+          let randomNumber = Math.floor(Math.random() * 1001);
+          let proposedName;
+          do {
+            proposedName = clean_name + randomNumber;
+            //check if proposed username exists
+            _.find(people, key => {
+              if (key.name.toLowerCase() === proposedName.toLowerCase())
+                return (exists = true);
+            });
+          } while (!exists);
+          socket.emit("exists", {
+            msg: "The username already exists, please pick another one.",
+            proposedName: proposedName
           });
-          io.sockets.emit("admin chat", {
-            from: "Admin",
-            msg: people[socket.id].name + " is online.",
-            color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
-          });
-          peopleCount = _.size(people);
-          io.sockets.emit("update-people", { people, peopleCount });
-          roomCount = _.size(rooms);
-          io.sockets.emit("update-rooms", { rooms, roomCount });
-          waitForPeerId(5000,peerId)
-          peerId = null;
-        })()
-
-
-      }
-
-      sockets.push(socket);
+        } else {
+            people[socket.id] = {
+              name: clean_name,
+              owns: null,
+              inroom: null,
+              device: data.device,
+              peerId: peerId,
+              color: getRandomColor()
+            };
+            let d = new Date();
+            socket.emit("admin chat", {
+              msg: "You have connected to the server.",
+              from: "Admin",
+              color: adminColor,
+              time: d.getHours() + ":" + d.getMinutes()
+            });
+            io.sockets.emit("admin chat", {
+              from: "Admin",
+              msg: people[socket.id].name + " is online.",
+              color: adminColor,
+              time: d.getHours() + ":" + d.getMinutes()
+            });
+            peopleCount = _.size(people);
+            io.sockets.emit("update-people", { people, peopleCount });
+            roomCount = _.size(rooms);
+            io.sockets.emit("update-rooms", { rooms, roomCount });
+        }
+        sockets.push(socket);
+      });
     });
+
+
 
     socket.on("create room", roomData => {
       if (people[socket.id] && people[socket.id].inroom) {
