@@ -164,7 +164,7 @@ module.exports = io => {
                 from: "Admin",
                 msg:
                   "You are already in a room (" +
-                  decodeURI(rooms[people[socket.id].inroom].name) +
+                  decodeURI(rooms[people[socket.id].name]) +
                   "), please leave it first to join another room.",
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
