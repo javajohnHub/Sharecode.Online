@@ -4,6 +4,7 @@ import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: 'app-ping',
   template: `
+  <div *ngIf="peerId">
   <input [(ngModel)]="name"/>
   <button type="button" (click)="sendName()">Send Name</button><br/>
   <div *ngIf="messages.length > 0">
@@ -30,6 +31,8 @@ import * as Peer from "peerjs_fork_firefox40";
 <br/>
   <input [(ngModel)]="msg"/>
   <button type="button" (click)="sendMsg()">Send Msg</button><br/>
+  </div>
+
   `
 })
 export class PingComponent {
@@ -50,6 +53,7 @@ export class PingComponent {
   rms;
   peeps;
   msg;
+  peerId;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -60,32 +64,32 @@ export class PingComponent {
       debug: 3
     });
     this.peer.on("open", () => {
+      this.peerId = this.peer.id;
       this.socket.emit('peerId', this.peer.id);
-    });
+      this.socket.on('update-people', (people) => {
+        this.people = people.people;
+        this.peopleCount = people.peopleCount;
+        this.person = this.people[this.socket.socket.id];
+        this.peeps = Object.values(this.people);
+      });
 
-    this.socket.on('update-people', (people) => {
-      this.people = people.people;
-      this.peopleCount = people.peopleCount;
-      this.person = this.people[this.socket.socket.id];
-      this.peeps = Object.values(this.people);
-    });
+      this.socket.on('update-rooms', (rooms) => {
+        this.rooms = rooms.rooms;
+        this.roomCount = rooms.roomCount;
+        this.rms = Object.values(this.rooms);
+      });
 
-    this.socket.on('update-rooms', (rooms) => {
-      this.rooms = rooms.rooms;
-      this.roomCount = rooms.roomCount;
-      this.rms = Object.values(this.rooms);
-    });
+      this.socket.on("exists", proposedName => {
+        this.name = proposedName.proposedName;
+        alert('name exists try ' + this.name)
+      });
 
-    this.socket.on("exists", proposedName => {
-      this.name = proposedName.proposedName;
-      alert('name exists try ' + this.name)
-    });
-
-    this.socket.on("admin chat", msg => {
-      this.messages.push(msg);
-    });
-    this.socket.on("message", msg => {
-      this.messages.push(msg);
+      this.socket.on("admin chat", msg => {
+        this.messages.push(msg);
+      });
+      this.socket.on("message", msg => {
+        this.messages.push(msg);
+      });
     });
 
   }
