@@ -273,7 +273,7 @@ module.exports = io => {
       let rms = Object.values(rooms);
       rms.forEach((room) => {
         if(_.contains(room.people, socket.id)){
-          room.people = _.without(room.people, people[socket.id].inroom);
+          room.people = _.without(room.people, socket.id);
         }
 
       })
