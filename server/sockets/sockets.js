@@ -269,24 +269,24 @@ module.exports = io => {
         time: d.getHours() + ":" + d.getMinutes()
       });
     });
-    socket.on("disconnected", () => {
-      let rms = Object.values(rooms);
-      rms.forEach((room) => {
-        if(_.contains(room.people, socket.id)){
-          room.people = _.without(room.people, socket.id);
-          if(room.owner == socket.id){
-            delete rooms[room.id]
-          }
-        }
+    // socket.on("disconnected", () => {
+    //   let rms = Object.values(rooms);
+    //   rms.forEach((room) => {
+    //     if(_.contains(room.people, socket.id)){
+    //       room.people = _.without(room.people, socket.id);
+    //       if(room.owner == socket.id){
+    //         delete rooms[room.id]
+    //       }
+    //     }
 
-      })
+    //   })
 
-      delete people[socket.id];
-      peopleCount = _.size(people);
-      io.sockets.emit("update-people", { people, peopleCount });
-      let roomCount = _.size(rooms);
-      io.sockets.emit("update-rooms", { rooms, roomCount });
-    });
+    //   delete people[socket.id];
+    //   peopleCount = _.size(people);
+    //   io.sockets.emit("update-people", { people, peopleCount });
+    //   let roomCount = _.size(rooms);
+    //   io.sockets.emit("update-rooms", { rooms, roomCount });
+    // });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach((room) => {
