@@ -272,7 +272,10 @@ module.exports = io => {
     socket.on("disconnected", () => {
       let rms = Object.values(rooms);
       rms.forEach((room) => {
-        console.log(room.people)
+        if(_.contains(room.people, socket.id)){
+          delete room.people[socket.id]
+        }
+
       })
       room.people = _.without(room.people, people[socket.id].inroom);
       delete people[socket.id];
