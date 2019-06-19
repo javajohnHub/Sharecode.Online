@@ -11,9 +11,9 @@ module.exports = io => {
   let peerId;
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
-      let roomCount = _.size(rooms);
-      io.sockets.emit("update-people", { people, peopleCount });
-      io.sockets.emit("update-rooms", { rooms, roomCount });
+    let roomCount = _.size(rooms);
+    io.sockets.emit("update-people", { people, peopleCount });
+    io.sockets.emit("update-rooms", { rooms, roomCount });
 
     socket.on("peerId", id => {
       peerId = id;
@@ -42,7 +42,7 @@ module.exports = io => {
           proposedName: proposedName
         });
       } else {
-
+        setTimeout(() => {
           people[socket.id] = {
             name: clean_name,
             owns: null,
@@ -68,7 +68,7 @@ module.exports = io => {
           io.sockets.emit("update-people", { people, peopleCount });
           roomCount = _.size(rooms);
           io.sockets.emit("update-rooms", { rooms, roomCount });
-
+        }, 2000);
       }
 
       sockets.push(socket);
@@ -81,8 +81,8 @@ module.exports = io => {
           from: "Admin",
           msg:
             "You are already in a room. Please leave it first to create your own.",
-            color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+          color: adminColor,
+          time: d.getHours() + ":" + d.getMinutes()
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
@@ -149,8 +149,8 @@ module.exports = io => {
             from: "Admin",
             msg:
               "You are the owner of this room and you have already been joined.",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
+            color: adminColor,
+            time: d.getHours() + ":" + d.getMinutes()
           });
         } else {
           if (_.contains(room.people, socket.id)) {
@@ -170,8 +170,8 @@ module.exports = io => {
                   "You are already in a room (" +
                   decodeURI(rooms[people[socket.id].inroom].name) +
                   "), please leave it first to join another room.",
-                  color: adminColor,
-                  time: d.getHours() + ":" + d.getMinutes()
+                color: adminColor,
+                time: d.getHours() + ":" + d.getMinutes()
               });
             }
             if (room.people.length < room.limit) {
@@ -232,8 +232,8 @@ module.exports = io => {
               "The owner (" +
               people[socket.id].name +
               ") has left the room. The room is removed and you have been disconnected from it as well.",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
+            color: adminColor,
+            time: d.getHours() + ":" + d.getMinutes()
           });
         }
 
@@ -247,10 +247,9 @@ module.exports = io => {
 
         if ((_.contains(room.people), socket.id)) {
           for (let i = 0; i < room.people.length; i++) {
-            if(people[room.people[i]]){
+            if (people[room.people[i]]) {
               people[room.people[i]].inroom = null;
             }
-
           }
         }
         delete rooms[people[socket.id].owns];
@@ -263,22 +262,21 @@ module.exports = io => {
         io.sockets.emit("update-rooms", { rooms, roomCount });
       }
     });
-    socket.on('message', (msg) => {
+    socket.on("message", msg => {
       let d = new Date();
-      console.log(people[socket.id])
+      console.log(people[socket.id]);
       io.sockets.in(socket.room).emit("message", {
         msg: decodeURI(sanitize.escape(msg)),
         color: people[socket.id].color,
         from: people[socket.id].name,
         time: d.getHours() + ":" + d.getMinutes()
-      } )
-    })
+      });
+    });
     socket.on("disconnect", () => {
       delete people[socket.id];
       io.sockets.emit("update-people", people);
     });
   });
-
 };
 
 getRandomColor = ranges => {
