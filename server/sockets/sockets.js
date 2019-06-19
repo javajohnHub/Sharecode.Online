@@ -264,7 +264,7 @@ module.exports = io => {
       let d = new Date();
       io.sockets.in(socket.room).emit("message", {
         msg: decodeURI(sanitize.escape(msg)),
-        color: color,
+        color: people[socket.id].color,
         from: people[socket.id].name,
         time: d.getHours() + ":" + d.getMinutes()
       } )
