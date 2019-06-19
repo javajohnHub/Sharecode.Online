@@ -271,6 +271,7 @@ module.exports = io => {
     });
     socket.on("disconnected", () => {
       delete people[socket.id];
+      room.people = _.without(room.people, socket.id);
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
       let roomCount = _.size(rooms);
@@ -278,6 +279,7 @@ module.exports = io => {
     });
     socket.on("disconnect", () => {
       delete people[socket.id];
+      room.people = _.without(room.people, socket.id);
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
       let roomCount = _.size(rooms);
