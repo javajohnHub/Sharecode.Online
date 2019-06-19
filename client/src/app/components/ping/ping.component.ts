@@ -8,27 +8,25 @@ import * as Peer from "peerjs_fork_firefox40";
     <div *ngIf="peerId; else loading">
       <input [(ngModel)]="name" />
       <button type="button" (click)="sendName()">Send Name</button><br />
-      <div *ngIf="messages.length > 0">
-        <ul>
-          <li *ngFor="let msg of messages">
-            <span [style.color]="msg.color"
-              >{{ msg.time }} {{ msg.from }}:</span
-            >
-            {{ msg.msg }}
-          </li>
-        </ul>
-      </div>
-
-      <input type="text" [(ngModel)]="room" />
-      <input type="number" [(ngModel)]="limit" />
+      <input type="text" [(ngModel)]="room" /><br/>
+      <input type="number" [(ngModel)]="limit" /><br/>
       <button type="button" (click)="sendRoom()">Create room</button><br />
-
+      <div *ngIf="messages.length > 0">
+      <ul>
+        <li *ngFor="let msg of messages">
+          <span [style.color]="msg.color"
+            >{{ msg.time }} {{ msg.from }}:</span
+          >
+          {{ msg.msg }}
+        </li>
+      </ul>
+    </div>
       People: {{ peopleCount }}
-      <pre><code>{{people | json}}</code></pre>
+
       <br />
 
       Rooms: {{ roomCount }}
-      <pre><code>{{rooms | json}}</code></pre>
+
       <br />
       <div *ngFor="let room of rms">
         <button type="button" (click)="joinRoom(room.id)">
@@ -42,6 +40,8 @@ import * as Peer from "peerjs_fork_firefox40";
       <br />
       <input [(ngModel)]="msg" />
       <button type="button" (click)="sendMsg()">Send Msg</button><br />
+      <pre><code>{{people | json}}</code></pre>
+      <pre><code>{{rooms | json}}</code></pre>
     </div>
   `
 })
@@ -76,18 +76,6 @@ export class PingComponent {
     this.peer.on("open", () => {
       this.peerId = this.peer.id;
       this.socket.emit("peerId", this.peer.id);
-      this.socket.on("update-people", people => {
-        this.people = people.people;
-        this.peopleCount = people.peopleCount;
-        this.person = this.people[this.socket.socket.id];
-        this.peeps = Object.values(this.people);
-      });
-
-      this.socket.on("update-rooms", rooms => {
-        this.rooms = rooms.rooms;
-        this.roomCount = rooms.roomCount;
-        this.rms = Object.values(this.rooms);
-      });
 
       this.socket.on("exists", proposedName => {
         this.name = proposedName.proposedName;
@@ -100,6 +88,19 @@ export class PingComponent {
       this.socket.on("message", msg => {
         this.messages.push(msg);
       });
+    });
+
+    this.socket.on("update-people", people => {
+      this.people = people.people;
+      this.peopleCount = people.peopleCount;
+      this.person = this.people[this.socket.socket.id];
+      this.peeps = Object.values(this.people);
+    });
+
+    this.socket.on("update-rooms", rooms => {
+      this.rooms = rooms.rooms;
+      this.roomCount = rooms.roomCount;
+      this.rms = Object.values(this.rooms);
     });
   }
 
