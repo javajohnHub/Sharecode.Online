@@ -205,8 +205,10 @@ module.exports = io => {
         }
         delete rooms[people[socket.id].owns];
         people[socket.id].owns = null;
+        people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
-
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
       }
