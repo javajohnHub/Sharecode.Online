@@ -97,7 +97,7 @@ module.exports = io => {
             io.sockets.emit("update-people", { people, peopleCount });
             roomCount = _.size(rooms);
             io.sockets.emit("update-rooms", { rooms, roomCount });
-          }, 200)
+          }, 1000)
         }
 
       }
