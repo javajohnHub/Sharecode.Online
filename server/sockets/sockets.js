@@ -274,8 +274,9 @@ module.exports = io => {
       rms.forEach((room) => {
         if(_.contains(room.people, socket.id)){
           room.people = _.without(room.people, socket.id);
+          people[socket.id].inroom = null;
           if(room.owner == socket.id){
-            people[socket.id].inroom = null;
+
             delete rooms[room.id]
           }
         }
