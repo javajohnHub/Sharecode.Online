@@ -262,7 +262,7 @@ module.exports = io => {
     });
     socket.on('message', (msg) => {
       let d = new Date();
-      console.log(people[socket.id].color)
+      console.log(people[socket.id])
       io.sockets.in(socket.room).emit("message", {
         msg: decodeURI(sanitize.escape(msg)),
         color: people[socket.id].color,
