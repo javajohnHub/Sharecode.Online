@@ -319,14 +319,13 @@ module.exports = io => {
         }
       }
       delete rooms[people[socket.id].owns];
-      delete people[socket.id];
-      let o = _.findWhere(sockets, { id: socket.id });
-      sockets = _.without(sockets, o);
-      room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
-      peopleCount = _.size(people);
-      io.sockets.emit("update-people", { people, peopleCount });
-      let roomCount = _.size(rooms);
-      io.sockets.emit("update-rooms", { rooms, roomCount });
+        people[socket.id].owns = null;
+        people[socket.id].inroom = null;
+        room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", { people, peopleCount });
+        let roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
     });
   });
 };
