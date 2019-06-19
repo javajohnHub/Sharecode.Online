@@ -283,7 +283,13 @@ module.exports = io => {
         }
 
       })
-
+      let socketids = [];
+      for (let i = 0; i < sockets.length; i++) {
+        socketids.push(sockets[i].id);
+        if ((_.contains(socketids), room.people)) {
+          sockets[i].leave(room.name);
+        }
+      }
       delete people[socket.id];
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
