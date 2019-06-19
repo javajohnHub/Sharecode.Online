@@ -43,7 +43,6 @@ module.exports = io => {
           proposedName: proposedName
         });
       } else {
-        setTimeout(() => {
           setTimeout(() => {
             people[socket.id] = {
               name: clean_name,
@@ -66,11 +65,6 @@ module.exports = io => {
               color: adminColor,
               time: d.getHours() + ":" + d.getMinutes()
             });
-          },1800)
-
-
-
-
             peopleCount = _.size(people);
             io.sockets.emit("update-people", { people, peopleCount });
             roomCount = _.size(rooms);
