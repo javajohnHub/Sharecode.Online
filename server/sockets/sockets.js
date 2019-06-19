@@ -11,7 +11,7 @@ module.exports = io => {
   let color;
   io.sockets.on("connection", socket => {
     let peerId;
-    color = getRandomColor();
+
     socket.on("peerId", id => {
       peerId = id;
       let peopleCount = _.size(people);
@@ -21,6 +21,7 @@ module.exports = io => {
     });
 
     socket.on("send name", data => {
+      color = getRandomColor();
       let clean_name = decodeURI(sanitize.escape(data.name));
       let exists = false;
       _.find(people, key => {
