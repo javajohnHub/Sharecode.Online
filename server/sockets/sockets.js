@@ -52,6 +52,7 @@ module.exports = io => {
               peerId: peerId,
               color: getRandomColor()
             };
+            peerId = null;
             let d = new Date();
             socket.emit("admin chat", {
               msg: "You have connected to the server.",
@@ -70,7 +71,7 @@ module.exports = io => {
             io.sockets.emit("update-people", { people, peopleCount });
             roomCount = _.size(rooms);
             io.sockets.emit("update-rooms", { rooms, roomCount });
-          },1000)
+          },2000)
 
       }
 
