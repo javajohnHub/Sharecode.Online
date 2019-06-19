@@ -7,9 +7,9 @@ import * as Peer from "peerjs_fork_firefox40";
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
       <input [(ngModel)]="name" />
-      <button type="button" (click)="sendName()">Send Name</button><br />
+      <button type="button" (click)="sendName()">Send Name</button><br /><br />
       <input type="text" [(ngModel)]="room" /><br/>
-      <input type="number" [(ngModel)]="limit" /><br/>
+      <input type="number" [(ngModel)]="limit" />
       <button type="button" (click)="sendRoom()">Create room</button><br />
       <div *ngIf="messages.length > 0">
       <ul>
@@ -36,7 +36,7 @@ import * as Peer from "peerjs_fork_firefox40";
           leave {{ room.name }}
         </button>
       </div>
-      <button type="button" (click)="removeRoom()">Remove room</button>
+      <!--<button type="button" (click)="removeRoom()">Remove room</button>-->
       <br />
       <input [(ngModel)]="msg" />
       <button type="button" (click)="sendMsg()">Send Msg</button><br />
