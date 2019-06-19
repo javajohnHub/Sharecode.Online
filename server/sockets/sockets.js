@@ -167,7 +167,7 @@ module.exports = io => {
             }
           }
         }
-        people[socket.id].inroom = socket.room;
+        people[socket.id].inroom = id;
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
