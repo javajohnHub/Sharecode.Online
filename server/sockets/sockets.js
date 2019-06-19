@@ -73,13 +73,11 @@ module.exports = io => {
           msg:
             "You are already in a room. Please leave it first to create your own."
         });
-      } else if (people[socket.id] && people[socket.id].owns == null) {
+      } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
         let clean_name = sanitize.escape(roomData.name);
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
-        roomCount = _.size(rooms);
-
         room.limit = roomData.limit;
         socket.room = clean_name;
         socket.join(socket.room);
@@ -91,6 +89,9 @@ module.exports = io => {
           msg: "Welcome to " + room.name
         });
 
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", { people, peopleCount });
+        roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
       } else {
         socket.emit("admin chat", {
