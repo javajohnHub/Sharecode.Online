@@ -314,7 +314,9 @@ module.exports = io => {
       if ((_.contains(room.people), socket.id)) {
         for (let i = 0; i < room.people.length; i++) {
           if (people[room.people[i]]) {
+            if (socket.id !== room.owner) {
             people[room.people[i]].inroom = null;
+            }
           }
         }
       }
