@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import {SocketService} from '../../shared/socket.service';
 import * as Peer from "peerjs_fork_firefox40";
 @Component({
@@ -65,34 +65,38 @@ export class PingComponent {
     });
     this.peer.on("open", () => {
       this.peerId = this.peer.id;
-      this.socket.emit('peerId', this.peer.id);
-      this.socket.on('update-people', (people) => {
-        this.people = people.people;
-        this.peopleCount = people.peopleCount;
-        this.person = this.people[this.socket.socket.id];
-        this.peeps = Object.values(this.people);
-      });
-
-      this.socket.on('update-rooms', (rooms) => {
-        this.rooms = rooms.rooms;
-        this.roomCount = rooms.roomCount;
-        this.rms = Object.values(this.rooms);
-      });
-
-      this.socket.on("exists", proposedName => {
-        this.name = proposedName.proposedName;
-        alert('name exists try ' + this.name)
-      });
-
-      this.socket.on("admin chat", msg => {
-        this.messages.push(msg);
-      });
-      this.socket.on("message", msg => {
-        this.messages.push(msg);
-      });
+    });
+    this.socket.emit('peerId', this.peer.id);
+    this.socket.on('update-people', (people) => {
+      this.people = people.people;
+      this.peopleCount = people.peopleCount;
+      this.person = this.people[this.socket.socket.id];
+      this.peeps = Object.values(this.people);
     });
 
+    this.socket.on('update-rooms', (rooms) => {
+      this.rooms = rooms.rooms;
+      this.roomCount = rooms.roomCount;
+      this.rms = Object.values(this.rooms);
+    });
+
+    this.socket.on("exists", proposedName => {
+      this.name = proposedName.proposedName;
+      alert('name exists try ' + this.name)
+    });
+
+    this.socket.on("admin chat", msg => {
+      this.messages.push(msg);
+    });
+    this.socket.on("message", msg => {
+      this.messages.push(msg);
+    });
   }
+
+  @HostListener('window:beforeunload', ['$event'])
+    unloadHandler(event: Event) {
+	    this.socket.emit('disconnected')
+    }
   sendName(){
     this.device = "desktop";
     if (
