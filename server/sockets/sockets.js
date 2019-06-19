@@ -8,7 +8,6 @@ module.exports = io => {
   let rooms = {};
   let sockets = [];
   let adminColor = "rgb(100,100,100)";
-  let color;
   io.sockets.on("connection", socket => {
     let peerId;
 
@@ -21,7 +20,6 @@ module.exports = io => {
     });
 
     socket.on("send name", data => {
-      color = getRandomColor();
       let clean_name = decodeURI(sanitize.escape(data.name));
       let exists = false;
       _.find(people, key => {
@@ -49,7 +47,8 @@ module.exports = io => {
           owns: null,
           inroom: null,
           device: data.device,
-          peerId: peerId
+          peerId: peerId,
+          color: getRandomColor()
         };
         let d = new Date();
         socket.emit("admin chat", {
