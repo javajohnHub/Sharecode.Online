@@ -271,7 +271,9 @@ module.exports = io => {
     });
     socket.on("disconnected", () => {
       let rms = Object.values(rooms);
-      console.log(rms.people)
+      rms.forEach((room) => {
+        console.log(room.people)
+      })
       room.people = _.without(room.people, people[socket.id].inroom);
       delete people[socket.id];
       peopleCount = _.size(people);
