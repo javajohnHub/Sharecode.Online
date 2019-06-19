@@ -9,8 +9,7 @@ import * as Peer from "peerjs_fork_firefox40";
   <div *ngIf="messages.length > 0">
     <ul>
     <li *ngFor="let msg of messages">
-    <span *ngIf="msg.from !== 'Admin'">{{msg.from}}:</span>
-    <span *ngIf="msg.from === 'Admin'" [style.color]="person.color">{{msg.from}}:</span> {{msg.msg}}</li>
+    <span  [style.color]="msg.color">{{msg.from}}:</span> {{msg.msg}}</li>
 
     </ul>
   </div>
