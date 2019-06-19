@@ -42,7 +42,7 @@ module.exports = io => {
           proposedName: proposedName
         });
       } else {
-        if(peerId){
+        do {
           people[socket.id] = {
             name: clean_name,
             owns: null,
@@ -69,36 +69,7 @@ module.exports = io => {
           io.sockets.emit("update-people", { people, peopleCount });
           roomCount = _.size(rooms);
           io.sockets.emit("update-rooms", { rooms, roomCount });
-        }else{
-          setTimeout(() => {
-            people[socket.id] = {
-              name: clean_name,
-              owns: null,
-              inroom: null,
-              device: data.device,
-              peerId: peerId,
-              color: getRandomColor()
-            };
-            let d = new Date();
-            socket.emit("admin chat", {
-              msg: "You have connected to the server.",
-              from: "Admin",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
-            });
-            io.sockets.emit("admin chat", {
-              from: "Admin",
-              msg: people[socket.id].name + " is online.",
-              color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
-            });
-
-            peopleCount = _.size(people);
-            io.sockets.emit("update-people", { people, peopleCount });
-            roomCount = _.size(rooms);
-            io.sockets.emit("update-rooms", { rooms, roomCount });
-          }, 200)
-        }
+        }while(!peerId)
 
       }
 
@@ -278,7 +249,9 @@ module.exports = io => {
 
         if ((_.contains(room.people), socket.id)) {
           for (let i = 0; i < room.people.length; i++) {
-            people[room.people[i]].inroom = null;
+            if(people[room.people[i]]){
+              people[room.people[i]].inroom = null;
+            }
           }
         }
         delete rooms[people[socket.id].owns];
