@@ -9,7 +9,7 @@ import * as Peer from "peerjs_fork_firefox40";
   <div *ngIf="messages.length > 0">
     <ul>
     <li *ngFor="let msg of messages">
-    <span  [style.color]="msg.color">{{msg.from}}:</span> {{msg.msg}}</li>
+    <span  [style.color]="msg.color">{{msg.time}} {{msg.from}}:</span> {{msg.msg}}</li>
 
     </ul>
   </div>
@@ -24,7 +24,7 @@ import * as Peer from "peerjs_fork_firefox40";
     <button type="button" (click)="leaveRoom(room.id)" >leave {{room.name}}</button>
   </div>
   <button type="button" (click)="removeRoom()">Remove room</button>
-
+<br/>
   <input [(ngModel)]="msg"/>
   <button type="button" (click)="sendMsg()">Send Msg</button><br/>
   `

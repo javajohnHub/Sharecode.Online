@@ -53,12 +53,14 @@ module.exports = io => {
         socket.emit("admin chat", {
           msg: "You have connected to the server.",
           from: "Admin",
-          color: adminColor
+          color: adminColor,
+          time: Date.now()
         });
         io.sockets.emit("admin chat", {
           from: "Admin",
           msg: people[socket.id].name + " is online.",
-          color: adminColor
+          color: adminColor,
+          time: Date.now()
         });
 
         peopleCount = _.size(people);
@@ -76,7 +78,8 @@ module.exports = io => {
           from: "Admin",
           msg:
             "You are already in a room. Please leave it first to create your own.",
-            color: adminColor
+            color: adminColor,
+            time: Date.now()
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
@@ -92,7 +95,8 @@ module.exports = io => {
         socket.emit("admin chat", {
           from: "Admin",
           msg: "Welcome to " + room.name,
-          color: adminColor
+          color: adminColor,
+          time: Date.now()
         });
 
         peopleCount = _.size(people);
@@ -103,7 +107,8 @@ module.exports = io => {
         socket.emit("admin chat", {
           from: "Admin",
           msg: "You have already created a room.",
-          color: adminColor
+          color: adminColor,
+          time: Date.now()
         });
       }
     });
@@ -119,7 +124,8 @@ module.exports = io => {
           socket.emit("admin chat", {
             from: "Admin",
             msg: "Only the owner can remove a room.",
-            color: adminColor
+            color: adminColor,
+            time: Date.now()
           });
         }
       });
@@ -136,14 +142,16 @@ module.exports = io => {
             from: "Admin",
             msg:
               "You are the owner of this room and you have already been joined.",
-              color: adminColor
+              color: adminColor,
+              time: Date.now()
           });
         } else {
           if (_.contains(room.people, socket.id)) {
             socket.emit("admin chat", {
               from: "Admin",
               msg: "You have already joined this room.",
-              color: adminColor
+              color: adminColor,
+              time: Date.now()
             });
           } else {
             if (people[socket.id].inroom !== null) {
@@ -153,7 +161,8 @@ module.exports = io => {
                   "You are already in a room (" +
                   decodeURI(rooms[people[socket.id].inroom].name) +
                   "), please leave it first to join another room.",
-                  color: adminColor
+                  color: adminColor,
+                  time: Date.now()
               });
             }
             if (room.people.length < room.limit) {
@@ -165,18 +174,21 @@ module.exports = io => {
               io.sockets.in(socket.room).emit("admin chat", {
                 from: "Admin",
                 msg: user.name + " has connected to " + decodeURI(room.name),
-                color: adminColor
+                color: adminColor,
+                time: Date.now()
               });
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "Welcome to " + decodeURI(room.name) + ".",
-                color: adminColor
+                color: adminColor,
+                time: Date.now()
               });
             } else {
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "The room is full.",
-                color: adminColor
+                color: adminColor,
+                time: Date.now()
               });
             }
           }
@@ -190,7 +202,8 @@ module.exports = io => {
         socket.emit("admin chat", {
           from: "Admin",
           msg: "Please enter a valid name first.",
-          color: adminColor
+          color: adminColor,
+          time: Date.now()
         });
       }
       let roomCount = _.size(rooms);
@@ -207,7 +220,8 @@ module.exports = io => {
               "The owner (" +
               people[socket.id].name +
               ") has left the room. The room is removed and you have been disconnected from it as well.",
-              color: adminColor
+              color: adminColor,
+              time: Date.now()
           });
         }
 
@@ -238,7 +252,8 @@ module.exports = io => {
       io.sockets.in(socket.room).emit("message", {
         msg: decodeURI(sanitize.escape(msg)),
         color: color,
-        from: people[socket.id].name
+        from: people[socket.id].name,
+        time: Date.now()
       } )
     })
     socket.on("disconnect", () => {
