@@ -299,7 +299,7 @@ getRandomColor = ranges => {
 waitForPeerId = (timeoutms, id) => new Promise((r, j)=>{
   var check = () => {
     console.warn('checking')
-    if(peerId)
+    if(id)
       r()
     else if((timeoutms -= 100) < 0)
       j('timed out!')
