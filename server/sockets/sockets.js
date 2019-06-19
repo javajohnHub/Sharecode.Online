@@ -7,8 +7,9 @@ module.exports = io => {
   let people = {};
   let rooms = {};
   let sockets = [];
-  let peerId;
+
   io.sockets.on("connection", socket => {
+    let peerId;
     socket.on("peerId", id => {
       peerId = id;
       let peopleCount = _.size(people);
