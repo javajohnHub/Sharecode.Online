@@ -8,7 +8,7 @@ import * as Peer from "peerjs_fork_firefox40";
   <button type="button" (click)="sendName()">Send Name</button><br/>
   <div *ngIf="messages.length > 0">
     <ul>
-    <li *ngFor="let msg of messages">{{msg.from}}: {{msg.msg}}</li>
+    <li *ngFor="let msg of messages"><span [style.color]="person.color">{{msg.from}}: {{msg.msg}}</span></li>
     </ul>
   </div>
 
