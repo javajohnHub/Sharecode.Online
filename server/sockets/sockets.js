@@ -12,7 +12,10 @@ module.exports = io => {
     let peerId;
 
     socket.on("peerId", id => {
-      peerId = id;
+      setTimeout(() => {
+        peerId = id;
+      }, 200)
+
       let peopleCount = _.size(people);
       let roomCount = _.size(rooms);
       io.sockets.emit("update-people", { people, peopleCount });
