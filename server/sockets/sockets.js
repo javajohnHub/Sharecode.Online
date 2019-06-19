@@ -179,7 +179,8 @@ module.exports = io => {
               let d = new Date();
               io.sockets.in(socket.room).emit("admin chat", {
                 from: "Admin",
-                msg: user.name + " has connected to " + decodeURI(room.name),
+                msg:
+                  user.name + " has connected to " + decodeURI(room.name),
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
               });
@@ -271,25 +272,26 @@ module.exports = io => {
     });
     socket.on("disconnected", () => {
       let rms = Object.values(rooms);
-      rms.forEach((room) => {
-        if(_.contains(room.people, socket.id)){
-          room.people[0].owns =
-          room.people = _.without(room.people, socket.id);
-          if(room.owner == socket.id){
-            delete rooms[room.id]
-          }else{
-            console.log(room.people)
+      rms.forEach(room => {
+        if (_.contains(room.people, socket.id)) {
+          room.people[0].owns = room.people = _.without(
+            room.people,
+            socket.id
+          );
+          if (room.owner == socket.id) {
+            delete rooms[room.id];
+          } else {
+            let socketids = [];
+            for (let i = 0; i < sockets.length; i++) {
+              socketids.push(sockets[i].id);
+              if ((_.contains(socketids), room.people)) {
+                sockets[i].leave(room.name);
+              }
+            }
           }
         }
+      });
 
-      })
-      let socketids = [];
-      for (let i = 0; i < sockets.length; i++) {
-        socketids.push(sockets[i].id);
-        if ((_.contains(socketids), room.people)) {
-          sockets[i].leave(room.name);
-        }
-      }
       delete people[socket.id];
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
