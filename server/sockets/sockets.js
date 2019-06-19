@@ -288,7 +288,7 @@ module.exports = io => {
     //   io.sockets.emit("update-rooms", { rooms, roomCount });
     // });
     socket.on("disconnect", () => {
-
+      console.log(rooms)
       let room = rooms[people[socket.id].inroom]
       if (socket.id === room.owner) {
         let d = new Date();
