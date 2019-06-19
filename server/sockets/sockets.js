@@ -44,6 +44,7 @@ module.exports = io => {
         });
       } else {
         setTimeout(() => {
+          setTimeout(() => {
             people[socket.id] = {
               name: clean_name,
               owns: null,
@@ -52,7 +53,9 @@ module.exports = io => {
               peerId: peerId,
               color: getRandomColor()
             };
-            peerId = null;
+          },1800)
+
+
             let d = new Date();
             socket.emit("admin chat", {
               msg: "You have connected to the server.",
