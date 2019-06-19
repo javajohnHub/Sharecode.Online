@@ -68,7 +68,7 @@ module.exports = io => {
           io.sockets.emit("update-people", { people, peopleCount });
           roomCount = _.size(rooms);
           io.sockets.emit("update-rooms", { rooms, roomCount });
-          waitForPeerId(2000,peerId)
+          waitForPeerId(5000,peerId)
         })()
 
 
