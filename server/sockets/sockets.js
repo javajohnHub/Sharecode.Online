@@ -69,6 +69,7 @@ module.exports = io => {
           roomCount = _.size(rooms);
           io.sockets.emit("update-rooms", { rooms, roomCount });
           waitForPeerId(5000,peerId)
+          peerId = null;
         })()
 
 
