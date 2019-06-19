@@ -167,6 +167,11 @@ module.exports = io => {
             }
           }
         }
+        people[socket.id].inroom = socket.room;
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", { people, peopleCount });
+        let roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
       } else {
         socket.emit("admin chat", {
           from: "Admin",
