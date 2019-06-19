@@ -289,7 +289,35 @@ module.exports = io => {
     // });
     socket.on("disconnect", () => {
 
+      let room = rooms[people[socket.id].inroom]
+      if (socket.id === room.owner) {
+        let d = new Date();
+        io.sockets.in(socket.room).emit("admin chat", {
+          from: "Admin",
+          msg:
+            "The owner (" +
+            people[socket.id].name +
+            ") has left the room. The room is removed and you have been disconnected from it as well.",
+          color: adminColor,
+          time: d.getHours() + ":" + d.getMinutes()
+        });
+        let socketids = [];
+      for (let i = 0; i < sockets.length; i++) {
+        socketids.push(sockets[i].id);
+        if ((_.contains(socketids), room.people)) {
+          sockets[i].leave(room.name);
+        }
+      }
 
+      if ((_.contains(room.people), socket.id)) {
+        for (let i = 0; i < room.people.length; i++) {
+          if (people[room.people[i]]) {
+
+            people[room.people[i]].inroom = null;
+
+          }
+        }
+      }
       delete rooms[people[socket.id].owns];
        delete people[socket.id]
 
@@ -298,6 +326,9 @@ module.exports = io => {
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
+      }
+
+
     });
   });
 };
