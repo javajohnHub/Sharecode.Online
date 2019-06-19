@@ -42,7 +42,7 @@ module.exports = io => {
           proposedName: proposedName
         });
       } else {
-        setTimeout(() => {
+        (async ()=>{
           people[socket.id] = {
             name: clean_name,
             owns: null,
@@ -68,7 +68,10 @@ module.exports = io => {
           io.sockets.emit("update-people", { people, peopleCount });
           roomCount = _.size(rooms);
           io.sockets.emit("update-rooms", { rooms, roomCount });
-        }, 2000);
+          waitForPeerId(2000,peerId)
+        })()
+
+
       }
 
       sockets.push(socket);
@@ -292,3 +295,16 @@ getRandomColor = ranges => {
   color = "rgb(" + g() + "," + g() + "," + g() + ")";
   return color;
 };
+
+waitForPeerId = (timeoutms, id) => new Promise((r, j)=>{
+  var check = () => {
+    console.warn('checking')
+    if(peerId)
+      r()
+    else if((timeoutms -= 100) < 0)
+      j('timed out!')
+    else
+      setTimeout(check, 100)
+  }
+  setTimeout(check, 100)
+})
