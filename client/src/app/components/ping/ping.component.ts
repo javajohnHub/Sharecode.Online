@@ -24,6 +24,9 @@ import * as Peer from "peerjs_fork_firefox40";
     <button type="button" (click)="leaveRoom(room.id)" >leave {{room.name}}</button>
   </div>
   <button type="button" (click)="removeRoom()">Remove room</button>
+
+  <input [(ngModel)]="msg"/>
+  <button type="button" (click)="sendMsg()">Send Msg</button><br/>
   `
 })
 export class PingComponent {
@@ -43,6 +46,7 @@ export class PingComponent {
   limit = 2;
   rms;
   peeps;
+  msg;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -77,7 +81,9 @@ export class PingComponent {
     this.socket.on("admin chat", msg => {
       this.messages.push(msg);
     });
-
+    this.socket.on("message", msg => {
+      this.messages.push(msg);
+    });
 
   }
   sendName(){
@@ -96,6 +102,9 @@ export class PingComponent {
     this.socket.emit('create room', {name: this.room, limit: this.limit})
   }
 
+  sendMsg(){
+    this.socket.emit('message', this.msg)
+  }
   removeRoom(){
     this.socket.emit('remove room')
   }
