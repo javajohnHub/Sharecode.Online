@@ -153,7 +153,7 @@ module.exports = io => {
             let d = new Date();
             socket.emit("admin chat", {
               from: "Admin",
-              msg: "You have already joined this room.",
+              msg: "You are not logged in.",
               color: adminColor,
               time: d.getHours() + ":" + d.getMinutes()
             });
