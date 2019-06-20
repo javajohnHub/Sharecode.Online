@@ -242,12 +242,13 @@ module.exports = io => {
             }
           }
         }
-        if(rooms[room.id].people.length === 0) {
-          delete rooms[room.id];
-        }
+
         people[socket.id].owns = null;
         people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
+        if(rooms[room.id].people.length === 0) {
+          delete rooms[room.id];
+        }
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
