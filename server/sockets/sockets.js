@@ -175,8 +175,7 @@ module.exports = io => {
               user = people[socket.id];
               io.sockets.in(socket.room).emit("admin chat", {
                 from: "Admin",
-                msg:
-                  user.name + " has connected to " + decodeURI(room.name),
+                msg: user.name + " has connected to " + decodeURI(room.name),
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
               });
@@ -253,7 +252,7 @@ module.exports = io => {
           }
         }
         delete rooms[people[socket.id].owns];
-        delete rooms[people[socket.id].inroom]
+        delete rooms[people[socket.id].inroom];
         people[socket.id].owns = null;
         people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
@@ -274,16 +273,20 @@ module.exports = io => {
       });
     });
     socket.on("disconnected", () => {
- let rms = Object.values(rooms);
+      let rms = Object.values(rooms);
       rms.forEach(room => {
         if (_.contains(room.people, socket.id)) {
-          /*room.people[0].owns = */room.people = _.without(
+          /*room.people[0].owns = */ room.people = _.without(
             room.people,
             socket.id
           );
           if (room.owner === socket.id) {
-console.log(people[socket.id].owns)
-           rooms[room.id].owner = rooms[room.id].people[0]
+            console.log(people[socket.id].owns);
+            rooms[room.id].owner = rooms[room.id].people[0];
+            peopleCount = _.size(people);
+            io.sockets.emit("update-people", { people, peopleCount });
+            let roomCount = _.size(rooms);
+            io.sockets.emit("update-rooms", { rooms, roomCount });
           } else {
             if (_.contains(room.people, socket.id)) {
               let personIndex = room.people.indexOf(socket.id);
@@ -294,7 +297,6 @@ console.log(people[socket.id].owns)
             //delete people[socket.id];
           }
         }
-
       });
 
       delete people[socket.id];
@@ -303,9 +305,7 @@ console.log(people[socket.id].owns)
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
-    socket.on("disconnect", () => {
-
-    });
+    socket.on("disconnect", () => {});
   });
 };
 
