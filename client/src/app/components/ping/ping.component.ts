@@ -16,7 +16,8 @@ import * as Peer from "peerjs_fork_firefox40";
      <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
      </div>
 
-
+     Current name: {{chosenName}}<br/>
+     Current Room {{chosenRoom}}<br/>
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
       <ul>
         <li *ngFor="let msg of messages">
@@ -69,6 +70,8 @@ export class PingComponent {
   peerId;
   nameFlag = false;
   inRoom = false;
+  chosenName;
+  chosenRoom;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
@@ -133,11 +136,13 @@ export class PingComponent {
     }
     this.socket.emit("send name", { name: this.name, device: this.device });
     this.nameFlag = true;
+    this.chosenName = this.name;
   }
 
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
     this.inRoom = true;
+    this.chosenRoom = this.room;
   }
 
   sendMsg() {
@@ -150,11 +155,13 @@ export class PingComponent {
   joinRoom(id) {
     this.socket.emit("join room", id);
     this.inRoom = true;
+    this.chosenRoom = this.rooms[id].name;
   }
 
   leaveRoom(id) {
     this.socket.emit("leave room", id);
     this.inRoom = false;
+    this.chosenRoom = null;
   }
   scrollToBottom(): void {
     try {
