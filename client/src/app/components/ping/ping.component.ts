@@ -40,8 +40,6 @@ import * as Peer from "peerjs_fork_firefox40";
       <br />
       <input [(ngModel)]="msg" />
       <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
-      <pre><code>{{people | json}}</code></pre>
-      <pre><code>{{rooms | json}}</code></pre>
     </div>
   `
 })
