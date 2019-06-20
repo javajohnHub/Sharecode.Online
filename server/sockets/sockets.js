@@ -171,12 +171,8 @@ module.exports = io => {
               });
             }
             if (room.people.length < room.limit) {
-              room.addPerson(socket.id);
-              people[socket.id].inroom = id;
-              socket.room = room.name;
-              socket.join(socket.room);
-              user = people[socket.id];
               let d = new Date();
+              user = people[socket.id];
               io.sockets.in(socket.room).emit("admin chat", {
                 from: "Admin",
                 msg:
@@ -190,6 +186,10 @@ module.exports = io => {
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
               });
+              room.addPerson(socket.id);
+              people[socket.id].inroom = id;
+              socket.room = room.name;
+              socket.join(socket.room);
             } else {
               let d = new Date();
               socket.emit("admin chat", {
@@ -198,6 +198,7 @@ module.exports = io => {
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
               });
+
               people[socket.id].inroom = null;
             }
           }
