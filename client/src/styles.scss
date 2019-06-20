@@ -1,11 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+  background-color: rgba(0,0,0, 0.5)
+}
 #chat-div {
   border: 1px solid #fff;
-  height: 374px;
+  height: 200px;
   overflow-y: scroll;
   padding: 15px;
   padding-bottom: 20px;
   word-wrap: break-word;
   background-color: rgba(255, 255, 255, 0.1);
   resize: vertical;
+
+  ul {
+    list-style: none;
+  }
 }
