@@ -198,6 +198,7 @@ module.exports = io => {
                 color: adminColor,
                 time: d.getHours() + ":" + d.getMinutes()
               });
+              people[socket.id].inroom = null;
             }
           }
         }
