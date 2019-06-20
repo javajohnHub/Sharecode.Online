@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import * as Peer from "peerjs_fork_firefox40";
 @Component({
@@ -11,7 +11,7 @@ import * as Peer from "peerjs_fork_firefox40";
       <input type="text" [(ngModel)]="room" /><br/>
       <input type="number" [(ngModel)]="limit" />
       <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
-      <div *ngIf="messages.length > 0">
+      <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
       <ul>
         <li *ngFor="let msg of messages">
           <span [style.color]="msg.color"
@@ -65,6 +65,7 @@ export class PingComponent {
   msg;
   peerId;
   nameFlag = false;
+  @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -88,6 +89,7 @@ export class PingComponent {
       });
       this.socket.on("message", msg => {
         this.messages.push(msg);
+        this.scrollToBottom();
       });
     });
 
@@ -103,6 +105,7 @@ export class PingComponent {
       this.roomCount = rooms.roomCount;
       this.rms = Object.values(this.rooms);
     });
+    this.scrollToBottom();
   }
 
   @HostListener("window:beforeunload", ["$event"])
@@ -140,5 +143,11 @@ export class PingComponent {
 
   leaveRoom(id) {
     this.socket.emit("leave room", id);
+  }
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollTop - 1000;
+    } catch (err) {}
   }
 }
