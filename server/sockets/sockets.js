@@ -282,7 +282,7 @@ module.exports = io => {
             socket.id
           );
           if (room.owner == socket.id) {
-          rooms[room.id].people[0].owns = room.id;
+
            rooms[room.id].owner = rooms[room.id].people[0]
           } else {
             if (_.contains(room.people, socket.id)) {
