@@ -272,7 +272,7 @@ module.exports = io => {
       });
     });
     socket.on("disconnected", () => {
-      let room = rooms[people[s.id].inroom];
+      let room = rooms[people[socket.id].inroom];
       let socketids = [];
             for (let i = 0; i < sockets.length; i++) {
               socketids.push(sockets[i].id);
