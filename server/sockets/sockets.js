@@ -280,7 +280,7 @@ module.exports = io => {
             room.people,
             socket.id
           );
-          if (room.owner === socket.id) {
+          if (room.owner === socket.id && people[rooms[room.id].people[0]].length > 0) {
 
             people[rooms[room.id].people[0]].owns = people[socket.id].owns
             rooms[room.id].owner = rooms[room.id].people[0];
