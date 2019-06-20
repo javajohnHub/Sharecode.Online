@@ -297,8 +297,10 @@ module.exports = io => {
             }
             delete people[socket.id];
             console.log(room.people.length)
-            if(room.people.length == 0){
-              delete room
+            if(room.people.length === 0){
+              delete rooms[room.id]
+              let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
@@ -334,8 +336,10 @@ module.exports = io => {
             }
             delete people[socket.id];
             console.log(room.people.length)
-            if(room.people.length == 0){
-              delete room
+            if(room.people.length === 0){
+              delete rooms[room.id]
+              let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
