@@ -231,6 +231,13 @@ module.exports = io => {
               sockets[i].leave(room.name);
             }
           }
+          people[socket.id].owns = null;
+        people[socket.id].inroom = null;
+        room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
+        peopleCount = _.size(people);
+        io.sockets.emit("update-people", { people, peopleCount });
+        let roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
         }
 
         if ((_.contains(room.people), socket.id)) {
@@ -241,14 +248,15 @@ module.exports = io => {
               }
             }
           }
-        }
-        people[socket.id].owns = null;
+          people[socket.id].owns = null;
         people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
+        }
+
       }
     });
     socket.on("message", msg => {
