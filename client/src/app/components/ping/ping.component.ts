@@ -6,7 +6,7 @@ import * as Peer from "peerjs_fork_firefox40";
   template: `
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
-    <div *ngIf="!nameFlag">
+    <div >
       <input [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
      </div>
