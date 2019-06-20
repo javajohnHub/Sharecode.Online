@@ -90,8 +90,8 @@ export class PingComponent {
       this.socket.on("message", msg => {
         let scroll = false;
         this.messages.push(msg);
-        if (this.myScrollContainer.nativeElement.height() +
-        this.myScrollContainer.nativeElement.scrollTop >= this.myScrollContainer.nativeElement.scrollHeight) {
+        if (this.myScrollContainer.nativeElement.scrollTop +
+          this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight) {
           scroll = true;
         }
 
