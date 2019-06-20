@@ -6,9 +6,11 @@ import * as Peer from "peerjs_fork_firefox40";
   template: `
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
+    <div *ngIf="!nameFlag">
       <input [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
-     <div *ngIf="!inRoom">
+     </div>
+      <div *ngIf="!inRoom">
      <input type="text" [(ngModel)]="room" /><br/>
      <input type="number" [(ngModel)]="limit" />
      <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
