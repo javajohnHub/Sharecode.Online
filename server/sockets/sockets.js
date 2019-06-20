@@ -289,7 +289,7 @@ console.log(people[socket.id].owns)
               let personIndex = room.people.indexOf(socket.id);
               room.people.splice(personIndex, 1);
               socket.leave(room.name);
-              people[socket.id].owns = room.id;
+              //people[socket.id].owns = room.id;
             }
             delete people[socket.id];
           }
