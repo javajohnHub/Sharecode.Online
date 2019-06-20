@@ -290,7 +290,7 @@ module.exports = io => {
               room.people.splice(personIndex, 1);
               socket.leave(room.name);
             }
-            delete people[s.id];
+            delete people[socket.id];
           }
         }
 
