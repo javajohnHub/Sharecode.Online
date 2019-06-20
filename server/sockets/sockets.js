@@ -296,6 +296,7 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
+            console.log(room.people.length)
             if(room.people.length == 0){
               delete room
             }
@@ -332,6 +333,7 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
+            console.log(room.people.length)
             if(room.people.length == 0){
               delete room
             }
