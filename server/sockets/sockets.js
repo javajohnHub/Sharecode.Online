@@ -228,7 +228,9 @@ module.exports = io => {
         for (let i = 0; i < sockets.length; i++) {
           socketids.push(sockets[i].id);
           if ((_.contains(socketids), room.people)) {
+            if (socket.id === room.owner) {
             sockets[i].leave(room.name);
+            }
           }
         }
 
