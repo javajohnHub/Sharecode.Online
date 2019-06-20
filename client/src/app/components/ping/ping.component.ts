@@ -89,7 +89,11 @@ export class PingComponent {
       });
       this.socket.on("message", msg => {
         this.messages.push(msg);
-        this.scrollToBottom();
+        let shouldScroll = this.myScrollContainer.nativeElement.scrollTop +
+        this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight;
+        if (!shouldScroll) {
+          this.scrollToBottom();
+        }
       });
     });
 
@@ -147,7 +151,6 @@ export class PingComponent {
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollTop - 1000;
     } catch (err) {}
   }
 }
