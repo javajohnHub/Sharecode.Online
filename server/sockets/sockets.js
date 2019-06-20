@@ -283,7 +283,10 @@ module.exports = io => {
           );
           if (room.owner == socket.id) {
             console.log(people[rooms[room.id].people])
-            people[rooms[room.id].people[0]].owns = room.id;
+            if(people[rooms[room.id]].people.length > 0){
+              people[rooms[room.id].people[0]].owns = room.id;
+            }
+
             rooms[room.id].owner = rooms[room.id].people[0]
           } else {
             if (_.contains(room.people, socket.id)) {
