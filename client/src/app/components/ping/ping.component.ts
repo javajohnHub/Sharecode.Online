@@ -39,7 +39,7 @@ import * as Peer from "peerjs_fork_firefox40";
       <!--<button type="button" (click)="removeRoom()">Remove room</button>-->
       <br />
       <input [(ngModel)]="msg" />
-      <button type="button" [disabled]="!msg" (click)="sendMsg()">Send Msg</button><br />
+      <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
       <pre><code>{{people | json}}</code></pre>
       <pre><code>{{rooms | json}}</code></pre>
     </div>
@@ -64,6 +64,7 @@ export class PingComponent {
   peeps;
   msg;
   peerId;
+  nameFlag = false;
   constructor() {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -108,6 +109,7 @@ export class PingComponent {
   unloadHandler(event: Event) {
     this.socket.emit("disconnected");
   }
+
   sendName() {
     this.device = "desktop";
     if (
@@ -118,6 +120,7 @@ export class PingComponent {
       this.device = "mobile";
     }
     this.socket.emit("send name", { name: this.name, device: this.device });
+    this.nameFlag = true;
   }
 
   sendRoom() {
