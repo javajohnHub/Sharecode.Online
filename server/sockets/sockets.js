@@ -272,7 +272,7 @@ module.exports = io => {
       });
     });
     socket.on("disconnected", () => {
-      let room = rooms[people[socket.id].inroom];
+     rooms.forEach((room) => {
       let socketids = [];
       for (let i = 0; i < sockets.length; i++) {
         socketids.push(sockets[i].id);
@@ -293,6 +293,8 @@ module.exports = io => {
       io.sockets.emit("update-people", { people, peopleCount });
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
+     })
+
       // let rms = Object.values(rooms);
       // rms.forEach(room => {
       //   if (_.contains(room.people, socket.id)) {
