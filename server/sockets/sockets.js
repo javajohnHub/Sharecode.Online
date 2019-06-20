@@ -274,24 +274,25 @@ module.exports = io => {
     socket.on("disconnected", () => {
       let room = rooms[people[socket.id].inroom];
       let socketids = [];
-            for (let i = 0; i < sockets.length; i++) {
-              socketids.push(sockets[i].id);
-              if ((_.contains(socketids), room.people)) {
-                sockets[i].leave(room.name);
-              }
-            }
+      for (let i = 0; i < sockets.length; i++) {
+        socketids.push(sockets[i].id);
+        if ((_.contains(socketids), room.people)) {
+          sockets[i].leave(room.name);
+        }
+      }
 
-            if ((_.contains(room.people), s.id)) {
-              for (let i = 0; i < room.people.length; i++) {
-                people[room.people[i]].inroom = null;
-              }
-            }
-            delete rooms[people[s.id].owns];
-            people[s.id].owns = null;
-            room.people = _.without(room.people, s.id); //remove people from the room:people{}collection
-            delete chatHistory[room.name]; //delete the chat history
-            sizeRooms = _.size(rooms);
-            io.sockets.emit("roomList", { rooms: rooms, count: sizeRooms });
+      if ((_.contains(room.people), s.id)) {
+        for (let i = 0; i < room.people.length; i++) {
+          people[room.people[i]].inroom = null;
+        }
+      }
+      delete rooms[people[s.id].owns];
+      people[socket.id].owns = null;
+      room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
+      peopleCount = _.size(people);
+      io.sockets.emit("update-people", { people, peopleCount });
+      let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
       // let rms = Object.values(rooms);
       // rms.forEach(room => {
       //   if (_.contains(room.people, socket.id)) {
