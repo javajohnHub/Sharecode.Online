@@ -35,11 +35,11 @@ import * as Peer from "peerjs_fork_firefox40";
       </ul>
     </div>
 
-      <div *ngFor="let room of rms">
+      <div *ngFor="let room of rms" >
         <button type="button" (click)="joinRoom(room.id)">
           Join {{ room.name }}
         </button>
-        <button type="button" (click)="leaveRoom(room.id)">
+        <button *ngIf="chosenName" type="button" (click)="leaveRoom(room.id)">
           leave {{ room.name }}
         </button>
       </div>
