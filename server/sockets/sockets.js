@@ -281,7 +281,8 @@ module.exports = io => {
             socket.id
           );
           if (room.owner === socket.id) {
-            console.log(people[socket.id].owns);
+
+            people[rooms[room.id].people[0]].owns = people[socket.id].owns
             rooms[room.id].owner = rooms[room.id].people[0];
             peopleCount = _.size(people);
             io.sockets.emit("update-people", { people, peopleCount });
