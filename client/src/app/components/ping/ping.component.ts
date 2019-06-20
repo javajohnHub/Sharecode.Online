@@ -88,12 +88,21 @@ export class PingComponent {
         this.messages.push(msg);
       });
       this.socket.on("message", msg => {
+        let scroll = false;
         this.messages.push(msg);
-        let shouldScroll = this.myScrollContainer.nativeElement.scrollTop +
-        this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight;
-        if (!shouldScroll) {
+        if (this.myScrollContainer.nativeElement.height() +
+        this.myScrollContainer.nativeElement.scrollTop >= this.myScrollContainer.nativeElement.scrollHeight) {
+          scroll = true;
+        }
+
+        if(scroll){
           this.scrollToBottom();
         }
+        // let shouldScroll = this.myScrollContainer.nativeElement.scrollTop +
+        // this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight;
+        // if (!shouldScroll) {
+        //   this.scrollToBottom();
+        // }
       });
     });
 
