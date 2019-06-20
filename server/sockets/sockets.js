@@ -46,7 +46,8 @@ module.exports = io => {
             inroom: null,
             device: data.device,
             peerId: peerId,
-            color: getRandomColor()
+            color: getRandomColor(),
+            id: socket.id
           };
           let d = new Date();
           socket.emit("admin chat", {
