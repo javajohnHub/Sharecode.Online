@@ -15,7 +15,13 @@ import * as Peer from "peerjs_fork_firefox40";
      <input type="number" [(ngModel)]="limit" />
      <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
      </div>
+     People: {{ peopleCount }}
 
+     <br />
+
+     Rooms: {{ roomCount }}
+
+     <br />
      Current name: {{chosenName}}<br/>
      Current Room {{chosenRoom}}<br/>
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
@@ -28,13 +34,7 @@ import * as Peer from "peerjs_fork_firefox40";
         </li>
       </ul>
     </div>
-      People: {{ peopleCount }}
 
-      <br />
-
-      Rooms: {{ roomCount }}
-
-      <br />
       <div *ngFor="let room of rms">
         <button type="button" (click)="joinRoom(room.id)">
           Join {{ room.name }}
@@ -160,8 +160,13 @@ export class PingComponent {
 
   leaveRoom(id) {
     this.socket.emit("leave room", id);
-    this.inRoom = false;
-    this.chosenRoom = null;
+    this.rms.forEach((room) => {
+      if(room.people.includes(this.socket.id)){
+        this.inRoom = false;
+        this.chosenRoom = null;
+      }
+    })
+
   }
   scrollToBottom(): void {
     try {
