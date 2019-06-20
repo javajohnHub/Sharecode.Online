@@ -18,7 +18,7 @@ module.exports = io => {
     socket.on("peerId", id => {
       peerId = id;
       socket.on("send name", data => {
-        let clean_name = decodeURI(sanitize.escape(data.name));
+        let clean_name = decodeURI(sanitize.escape(data.name.replace(/(<([^>]+)>)/ig,"")));
         let exists = false;
         _.find(people, key => {
           if (key.name.toLowerCase() === clean_name.toLowerCase())
@@ -82,7 +82,7 @@ module.exports = io => {
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
-        let clean_name = sanitize.escape(roomData.name);
+        let clean_name = sanitize.escape(roomData.name.replace(/(<([^>]+)>)/ig,""));
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
         room.limit = roomData.limit;
@@ -223,13 +223,12 @@ module.exports = io => {
     socket.on("leave room", id => {
       let room = rooms[id];
       if (room) {
-
         let socketids = [];
         for (let i = 0; i < sockets.length; i++) {
           socketids.push(sockets[i].id);
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
-            sockets[i].leave(room.name);
+              sockets[i].leave(room.name);
             }
           }
         }
@@ -240,14 +239,11 @@ module.exports = io => {
               if (socket.id === room.owner) {
                 people[room.people[i]].inroom = null;
               }
-
             }
           }
         }
-        // delete rooms[people[socket.id].owns];
-        // delete rooms[people[socket.id].inroom];
-         people[socket.id].owns = null;
-         people[socket.id].inroom = null;
+        people[socket.id].owns = null;
+        people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
@@ -259,7 +255,7 @@ module.exports = io => {
       let d = new Date();
       console.log(people[socket.id]);
       io.sockets.in(socket.room).emit("message", {
-        msg: decodeURI(sanitize.escape(msg)),
+        msg: decodeURI(sanitize.escape(msg.replace(/(<([^>]+)>)/ig,""))),
         color: people[socket.id].color,
         from: people[socket.id].name,
         time: d.getHours() + ":" + d.getMinutes()
@@ -274,8 +270,7 @@ module.exports = io => {
             socket.id
           );
           if (room.owner === socket.id && room.people.length > 0) {
-
-            people[rooms[room.id].people[0]].owns = people[socket.id].owns
+            people[rooms[room.id].people[0]].owns = people[socket.id].owns;
             rooms[room.id].owner = rooms[room.id].people[0];
 
             peopleCount = _.size(people);
@@ -289,11 +284,11 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
-            console.log(room.people.length)
-            if(room.people.length === 0){
-              delete rooms[room.id]
+            console.log(room.people.length);
+            if (room.people.length === 0) {
+              delete rooms[room.id];
               let roomCount = _.size(rooms);
-      io.sockets.emit("update-rooms", { rooms, roomCount });
+              io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
@@ -314,8 +309,7 @@ module.exports = io => {
             socket.id
           );
           if (room.owner === socket.id && room.people.length > 0) {
-
-            people[rooms[room.id].people[0]].owns = people[socket.id].owns
+            people[rooms[room.id].people[0]].owns = people[socket.id].owns;
             rooms[room.id].owner = rooms[room.id].people[0];
             peopleCount = _.size(people);
             io.sockets.emit("update-people", { people, peopleCount });
@@ -328,11 +322,11 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
-            console.log(room.people.length)
-            if(room.people.length === 0){
-              delete rooms[room.id]
+            console.log(room.people.length);
+            if (room.people.length === 0) {
+              delete rooms[room.id];
               let roomCount = _.size(rooms);
-      io.sockets.emit("update-rooms", { rooms, roomCount });
+              io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
