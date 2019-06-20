@@ -223,18 +223,6 @@ module.exports = io => {
     socket.on("leave room", id => {
       let room = rooms[id];
       if (room) {
-        if (socket.id === room.owner) {
-          let d = new Date();
-          io.sockets.in(socket.room).emit("admin chat", {
-            from: "Admin",
-            msg:
-              "The owner (" +
-              people[socket.id].name +
-              ") has left the room. The room is removed and you have been disconnected from it as well.",
-            color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
-          });
-        }
 
         let socketids = [];
         for (let i = 0; i < sockets.length; i++) {
