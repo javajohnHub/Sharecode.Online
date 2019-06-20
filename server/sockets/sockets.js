@@ -18,7 +18,7 @@ module.exports = io => {
     socket.on("peerId", id => {
       peerId = id;
       socket.on("send name", data => {
-        let clean_name = decodeURI(sanitize.escape(data.name.replace(/(<([^>]+)>)/ig,"")));
+        let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
         let exists = false;
         _.find(people, key => {
           if (key.name.toLowerCase() === clean_name.toLowerCase())
@@ -82,7 +82,7 @@ module.exports = io => {
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
-        let clean_name = sanitize.escape(roomData.name.replace(/(<([^>]+)>)/ig,""));
+        let clean_name = decodeURI(roomData.name.replace(/(<([^>]+)>)/ig,""))
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
         room.limit = roomData.limit;
@@ -255,7 +255,7 @@ module.exports = io => {
       let d = new Date();
       console.log(people[socket.id]);
       io.sockets.in(socket.room).emit("message", {
-        msg: decodeURI(sanitize.escape(msg.replace(/(<([^>]+)>)/ig,""))),
+        msg: decodeURI(msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[socket.id].name,
         time: d.getHours() + ":" + d.getMinutes()
