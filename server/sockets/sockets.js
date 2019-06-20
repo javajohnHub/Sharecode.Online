@@ -281,14 +281,15 @@ module.exports = io => {
             room.people,
             socket.id
           );
-          if (room.owner == socket.id) {
-            people[socket.id].owns = room.id;
+          if (room.owner === socket.id) {
+
            rooms[room.id].owner = rooms[room.id].people[0]
           } else {
             if (_.contains(room.people, socket.id)) {
               let personIndex = room.people.indexOf(socket.id);
               room.people.splice(personIndex, 1);
               socket.leave(room.name);
+              people[socket.id].owns = room.id;
             }
             delete people[socket.id];
           }
