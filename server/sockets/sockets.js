@@ -300,7 +300,7 @@ module.exports = io => {
         }
       });
 
-      delete people[socket.id];
+      //delete people[socket.id];
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
       let roomCount = _.size(rooms);
