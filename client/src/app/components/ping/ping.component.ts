@@ -18,7 +18,7 @@ import * as Peer from "peerjs_fork_firefox40";
      People: {{ peopleCount }}
 
      <br />
-<div *ngFor="let peep of peeps">{{peep}}</div>
+<div *ngFor="let peep of peeps">{{peep | json}}</div>
      Rooms: {{ roomCount }}
 
      <br />
