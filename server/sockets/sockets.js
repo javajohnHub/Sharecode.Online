@@ -280,7 +280,7 @@ module.exports = io => {
             socket.id
           );
           if (room.owner == socket.id) {
-            delete rooms[room.id];
+            rooms[room.id].people[0].owns = room.id;
           } else {
             let socketids = [];
             for (let i = 0; i < sockets.length; i++) {
