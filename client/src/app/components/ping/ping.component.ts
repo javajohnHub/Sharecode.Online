@@ -159,12 +159,12 @@ export class PingComponent {
   }
 
   leaveRoom(id) {
-    console.log(this.rooms[id].people, this.socket.socket.id, this.rooms[id].people.includes(this.socket.id))
+    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.socket.id))
     this.socket.emit("leave room", id);
-    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.id))
+    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.socket.id))
     this.rms.forEach((room) => {
 
-      if(room.people.includes(this.socket.id)){
+      if(room.people.includes(this.socket.socket.id)){
         this.inRoom = false;
         this.chosenRoom = null;
       }
