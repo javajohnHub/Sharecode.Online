@@ -284,6 +284,7 @@ module.exports = io => {
 
             people[rooms[room.id].people[0]].owns = people[socket.id].owns
             rooms[room.id].owner = rooms[room.id].people[0];
+
             peopleCount = _.size(people);
             io.sockets.emit("update-people", { people, peopleCount });
             let roomCount = _.size(rooms);
@@ -295,6 +296,9 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
+            if(room.people.length == 0){
+              delete room
+            }
           }
         }
       });
@@ -328,6 +332,9 @@ module.exports = io => {
               socket.leave(room.name);
             }
             delete people[socket.id];
+            if(room.people.length == 0){
+              delete room
+            }
           }
         }
       });
