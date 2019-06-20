@@ -160,7 +160,9 @@ export class PingComponent {
 
   leaveRoom(id) {
     this.socket.emit("leave room", id);
+    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.id))
     this.rms.forEach((room) => {
+
       if(room.people.includes(this.socket.id)){
         this.inRoom = false;
         this.chosenRoom = null;
