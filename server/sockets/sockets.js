@@ -305,7 +305,39 @@ module.exports = io => {
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
-    socket.on("disconnect", () => {});
+    socket.on("disconnect", () => {
+      let rms = Object.values(rooms);
+      rms.forEach(room => {
+        if (_.contains(room.people, socket.id)) {
+          /*room.people[0].owns = */ room.people = _.without(
+            room.people,
+            socket.id
+          );
+          if (room.owner === socket.id && room.people.length > 0) {
+
+            people[rooms[room.id].people[0]].owns = people[socket.id].owns
+            rooms[room.id].owner = rooms[room.id].people[0];
+            peopleCount = _.size(people);
+            io.sockets.emit("update-people", { people, peopleCount });
+            let roomCount = _.size(rooms);
+            io.sockets.emit("update-rooms", { rooms, roomCount });
+          } else {
+            if (_.contains(room.people, socket.id)) {
+              let personIndex = room.people.indexOf(socket.id);
+              room.people.splice(personIndex, 1);
+              socket.leave(room.name);
+            }
+            delete people[socket.id];
+          }
+        }
+      });
+
+      delete people[socket.id];
+      peopleCount = _.size(people);
+      io.sockets.emit("update-people", { people, peopleCount });
+      let roomCount = _.size(rooms);
+      io.sockets.emit("update-rooms", { rooms, roomCount });
+    });
   });
 };
 
