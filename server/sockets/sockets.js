@@ -282,7 +282,7 @@ module.exports = io => {
           if (room.owner == socket.id) {
             console.log(people[rooms[room.id].people[0]])
             people[rooms[room.id].people[0]].owns = room.id;
-            rooms[room.id].owner = people[socket.id]
+            rooms[room.id].owner = socket.id
           } else {
             let socketids = [];
             for (let i = 0; i < sockets.length; i++) {
