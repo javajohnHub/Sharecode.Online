@@ -9,8 +9,8 @@ import * as Peer from "peerjs_fork_firefox40";
       <input [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
       <input type="text" [(ngModel)]="room" /><br/>
-      <input type="number" [disabled]="!room"[(ngModel)]="limit" />
-      <button type="button" (click)="sendRoom()">Create room</button><br />
+      <input type="number" [(ngModel)]="limit" />
+      <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
       <div *ngIf="messages.length > 0">
       <ul>
         <li *ngFor="let msg of messages">
