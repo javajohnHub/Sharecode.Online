@@ -83,7 +83,8 @@ module.exports = io => {
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
-        let clean_name = decodeURI(roomData.name.replace(/(<([^>]+)>)/ig,""))
+        if(roomData.name.length > 0){
+          let clean_name = decodeURI(roomData.name.replace(/(<([^>]+)>)/ig,""))
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
         room.limit = roomData.limit;
@@ -113,6 +114,8 @@ module.exports = io => {
           time: d.getHours() + ":" + d.getMinutes()
         });
       }
+        }
+
     });
 
     socket.on("remove room", () => {
