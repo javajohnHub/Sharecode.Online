@@ -59,7 +59,7 @@ module.exports = io => {
             from: "Admin",
             msg: people[socket.id].name + " is online.",
             color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+            time: new Date().toLocaleTimeString()
           });
           peopleCount = _.size(people);
           io.sockets.emit("update-people", { people, peopleCount });
