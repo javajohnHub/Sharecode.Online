@@ -46,7 +46,7 @@
 
     </div>
     <input [(ngModel)]="msg" />
-    <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
+    <button type="button" [disabled]="!nameFlag && !msg" (click)="sendMsg()">Send Msg</button><br />
 
 
     <br />
