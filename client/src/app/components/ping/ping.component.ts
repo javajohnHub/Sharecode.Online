@@ -6,6 +6,9 @@ import * as Peer from "peerjs_fork_firefox40";
   template: `
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
+    <h2>
+    Current name: {{chosenName}} Current Room {{chosenRoom}}<br/>
+    </h2>
     <div *ngIf="!nameFlag">
       <input [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
@@ -27,8 +30,7 @@ import * as Peer from "peerjs_fork_firefox40";
 
      <br />
      <div *ngFor="let rm of rms">{{rm.name}}</div>
-     Current name: {{chosenName}}<br/>
-     Current Room {{chosenRoom}}<br/>
+
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
       <ul>
         <li *ngFor="let msg of messages">
