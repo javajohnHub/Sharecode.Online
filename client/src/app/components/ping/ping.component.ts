@@ -26,7 +26,7 @@ import * as Peer from "peerjs_fork_firefox40";
      Rooms: {{ roomCount }}
 
      <br />
-     <div *ngFor="let rm of rms">{{rm.people | json}}</div>
+     <div *ngFor="let rm of rms">{{rm.name}}</div>
      Current name: {{chosenName}}<br/>
      Current Room {{chosenRoom}}<br/>
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
