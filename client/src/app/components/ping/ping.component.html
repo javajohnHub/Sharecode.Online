@@ -4,11 +4,11 @@
       <span style="color: lightblue">
         Current name:</span> {{chosenName}} | <span style="color: lightblue">Current Room: </span>{{chosenRoom}}<br />
     </h2>
-    <div *ngIf="!nameFlag">
+    <div>
       <input type="text" placeholder="Name" [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
     </div>
-    <div *ngIf="!inRoom">
+    <div>
       <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />
       Limit: <input type="number" [(ngModel)]="limit" /><br/>
       <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
