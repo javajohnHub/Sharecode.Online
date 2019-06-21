@@ -25,8 +25,11 @@
   <span style="color: lightblue">Rooms:</span> {{ roomCount }}
 
   <br />
-  <div *ngFor="let rm of rms">{{rm.name}}</div>
-
+  <ng-container *ngIf="!inRoom">
+  <div *ngFor="let rm of rms" ><button type="button" (click)="joinRoom(room.id)">
+    Join {{ rm.name }}
+  </button></div>
+</ng-container>
   <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
     <ul>
       <li *ngFor="let msg of messages">
