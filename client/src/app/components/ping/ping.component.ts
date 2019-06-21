@@ -7,7 +7,7 @@ import * as Peer from "peerjs_fork_firefox40";
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
     <h2>
-    Current name: {{chosenName}} Current Room {{chosenRoom}}<br/>
+    <span style="color: rgb(20,20,20)">Current name:</span> {{chosenName}}<span style="color: rgb(20,20,20)"> Current Room: </span>{{chosenRoom}}<br/>
     </h2>
     <div *ngIf="!nameFlag">
       <input [(ngModel)]="name" />
