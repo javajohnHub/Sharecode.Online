@@ -31,7 +31,7 @@ import * as Peer from "peerjs_fork_firefox40";
 
     <br />
     <ng-container *ngIf="!inRoom" >
-    <div *ngFor="let rm of rms" ><button type="button" (click)="joinRoom(rm.id)">
+    <div *ngFor="let rm of rms" ><button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
       Join {{ rm.name }}
     </button></div>
   </ng-container>
