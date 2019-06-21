@@ -83,9 +83,6 @@ module.exports = io => {
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
-        if(roomData.name.length > 0){
-
-        }
         let clean_name = decodeURI(roomData.name.replace(/(<([^>]+)>)/ig,""))
         let room = new Room(clean_name, id, socket.id);
         rooms[id] = room;
