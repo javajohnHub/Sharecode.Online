@@ -257,14 +257,16 @@ module.exports = io => {
       }
     });
     socket.on("message", msg => {
-      let d = new Date();
-      console.log(people[socket.id]);
-      io.sockets.in(socket.room).emit("message", {
-        msg: decodeURI(msg.replace(/(<([^>]+)>)/ig,"")),
-        color: people[socket.id].color,
-        from: people[socket.id].name,
-        time: d.getHours() + ":" + d.getMinutes()
-      });
+      if(msg){
+        let d = new Date();
+        console.log(people[socket.id]);
+        io.sockets.in(socket.room).emit("message", {
+          msg: decodeURI(msg.replace(/(<([^>]+)>)/ig,"")),
+          color: people[socket.id].color,
+          from: people[socket.id].name,
+          time: d.getHours() + ":" + d.getMinutes()
+        });
+      }
     });
     socket.on("disconnected", () => {
       let rms = Object.values(rooms);
