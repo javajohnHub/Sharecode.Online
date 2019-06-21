@@ -7,7 +7,7 @@ module.exports = io => {
   let people = {};
   let rooms = {};
   let sockets = [];
-  let adminColor = "rgb(100,50,60)";
+  let adminColor = "rgb(255,255,255)";
   let peerId;
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
