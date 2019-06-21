@@ -1,8 +1,8 @@
 <ng-template #loading>Loading Peer Id...</ng-template>
 <div *ngIf="peerId; else loading">
   <h2>
-    <span style="color: 'rgb(60,20,20)'">Current name:</span> {{chosenName}}<span style="color: 'rgb(20,20,20)'">
-      Current Room: </span>{{chosenRoom}}<br />
+    <span style="color: lightcoral">
+      Current name:</span> {{chosenName}} | <span style="color: lightcoral">Current Room: </span>{{chosenRoom}}<br />
   </h2>
   <div *ngIf="!nameFlag">
     <input [(ngModel)]="name" />
