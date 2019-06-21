@@ -49,12 +49,11 @@ module.exports = io => {
             color: getRandomColor(),
             id: socket.id
           };
-          let d = new Date();
           socket.emit("admin chat", {
             msg: "You have connected to the server.",
             from: "Admin",
             color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+            time: new Date().toLocaleTimeString()
           });
           io.sockets.emit("admin chat", {
             from: "Admin",
@@ -73,13 +72,12 @@ module.exports = io => {
 
     socket.on("create room", roomData => {
       if (people[socket.id] && people[socket.id].inroom) {
-        let d = new Date();
         socket.emit("admin chat", {
           from: "Admin",
           msg:
             "You are already in a room. Please leave it first to create your own.",
           color: adminColor,
-          time: d.getHours() + ":" + d.getMinutes()
+          time: new Date().toLocaleTimeString()
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
@@ -92,12 +90,12 @@ module.exports = io => {
         people[socket.id].owns = id;
         people[socket.id].inroom = id;
         room.addPerson(socket.id);
-        let d = new Date();
+
         socket.emit("admin chat", {
           from: "Admin",
           msg: "Welcome to " + room.name,
           color: adminColor,
-          time: d.getHours() + ":" + d.getMinutes()
+          time: new Date().toLocaleTimeString()
         });
 
         peopleCount = _.size(people);
@@ -105,12 +103,12 @@ module.exports = io => {
         roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
       } else {
-        let d = new Date();
+
         socket.emit("admin chat", {
           from: "Admin",
           msg: "You are not logged in",
           color: adminColor,
-          time: d.getHours() + ":" + d.getMinutes()
+          time: new Date().toLocaleTimeString()
         });
       }
     });
@@ -123,12 +121,12 @@ module.exports = io => {
           people[socket.id].owns = null;
           people[socket.id].inroom = null;
         } else {
-          let d = new Date();
+
           socket.emit("admin chat", {
             from: "Admin",
             msg: "Only the owner can remove a room.",
             color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+            time: new Date().toLocaleTimeString()
           });
         }
       });
@@ -141,26 +139,26 @@ module.exports = io => {
       if (typeof people[socket.id] !== "undefined") {
         let room = rooms[id];
         if (socket.id === room.owner) {
-          let d = new Date();
+
           socket.emit("admin chat", {
             from: "Admin",
             msg:
               "You are the owner of this room and you have already been joined.",
             color: adminColor,
-            time: d.getHours() + ":" + d.getMinutes()
+            time: new Date().toLocaleTimeString()
           });
         } else {
           if (_.contains(room.people, socket.id)) {
-            let d = new Date();
+
             socket.emit("admin chat", {
               from: "Admin",
               msg: "You have already joined this room.",
               color: adminColor,
-              time: d.getHours() + ":" + d.getMinutes()
+              time: new Date().toLocaleTimeString()
             });
           } else {
             if (people[socket.id].inroom !== null) {
-              let d = new Date();
+
               socket.emit("admin chat", {
                 from: "Admin",
                 msg:
@@ -168,35 +166,35 @@ module.exports = io => {
                   decodeURI(rooms[people[socket.id].name]) +
                   "), please leave it first to join another room.",
                 color: adminColor,
-                time: d.getHours() + ":" + d.getMinutes()
+                time: new Date().toLocaleTimeString()
               });
             }
             if (room.people.length < room.limit) {
-              let d = new Date();
+
               user = people[socket.id];
               io.sockets.in(socket.room).emit("admin chat", {
                 from: "Admin",
                 msg: user.name + " has connected to " + decodeURI(room.name),
                 color: adminColor,
-                time: d.getHours() + ":" + d.getMinutes()
+                time: new Date().toLocaleTimeString()
               });
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "Welcome to " + decodeURI(room.name) + ".",
                 color: adminColor,
-                time: d.getHours() + ":" + d.getMinutes()
+                time: new Date().toLocaleTimeString()
               });
               room.addPerson(socket.id);
               people[socket.id].inroom = id;
               socket.room = room.name;
               socket.join(socket.room);
             } else {
-              let d = new Date();
+
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "The room is full.",
                 color: adminColor,
-                time: d.getHours() + ":" + d.getMinutes()
+                time: new Date().toLocaleTimeString()
               });
 
               people[socket.id].inroom = null;
@@ -209,12 +207,12 @@ module.exports = io => {
         let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
       } else {
-        let d = new Date();
+
         socket.emit("admin chat", {
           from: "Admin",
           msg: "Please enter a valid name first.",
           color: adminColor,
-          time: d.getHours() + ":" + d.getMinutes()
+          time: new Date().toLocaleTimeString()
         });
       }
       let roomCount = _.size(rooms);
@@ -247,13 +245,12 @@ module.exports = io => {
       }
     });
     socket.on("message", msg => {
-      let d = new Date();
       console.log(people[socket.id]);
       io.sockets.in(socket.room).emit("message", {
         msg: decodeURI(msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[socket.id].name,
-        time: d.getHours() + ":" + d.getMinutes()
+        time: new Date().toLocaleTimeString()
       });
     });
     socket.on("disconnected", () => {
