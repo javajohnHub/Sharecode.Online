@@ -10,7 +10,7 @@ import * as Peer from "peerjs_fork_firefox40";
         Current name:</span> {{chosenName}} | <span style="color: lightblue">Current Room: </span>{{chosenRoom}}<br />
     </h2>
     <div *ngIf="!nameFlag">
-      <input [(ngModel)]="name" />
+      <input type="text" placeholder="Name" [(ngModel)]="name" />
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
     </div>
     <div *ngIf="!inRoom">
@@ -35,8 +35,8 @@ import * as Peer from "peerjs_fork_firefox40";
       Join {{ rm.name }}
     </button></div>
   </ng-container>
-  <ng-container *ngIf="person.inroom === room.id">
-    <div *ngFor="let rm of rms" ><button type="button" (click)="leaveRoom(rm.id)">
+  <ng-container *ngFor="let rm of rms" >
+    <div *ngIf="person.inroom === rm.id" ><button type="button" (click)="leaveRoom(rm.id)">
       Leave {{ rm.name }}
     </button></div>
   </ng-container>
