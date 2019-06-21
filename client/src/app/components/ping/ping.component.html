@@ -1,0 +1,55 @@
+<ng-template #loading>Loading Peer Id...</ng-template>
+<div *ngIf="peerId; else loading">
+  <h2>
+    <span style="color: 'rgb(60,20,20)'">Current name:</span> {{chosenName}}<span style="color: 'rgb(20,20,20)'">
+      Current Room: </span>{{chosenRoom}}<br />
+  </h2>
+  <div *ngIf="!nameFlag">
+    <input [(ngModel)]="name" />
+    <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
+  </div>
+  <div *ngIf="!inRoom">
+    <input type="text" [(ngModel)]="room" /><br />
+    <input type="number" [(ngModel)]="limit" />
+    <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
+  </div>
+  People: {{ peopleCount }}
+
+  <br />
+  <div *ngFor="let peep of peeps">
+    <div *ngFor="let p of [peep]">
+      {{p.name}}
+    </div>
+  </div>
+  Rooms: {{ roomCount }}
+
+  <br />
+  <div *ngFor="let rm of rms">{{rm.name}}</div>
+
+  <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
+    <ul>
+      <li *ngFor="let msg of messages">
+        <span [style.color]="msg.color">{{ msg.time }} {{ msg.from }}:</span>
+        {{ msg.msg }}
+      </li>
+    </ul>
+
+  </div>
+  <input [(ngModel)]="msg" />
+  <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
+  <div *ngFor="let room of rms">
+    <ng-container *ngIf="!inRoom">
+      <button type="button" (click)="joinRoom(room.id)">
+        Join {{ room.name }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="person.inroom === room.id">
+      <button *ngIf="chosenName" type="button" (click)="leaveRoom(room.id)">
+        leave {{ room.name }}
+      </button>
+    </ng-container>
+  </div>
+
+  <br />
+
+</div>
