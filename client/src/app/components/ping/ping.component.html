@@ -1,8 +1,8 @@
 <ng-template #loading>Loading Peer Id...</ng-template>
 <div *ngIf="peerId; else loading">
   <h2>
-    <span style="color: lightcoral">
-      Current name:</span> {{chosenName}} | <span style="color: lightcoral">Current Room: </span>{{chosenRoom}}<br />
+    <span style="color: lightblue">
+      Current name:</span> {{chosenName}} | <span style="color: lightblue">Current Room: </span>{{chosenRoom}}<br />
   </h2>
   <div *ngIf="!nameFlag">
     <input [(ngModel)]="name" />
@@ -13,7 +13,7 @@
     <input type="number" [(ngModel)]="limit" />
     <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
   </div>
-  People: {{ peopleCount }}
+  <span style="color: lightblue">People:</span> {{ peopleCount }}
 
   <br />
   <div *ngFor="let peep of peeps">
@@ -21,7 +21,8 @@
       {{p.name}}
     </div>
   </div>
-  Rooms: {{ roomCount }}
+  <hr/>
+  <span style="color: lightblue">Rooms:</span> {{ roomCount }}
 
   <br />
   <div *ngFor="let rm of rms">{{rm.name}}</div>
@@ -29,8 +30,8 @@
   <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
     <ul>
       <li *ngFor="let msg of messages">
-        <span [style.color]="msg.color">{{ msg.time }} {{ msg.from }}:</span>
-        {{ msg.msg }}
+        {{ msg.time }} {{ msg.from }}:
+        <span [style.color]="msg.color">{{ msg.msg }}</span>
       </li>
     </ul>
 
