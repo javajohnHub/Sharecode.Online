@@ -39,8 +39,9 @@
     <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
       <ul>
         <li *ngFor="let msg of messages">
-          <span [style.color]="'white'">{{ msg.time }} {{ msg.from }}:</span>
+          <span [style.color]="'white'"> {{ msg.from }}:</span>
           <span [style.color]="msg.color">{{ msg.msg }}</span>
+         <span style="float: right;">{{ msg.time }}</span>
         </li>
       </ul>
 
