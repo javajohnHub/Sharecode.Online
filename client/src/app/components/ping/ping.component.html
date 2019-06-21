@@ -25,11 +25,17 @@
   <span style="color: lightblue">Rooms:</span> {{ roomCount }}
 
   <br />
-  <ng-container *ngIf="!inRoom">
-  <div *ngFor="let rm of rms" ><button type="button" (click)="joinRoom(room.id)">
+  <ng-container *ngIf="!inRoom" >
+  <div *ngFor="let rm of rms" ><button type="button" (click)="joinRoom(rm.id)">
     Join {{ rm.name }}
   </button></div>
 </ng-container>
+<ng-container *ngIf="person.inroom === room.id">
+  <div *ngFor="let rm of rms" ><button type="button" (click)="leaveRoom(rm.id)">
+    Leave {{ rm.name }}
+  </button></div>
+</ng-container>
+
   <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
     <ul>
       <li *ngFor="let msg of messages">
@@ -41,18 +47,7 @@
   </div>
   <input [(ngModel)]="msg" />
   <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
-  <div *ngFor="let room of rms">
-    <ng-container *ngIf="!inRoom">
-      <button type="button" (click)="joinRoom(room.id)">
-        Join {{ room.name }}
-      </button>
-    </ng-container>
-    <ng-container *ngIf="person.inroom === room.id">
-      <button *ngIf="chosenName" type="button" (click)="leaveRoom(room.id)">
-        leave {{ room.name }}
-      </button>
-    </ng-container>
-  </div>
+
 
   <br />
 
