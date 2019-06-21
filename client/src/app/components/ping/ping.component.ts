@@ -3,60 +3,7 @@ import { SocketService } from "../../shared/socket.service";
 import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: "app-ping",
-  template: `<ng-template #loading>Loading Peer Id...</ng-template>
-  <div *ngIf="peerId; else loading">
-    <h2>
-      <span style="color: lightblue">
-        Current name:</span> {{chosenName}} | <span style="color: lightblue">Current Room: </span>{{chosenRoom}}<br />
-    </h2>
-    <div *ngIf="!nameFlag">
-      <input type="text" placeholder="Name" [(ngModel)]="name" />
-      <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
-    </div>
-    <div *ngIf="!inRoom">
-      <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />
-      Limit: <input type="number" [(ngModel)]="limit" /><br/>
-      <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
-    </div>
-    <span style="color: lightblue">People:</span> {{ peopleCount }}
-
-    <br />
-    <div *ngFor="let peep of peeps">
-      <div *ngFor="let p of [peep]">
-        {{p.name}}
-      </div>
-    </div>
-    <hr/>
-    <span style="color: lightblue">Rooms:</span> {{ roomCount }}
-
-    <br />
-    <ng-container *ngIf="!inRoom" >
-    <div *ngFor="let rm of rms" ><button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
-      Join {{ rm.name }}
-    </button></div>
-  </ng-container>
-  <ng-container *ngFor="let rm of rms" >
-    <div *ngIf="person.inroom === rm.id" ><button type="button" (click)="leaveRoom(rm.id)">
-      Leave {{ rm.name }}
-    </button></div>
-  </ng-container>
-
-    <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
-      <ul>
-        <li *ngFor="let msg of messages">
-          {{ msg.time }} {{ msg.from }}:
-          <span [style.color]="msg.color">{{ msg.msg }}</span>
-        </li>
-      </ul>
-
-    </div>
-    <input [(ngModel)]="msg" />
-    <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
-
-
-    <br />
-
-  </div>`
+  templateUrl: `./ping.component.html`
 })
 export class PingComponent {
   socket: any;
