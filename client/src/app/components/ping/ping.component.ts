@@ -7,7 +7,7 @@ import * as Peer from "peerjs_fork_firefox40";
     <ng-template #loading>Loading Peer Id...</ng-template>
     <div *ngIf="peerId; else loading">
     <h2>
-    <span style="color: rgb(20,20,20)">Current name:</span> {{chosenName}}<span style="color: rgb(20,20,20)"> Current Room: </span>{{chosenRoom}}<br/>
+    <span style="color: 'rgb(60,20,20)'">Current name:</span> {{chosenName}}<span style="color: 'rgb(20,20,20)'"> Current Room: </span>{{chosenRoom}}<br/>
     </h2>
     <div *ngIf="!nameFlag">
       <input [(ngModel)]="name" />
@@ -40,19 +40,23 @@ import * as Peer from "peerjs_fork_firefox40";
           {{ msg.msg }}
         </li>
       </ul>
+      <input [(ngModel)]="msg" />
+      <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
     </div>
 
       <div *ngFor="let room of rms" >
+      <ng-container *ngIf="person.inroom === room.id">
         <button type="button" (click)="joinRoom(room.id)">
           Join {{ room.name }}
         </button>
         <button *ngIf="chosenName" type="button" (click)="leaveRoom(room.id)">
           leave {{ room.name }}
         </button>
+        </ng-container>
       </div>
+
       <br />
-      <input [(ngModel)]="msg" />
-      <button type="button" [disabled]="!msg && !nameFlag" (click)="sendMsg()">Send Msg</button><br />
+
     </div>
   `
 })
