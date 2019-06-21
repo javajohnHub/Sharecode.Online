@@ -18,7 +18,8 @@ module.exports = io => {
     socket.on("peerId", id => {
       peerId = id;
       socket.on("send name", data => {
-        if(data.name.length > 0){
+        console.log(data)
+        if(data.name !== ""){
           let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
           let exists = false;
           _.find(people, key => {
