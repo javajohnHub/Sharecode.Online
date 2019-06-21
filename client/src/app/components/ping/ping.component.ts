@@ -174,7 +174,7 @@ export class PingComponent {
         this.chosenRoom = null;
       }
     })
-
+    this.messages = [];
   }
   scrollToBottom(): void {
     try {
