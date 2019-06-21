@@ -103,6 +103,7 @@ export class PingComponent {
 
   sendMsg() {
     this.socket.emit("message", this.msg);
+    this.msg = "";
   }
   removeRoom() {
     this.socket.emit("remove room");
