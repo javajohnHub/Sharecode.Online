@@ -229,7 +229,7 @@ module.exports = io => {
           socketids.push(sockets[i].id);
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
-              sockets[socket.id].leave(room.name);
+              sockets[i].leave(room.name);
             }
           }
         }
@@ -238,7 +238,7 @@ module.exports = io => {
           for (let i = 0; i < room.people.length; i++) {
             if (people[room.people[i]]) {
               if (socket.id === room.owner) {
-                people[room.people[i]].inroom = null;
+                people[room.people[socket.id]].inroom = null;
               }
             }
           }
