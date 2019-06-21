@@ -14,8 +14,8 @@ import * as Peer from "peerjs_fork_firefox40";
       <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
     </div>
     <div *ngIf="!inRoom">
-      <input type="text" [(ngModel)]="room" /><br />
-      <input type="number" [(ngModel)]="limit" />
+      <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />
+      Limit: <input type="number" [(ngModel)]="limit" /><br/>
       <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
     </div>
     <span style="color: lightblue">People:</span> {{ peopleCount }}
