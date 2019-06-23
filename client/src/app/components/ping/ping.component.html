@@ -28,13 +28,6 @@
       <div *ngFor="let rm of rms" ><button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
         Join {{ rm.name }}
       </button>
-      <div *ngFor="let people of rm.people">
-          <div *ngFor="let peep of peeps">
-              <div *ngFor="let p of [peep]">
-                <div *ngIf="p.id === people">{{p.name}}</div>
-              </div>
-            </div>
-        </div>
     </div>
     </ng-container>
     <ng-container *ngFor="let rm of rms" >
