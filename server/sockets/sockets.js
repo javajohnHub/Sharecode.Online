@@ -222,6 +222,7 @@ module.exports = io => {
       let room = rooms[id];
       if (room) {
         let socketids = [];
+        rooms[id].owner = room.people[0]
         for (let i = 0; i < sockets.length; i++) {
           socketids.push(sockets[i].id);
           if ((_.contains(socketids), room.people)) {
@@ -229,7 +230,7 @@ module.exports = io => {
               sockets[i].leave(room.name);
               people[socket.id].owns = null;
               people[socket.id].inroom = null;
-              rooms[id].owner = room.people[0]
+
               peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
