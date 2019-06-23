@@ -228,13 +228,6 @@ module.exports = io => {
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
               sockets[i].leave(room.name);
-              people[socket.id].owns = null;
-              people[socket.id].inroom = null;
-
-              peopleCount = _.size(people);
-        io.sockets.emit("update-people", { people, peopleCount });
-        let roomCount = _.size(rooms);
-        io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
