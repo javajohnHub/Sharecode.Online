@@ -1,6 +1,5 @@
 import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
-import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: "app-ping",
   templateUrl: `./ping.component.html`
@@ -31,37 +30,20 @@ export class PingComponent {
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
-    this.peer = new Peer({
-      host: "sharecode.online",
-      port: "9000",
-      path: "/",
-      secure: true,
-      debug: 3
+    this.socket.on("admin chat", msg => {
+      this.messages.push(msg);
     });
-    this.peer.on("open", () => {
-      this.peerId = this.peer.id;
-      this.socket.emit("peerId", this.peer.id);
+    this.socket.on("message", msg => {
+      this.messages.push(msg);
 
-      this.socket.on("exists", proposedName => {
-        this.name = proposedName.proposedName;
-        alert("name exists try " + this.name);
-      });
-
-      this.socket.on("admin chat", msg => {
-        this.messages.push(msg);
-      });
-      this.socket.on("message", msg => {
-        this.messages.push(msg);
-
-        let shouldScroll = this.myScrollContainer.nativeElement.scrollTop +
-        this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight;
-        if (!shouldScroll) {
-          this.scrollToBottom();
-        }
-      });
-
+      let shouldScroll =
+        this.myScrollContainer.nativeElement.scrollTop +
+          this.myScrollContainer.nativeElement.clientHeight ===
+        this.myScrollContainer.nativeElement.scrollHeight;
+      if (!shouldScroll) {
+        this.scrollToBottom();
+      }
     });
-
     this.socket.on("update-people", people => {
       this.people = people.people;
       this.peopleCount = people.peopleCount;
@@ -80,20 +62,6 @@ export class PingComponent {
   @HostListener("window:beforeunload", ["$event"])
   unloadHandler(event: Event) {
     this.socket.emit("disconnected");
-  }
-
-  sendName() {
-    this.device = "desktop";
-    if (
-      navigator.userAgent.match(
-        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i
-      )
-    ) {
-      this.device = "mobile";
-    }
-    this.socket.emit("send name", { name: this.name, device: this.device });
-    this.nameFlag = true;
-    this.chosenName = this.name;
   }
 
   sendRoom() {
