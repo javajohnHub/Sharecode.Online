@@ -19,9 +19,16 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-          {{p.name}}
+        <div (click)="toggleMsg()">{{p.name}}</div>
+        <div *ngIf="whisperVis">
+            <input type="text" [(ngModel)]="whisper"/>
+            <button type="button" (click)="sendWhisper(p.id)">
+                Whisper
+              </button>
+          </div>
         </div>
       </div>
+
       <hr/>
       <span style="color: lightblue">Rooms:</span> {{ roomCount }}
       <ng-container *ngIf="!inRoom">

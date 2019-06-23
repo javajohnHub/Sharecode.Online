@@ -261,6 +261,15 @@ module.exports = io => {
         time: new Date().toLocaleTimeString()
       });
     });
+
+    socket.on("whisper", data => {
+      io.sockets.connected[data.id].emit("whisper", {
+        msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
+        color: people[socket.id].color,
+        from: people[socket.id].name,
+        time: new Date().toLocaleTimeString()
+      });
+    });
     socket.on("disconnected", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {

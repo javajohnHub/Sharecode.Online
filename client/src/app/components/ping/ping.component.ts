@@ -28,6 +28,8 @@ export class PingComponent {
   inRoom = false;
   chosenName;
   chosenRoom;
+  whisperVis = false;
+  whisper;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
@@ -59,6 +61,17 @@ export class PingComponent {
           this.scrollToBottom();
         }
       });
+
+      this.socket.on("whisper", msg => {
+        this.messages.push(msg);
+
+        let shouldScroll = this.myScrollContainer.nativeElement.scrollTop +
+        this.myScrollContainer.nativeElement.clientHeight === this.myScrollContainer.nativeElement.scrollHeight;
+        if (!shouldScroll) {
+          this.scrollToBottom();
+        }
+      });
+
     });
 
     this.socket.on("update-people", people => {
@@ -128,6 +141,14 @@ export class PingComponent {
     })
     this.messages = [];
   }
+toggleMsg(){
+  this.whisperVis = !this.whisperVis;
+}
+
+sendWhisper(id){
+  this.socket.emit("mwhisper", {msg: this.whisper, id});
+    this.msg = "";
+}
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
