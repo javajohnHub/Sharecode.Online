@@ -263,7 +263,7 @@ module.exports = io => {
     });
 
     socket.on("whisper", data => {
-      console.log(data,  io.sockets.connected[data.id])
+      console.log(data)
       io.sockets.connected[data.id].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
