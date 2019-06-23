@@ -32,6 +32,7 @@ export class PingComponent {
   whispers;
   whisper;
   toName;
+  chosenDm;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
@@ -77,7 +78,14 @@ export class PingComponent {
 
   whisperBox(p){
     console.log(p)
+    this.toName = p.name;
+    this.chosenDm = p;
     this.whisperBoxVis = true;
+  }
+  sendWhisper(){
+    console.log('sending', this.chosenDm, this.whisper)
+    this.socket.emit("whisper", {msg: this.msg, id: this.chosenDm.id});
+    this.msg = "";
   }
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
