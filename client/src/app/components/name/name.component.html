@@ -1,3 +1,4 @@
+<div *ngIf="peerId; else loading">
 <p-toast></p-toast>
 <p-dialog header="sharecode.online {{peerId}}" [(visible)]="nameDialogVis"
 positionTop="100" [closable]="false">
@@ -17,3 +18,5 @@ positionTop="100" [closable]="false">
         </div>
     </div>
 </p-dialog>
+</div>
+<ng-template #loading>Loading Peer Id...</ng-template>

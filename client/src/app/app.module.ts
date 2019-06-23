@@ -3,7 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import {ButtonModule} from 'primeng/button';
 import {
   LocationStrategy,
   HashLocationStrategy
@@ -30,6 +30,7 @@ import {DialogModule} from 'primeng/dialog';
     HttpClientModule,
     ToastModule,
     DialogModule,
+    ButtonModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
