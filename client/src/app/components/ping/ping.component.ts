@@ -51,6 +51,7 @@ export class PingComponent {
     });
 
     this.socket.on("whisper", msg => {
+      console.log(msg)
       this.whispers.push(msg);
       this.whisperBoxVis = true;
       let shouldScroll =
