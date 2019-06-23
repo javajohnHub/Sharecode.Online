@@ -32,6 +32,7 @@ export class PingComponent {
   whisper;
   whispers = [];
   whisperId;
+  toName;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
@@ -107,6 +108,8 @@ export class PingComponent {
   }
   whisperBox(person){
     this.whisperBoxVis = true;
+    this.toName = person.name;
+    this.whisperId = person.id;
     console.log(person)
   }
   removeRoom() {
