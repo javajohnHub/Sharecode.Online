@@ -29,12 +29,10 @@ export class PingComponent {
   chosenName;
   chosenRoom;
   whisperBoxVis = false;
+  whispers;
   whisper;
-  whispers = [];
-  whisperId;
   toName;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
-  @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
@@ -52,18 +50,6 @@ export class PingComponent {
       }
     });
 
-    this.socket.on("whisper", msg => {
-      console.log(msg)
-      this.whispers.push(msg);
-      this.whisperBoxVis = true;
-      let shouldScroll =
-        this.myScrollContainer2.nativeElement.scrollTop +
-          this.myScrollContainer.nativeElement.clientHeight ===
-        this.myScrollContainer2.nativeElement.scrollHeight;
-      if (!shouldScroll) {
-        this.scrollToBottom();
-      }
-    });
     this.socket.on("update-people", people => {
       this.people = people.people;
       this.peopleCount = people.peopleCount;
@@ -89,7 +75,15 @@ export class PingComponent {
 
   }
 
+  whisperBox(person){
+   console.log([person])
+   this.whisperBoxVis = true;
+  }
 
+  sendWhisper(){
+    this.socket.emit("whisper", {msg: this.whisper});
+    this.whisper = "";
+  }
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
     this.inRoom = true;
@@ -101,24 +95,6 @@ export class PingComponent {
     this.msg = "";
   }
 
-  sendWhisper() {
-    if(this.whisperId){
-      this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
-      this.whisper = "";
-    }else{
-      this.whisperId = this.person.id;
-      this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
-      this.whisper = "";
-    }
-
-  }
-  whisperBox(person){
-    this.whisperBoxVis = true;
-    this.toName = person.name;
-    this.whisperId = person.id;
-    this.person = person;
-    console.log(person)
-  }
   removeRoom() {
     this.socket.emit("remove room");
   }
