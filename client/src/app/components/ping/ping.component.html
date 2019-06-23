@@ -11,7 +11,7 @@
       <br />
       <div *ngFor="let peep of peeps;let last=last">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <a (click)="whisperBox(p)">DM</a> <!--<a>Call</a>-->
+        {{p.name}} <a *ngIf="p.id !== person.id" (click)="whisperBox(p)">DM</a> <!--<a>Call</a>-->
         <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
