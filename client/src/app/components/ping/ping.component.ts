@@ -102,8 +102,15 @@ export class PingComponent {
   }
 
   sendWhisper() {
-    this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
-    this.whisper = "";
+    if(this.whisperId){
+      this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
+      this.whisper = "";
+    }else{
+      this.whisperId = this.person.id;
+      this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
+      this.whisper = "";
+    }
+
   }
   whisperBox(person){
     this.whisperBoxVis = true;
