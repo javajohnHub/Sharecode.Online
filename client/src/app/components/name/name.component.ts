@@ -53,8 +53,10 @@ export class NameComponent {
       this.device = "mobile";
     }
     this.socket.emit("send name", { name: this.name, device: this.device });
-    this.nameDialogVis = false;
     this.nameChosen.emit({name: this.name});
+    console.log(this.name)
+    this.nameDialogVis = false;
+
   }
 
 }
