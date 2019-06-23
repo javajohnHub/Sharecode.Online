@@ -1,13 +1,6 @@
 <ng-template #loading>Loading Peer Id...</ng-template>
   <div *ngIf="peerId; else loading">
-    <h2>
-      <span style="color: lightblue">
-        Current name:</span> {{chosenName}} | <span style="color: lightblue">Current Room: </span>{{chosenRoom}}<br />
-    </h2>
-    <div>
-      <input type="text" placeholder="Name" [(ngModel)]="name" />
-      <button type="button" [disabled]="!name" (click)="sendName()">Send Name</button><br /><br />
-    </div>
+    <app-name></app-name>
     <div *ngIf="chosenName">
       <div>
         <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />

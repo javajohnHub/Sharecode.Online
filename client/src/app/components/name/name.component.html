@@ -1,0 +1,19 @@
+<p-toast></p-toast>
+<p-dialog header="sharecode.online {{peerId}}" [(visible)]="nameDialogVis"
+positionTop="100" [closable]="false">
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <h3>Realtime code editing. Chat. Video calls.</h3>
+            <form id="nameForm">
+                <div class="ui-g-12">
+                    <div class="ui-g-offset-1 ui-inputgroup">
+                        <input (keydown.enter)="sendName()" pInputText pattern=".{3,}" minlength="3" required type="text"
+                            [(ngModel)]="name" placeholder="Your name" name="name" />
+                        <button type="button" pButton (click)="sendName()" name="join" [disabled]="name.length < 3 || name.length > 15"
+                            label="Enter"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-dialog>
