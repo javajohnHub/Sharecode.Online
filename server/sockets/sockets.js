@@ -240,7 +240,10 @@ module.exports = io => {
         if(rooms[room.id].people.length === 0) {
           delete rooms[room.id];
         }
-        rooms[id].owner = room.people[0];
+        if(room.people.length > 0){
+          rooms[id].owner = room.people[0];
+        }
+
         people[room.people[0]].owns = room.id;
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
