@@ -63,6 +63,10 @@ export class PingComponent {
         this.scrollToBottom();
       }
     });
+
+    this.socket.on("open dialog", msg => {
+      this.whisperBoxVis = true;
+    });
     this.socket.on("update-people", people => {
       this.people = people.people;
       this.peopleCount = people.peopleCount;

@@ -284,6 +284,7 @@ module.exports = io => {
         from: people[data.from].name,
         time: new Date().toLocaleTimeString()
       });
+      io.sockets.connected[data.to].emit("open dialog", {});
     });
 
     socket.on("disconnected", () => {
