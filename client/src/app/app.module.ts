@@ -18,6 +18,7 @@ import {ToastModule} from 'primeng/toast';
 import {DialogModule} from 'primeng/dialog';
 import {SpinnerModule} from 'primeng/spinner';
 import {InputTextModule} from 'primeng/inputtext';
+import {SidebarModule} from 'primeng/sidebar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import {InputTextModule} from 'primeng/inputtext';
     ButtonModule,
     SpinnerModule,
     InputTextModule,
+    SidebarModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],

@@ -1,13 +1,68 @@
 <app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
-      <div *ngIf="!inRoom">
+        <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button><br />
+        <button pButton type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button><br />
+        <div *ngIf="!inRoom">
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" /><br/>
         <p-spinner [(ngModel)]="limit"></p-spinner><br/>
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
       </div>
       <hr/>
       <div [ngStyle]="{'border': newMsgs ? '1px solid green' : '1px solid red' }">Messages</div>
-      <span style="color: lightblue">People:</span> {{ peopleCount }}
+
+
+      <hr/>
+      <ng-container *ngIf="!inRoom">
+          <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
+          </button>
+        </div>
+        </ng-container>
+    <ng-container *ngFor="let rm of rms" >
+      <div *ngIf="person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
+      </button>
+      <div *ngFor="let people of rm.people">
+          <div *ngFor="let peep of peeps">
+              <div *ngFor="let p of [peep]">
+                <div *ngIf="p.id === people">{{p.name}}</div>
+              </div>
+            </div>
+        </div>
+    </div>
+    </ng-container>
+
+      <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
+        <ul>
+          <li *ngFor="let msg of messages">
+            <span [style.color]="'white'"> {{ msg.from }}: </span>
+            <span [style.color]="msg.color">{{ msg.msg }}</span>
+           <span style="float: right;color:white">{{ msg.time }}</span>
+          </li>
+        </ul>
+
+      </div>
+      <div *ngIf="messages.length > 0 && inRoom">
+          <input type="text" pInputText  [(ngModel)]="msg" />
+          <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
+      </div>
+
+
+
+      <br />
+
+    </div>
+
+    <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
+
+        <h3>Rooms: {{ roomCount }}</h3>
+      <ng-container *ngIf="!inRoom">
+      <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
+      </button>
+    </div>
+    </ng-container>
+    </p-sidebar>
+    <p-sidebar [(visible)]="peepDisplay" (onHide)="hide()" [blockScroll]="true">
+        <h3>People:</h3>
+        <span style="color: lightblue">People:</span> {{ peopleCount }}
 
       <br />
       <div *ngFor="let peep of peeps;let last=last">
@@ -43,44 +98,4 @@
     </p-dialog>
         </div>
       </div>
-
-      <hr/>
-      <span style="color: lightblue">Rooms:</span> {{ roomCount }}
-      <ng-container *ngIf="!inRoom">
-      <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
-      </button>
-    </div>
-    </ng-container>
-    <ng-container *ngFor="let rm of rms" >
-      <div *ngIf="person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
-      </button>
-      <div *ngFor="let people of rm.people">
-          <div *ngFor="let peep of peeps">
-              <div *ngFor="let p of [peep]">
-                <div *ngIf="p.id === people">{{p.name}}</div>
-              </div>
-            </div>
-        </div>
-    </div>
-    </ng-container>
-
-      <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
-        <ul>
-          <li *ngFor="let msg of messages">
-            <span [style.color]="'white'"> {{ msg.from }}: </span>
-            <span [style.color]="msg.color">{{ msg.msg }}</span>
-           <span style="float: right;color:white">{{ msg.time }}</span>
-          </li>
-        </ul>
-
-      </div>
-      <div *ngIf="messages.length > 0 && inRoom">
-          <input type="text" pInputText  [(ngModel)]="msg" />
-          <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
-      </div>
-
-
-
-      <br />
-
-    </div>
+    </p-sidebar>

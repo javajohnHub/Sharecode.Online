@@ -34,6 +34,8 @@ export class PingComponent {
   toName;
   chosenDm;
   newMsgs = false;
+  peepDisplay = false;
+  roomDisplay = false;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
@@ -141,6 +143,9 @@ export class PingComponent {
     this.messages = [];
   }
 
+  hide(){
+    console.log('hidden')
+  }
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
