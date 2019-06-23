@@ -13,7 +13,7 @@
         <div *ngFor="let p of [peep]">
         {{p.name}} <a (click)="whisperBoxVis = true">DM</a> <a>Call</a>
         <p-dialog header="DM" [(visible)]="whisperBoxVis"
-    positionTop="100" [closable]="false">
+    positionTop="100">
         <div class="ui-g">
             <div class="ui-g-12">
                 <h3>{{p.name}}</h3>
