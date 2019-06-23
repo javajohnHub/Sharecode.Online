@@ -33,6 +33,7 @@ export class PingComponent {
   whisper;
   toName;
   chosenDm;
+  newMsgs = false;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
@@ -65,8 +66,9 @@ export class PingComponent {
     });
 
     this.socket.on("open dialog", msg => {
-      this.whisperBoxVis = true;
+      this.newMsgs = true;
     });
+
     this.socket.on("update-people", people => {
       this.people = people.people;
       this.peopleCount = people.peopleCount;
@@ -102,6 +104,7 @@ export class PingComponent {
     console.log(this.chosenDm, this.whisper, this.person)
     this.socket.emit("whisper", {msg: this.whisper, to: this.chosenDm.id, from: this.person.id});
     this.whisper = "";
+    this.newMsgs = false;
   }
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });

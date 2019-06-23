@@ -6,6 +6,7 @@
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
       </div>
       <hr/>
+      <div [ngStyle]="{'border': newMsgs ? '1px solid green' : '1px solid red' }">Messages</div>
       <span style="color: lightblue">People:</span> {{ peopleCount }}
 
       <br />
