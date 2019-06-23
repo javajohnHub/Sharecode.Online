@@ -74,8 +74,8 @@
         </ul>
 
       </div>
-      <input [(ngModel)]="msg" />
-      <button type="button" [disabled]="!nameFlag && !msg" (click)="sendMsg()">Send Msg</button><br />
+      <input type="text" pInputText  [(ngModel)]="msg" />
+      <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
 
 
       <br />
