@@ -34,6 +34,7 @@ export class PingComponent {
   toName;
   chosenDm;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
+  @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
@@ -50,7 +51,17 @@ export class PingComponent {
         this.scrollToBottom();
       }
     });
+    this.socket.on("whisper", msg => {
+      this.messages.push(msg);
 
+      let shouldScroll =
+        this.myScrollContainer2.nativeElement.scrollTop +
+          this.myScrollContainer2.nativeElement.clientHeight ===
+        this.myScrollContainer2.nativeElement.scrollHeight;
+      if (!shouldScroll) {
+        this.scrollToBottom();
+      }
+    });
     this.socket.on("update-people", people => {
       this.people = people.people;
       this.peopleCount = people.peopleCount;
