@@ -99,7 +99,7 @@ export class PingComponent {
   }
 
   sendWhisper(id) {
-    this.socket.emit("whisper", {msg: this.msg, id});
+    this.socket.emit("whisper", {msg: this.whisper, id});
     this.whisper = "";
   }
   removeRoom() {
