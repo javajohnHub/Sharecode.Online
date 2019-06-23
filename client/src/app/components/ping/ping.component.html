@@ -24,7 +24,7 @@
       </div>
       <hr/>
       <span style="color: lightblue">Rooms:</span> {{ roomCount }}
-      <ng-container *ngIf="!inRoom" >
+      <ng-container >
       <div *ngFor="let rm of rms" ><button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
         Join {{ rm.name }}
       </button>
