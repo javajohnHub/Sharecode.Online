@@ -19,33 +19,29 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-          {{p.name}} {{p.id}}
+          {{p.name}}
         </div>
       </div>
       <hr/>
       <span style="color: lightblue">Rooms:</span> {{ roomCount }}
-      <div *ngFor="let rm of rms">
-          <ng-container *ngIf="!inRoom" >
-              <button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
-                Join {{ rm.name }}
-              </button>
-            </ng-container>
-
-              <div *ngIf="person.inroom === rm.id" ><button type="button" (click)="leaveRoom(rm.id)">
-                Leave {{ rm.name }}
-              </button></div>
-
-        <div *ngFor="let people of rm.people">
-          <div *ngFor="let peep of peeps">
-            <div *ngFor="let p of [peep]">
-             <div *ngIf="p.id === people">{{p.name}}</div>
-            </div>
-          </div>
+      <ng-container *ngIf="!inRoom" >
+      <div *ngFor="let rm of rms" ><button type="button" [disabled]="!nameFlag" (click)="joinRoom(rm.id)">
+        Join {{ rm.name }}
+      </button>
+      <div *ngFor="let people of rm.people">
+          {{people}}
         </div>
-      </div>
-      <hr/>
-
-
+    </div>
+    </ng-container>
+    <ng-container *ngFor="let rm of rms" >
+      <div *ngIf="person.inroom === rm.id" ><button type="button" (click)="leaveRoom(rm.id)">
+        Leave {{ rm.name }}
+      </button>
+      <div *ngFor="let people of rm.people">
+          {{people}}
+        </div>
+    </div>
+    </ng-container>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
         <ul>
