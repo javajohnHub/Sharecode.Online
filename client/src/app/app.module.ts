@@ -16,6 +16,7 @@ import { PingComponent } from './components/ping/ping.component';
 import { NameComponent } from './components/name/name.component';
 import {ToastModule} from 'primeng/toast';
 import {DialogModule} from 'primeng/dialog';
+import {SpinnerModule} from 'primeng/spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import {DialogModule} from 'primeng/dialog';
     ToastModule,
     DialogModule,
     ButtonModule,
+    SpinnerModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],

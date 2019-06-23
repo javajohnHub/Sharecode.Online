@@ -1,9 +1,9 @@
 <app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
-      <div>
-        <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />
-        Limit: <input type="number" [(ngModel)]="limit" /><br/>
-        <button type="button" [disabled]="!room" (click)="sendRoom()">Create room</button><br />
+      <div *ngIf="!inRoom">
+        <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" />
+        <p-spinner [(ngModel)]="limit"></p-spinner>
+        <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
       </div>
       <span style="color: lightblue">People:</span> {{ peopleCount }}
 
