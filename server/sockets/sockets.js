@@ -267,7 +267,7 @@ module.exports = io => {
       io.sockets.connected[data.id].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
-        from: people[socket.id].name,
+        from: data.from,
         time: new Date().toLocaleTimeString()
       });
     });
