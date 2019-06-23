@@ -9,7 +9,7 @@ positionTop="100" [closable]="false">
                     <div class="ui-g-offset-1 ui-inputgroup">
                         <input (keydown.enter)="sendName()" pInputText pattern=".{3,}" minlength="3" required type="text"
                             [(ngModel)]="name" placeholder="Your name" name="name" />
-                        <button type="button" pButton (click)="sendName()" name="join" [disabled]="name.length < 3 || name.length > 15"
+                        <button type="button" pButton (click)="sendName()" name="join" [disabled]="!name || name && name.length < 3 || name && name.length > 15"
                             label="Enter"></button>
                     </div>
                 </div>
