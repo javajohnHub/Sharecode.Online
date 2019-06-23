@@ -17,6 +17,7 @@ import { NameComponent } from './components/name/name.component';
 import {ToastModule} from 'primeng/toast';
 import {DialogModule} from 'primeng/dialog';
 import {SpinnerModule} from 'primeng/spinner';
+import {InputTextModule} from 'primeng/inputtext';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import {SpinnerModule} from 'primeng/spinner';
     DialogModule,
     ButtonModule,
     SpinnerModule,
+    InputTextModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
