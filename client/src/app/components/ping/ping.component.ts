@@ -29,7 +29,7 @@ export class PingComponent {
   chosenName;
   chosenRoom;
   whisperBoxVis = false;
-  whispers;
+  whispers = [];
   whisper;
   toName;
   chosenDm;
