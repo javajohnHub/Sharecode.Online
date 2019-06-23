@@ -228,7 +228,7 @@ module.exports = io => {
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
               sockets[i].leave(room.name);
-              people[sockets[i]].owns = null;
+              people[socket.id].owns = null;
             }
           }
         }
