@@ -270,6 +270,7 @@ module.exports = io => {
           time: new Date().toLocaleTimeString(),
           color: adminColor
         });
+        return
       }
       io.sockets.connected[data.to].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
