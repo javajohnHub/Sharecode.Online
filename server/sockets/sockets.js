@@ -242,9 +242,10 @@ module.exports = io => {
         }
         if(room.people.length > 0){
           rooms[id].owner = room.people[0];
+          people[room.people[0]].owns = room.id;
         }
 
-        people[room.people[0]].owns = room.id;
+
         peopleCount = _.size(people);
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
