@@ -76,8 +76,9 @@ export class PingComponent {
   }
 
   whisperBox(person){
-   console.log([person])
+   console.log(person)
    this.whisperBoxVis = true;
+   this.toName = person.name;
   }
 
   sendWhisper(){
