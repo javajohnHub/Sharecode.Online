@@ -19,7 +19,7 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-          {{p.name}}
+          {{p | json}}
         </div>
       </div>
       <hr/>
