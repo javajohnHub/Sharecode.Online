@@ -255,7 +255,7 @@ module.exports = io => {
     socket.on("message", msg => {
       console.log(msg);
       io.sockets.in(socket.room).emit("message", {
-        msg: decodeURI(msg.replace(/(<([^>]+)>)/ig,"")),
+        msg: decodeURI(msg.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[socket.id].name,
         time: new Date().toLocaleTimeString()
