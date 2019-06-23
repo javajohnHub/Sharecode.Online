@@ -103,13 +103,14 @@ export class PingComponent {
 
   sendWhisper(msg) {
     console.log(msg)
-    this.socket.emit("whisper", {msg: this.whisper, id: msg.id});
+    this.socket.emit("whisper", {msg: this.whisper, id: msg.id, from: this.person});
     this.whisper = "";
   }
   whisperBox(person){
     this.whisperBoxVis = true;
     this.toName = person.name;
     this.whisperId = person.id;
+    this.person = person;
     console.log(person)
   }
   removeRoom() {
