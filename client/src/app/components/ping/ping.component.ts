@@ -31,6 +31,7 @@ export class PingComponent {
   whisperBoxVis = false;
   whisper;
   whispers = [];
+  whisperId;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {

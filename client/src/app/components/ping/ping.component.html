@@ -11,7 +11,7 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <a (click)="whisperBoxVis = true">DM</a> <a>Call</a>
+        {{p.name}} <a (click)="whisperBoxVis = true; whisperId = p.id">DM</a> <a>Call</a>
         <p-dialog header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
@@ -30,9 +30,9 @@
 
                           </div>
                         <div class="ui-g-offset-1 ui-inputgroup">
-                            <input (keydown.enter)="sendWhisper(p.id)" pInputText required type="text"
+                            <input (keydown.enter)="sendWhisper(whisperId)" pInputText required type="text"
                                 [(ngModel)]="whisper" placeholder="Whisper" name="whisper" />
-                            <button type="button" pButton (click)="sendWhisper(p.id)" name="send" [disabled]="!whisper"
+                            <button type="button" pButton (click)="sendWhisper(whisperId)" name="send" [disabled]="!whisper"
                                 label="Enter"></button>
                         </div>
                     </div>
