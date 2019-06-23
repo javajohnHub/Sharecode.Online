@@ -1,6 +1,6 @@
 import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 @Component({
   selector: "app-ping",
   templateUrl: `./ping.component.html`
@@ -28,7 +28,11 @@ export class PingComponent {
   inRoom = false;
   chosenName;
   chosenRoom;
+  whisperBoxVis = false;
+  whisper;
+  whispers = [];
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
+  @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
@@ -41,6 +45,18 @@ export class PingComponent {
         this.myScrollContainer.nativeElement.scrollTop +
           this.myScrollContainer.nativeElement.clientHeight ===
         this.myScrollContainer.nativeElement.scrollHeight;
+      if (!shouldScroll) {
+        this.scrollToBottom();
+      }
+    });
+
+    this.socket.on("whisper", msg => {
+      this.whispers.push(msg);
+
+      let shouldScroll =
+        this.myScrollContainer2.nativeElement.scrollTop +
+          this.myScrollContainer.nativeElement.clientHeight ===
+        this.myScrollContainer2.nativeElement.scrollHeight;
       if (!shouldScroll) {
         this.scrollToBottom();
       }
@@ -69,6 +85,8 @@ export class PingComponent {
     this.chosenName = event.name;
 
   }
+
+
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
     this.inRoom = true;
@@ -76,8 +94,13 @@ export class PingComponent {
   }
 
   sendMsg() {
-    this.socket.emit("message", this.msg);
+    this.socket.emit("message", {msg: this.msg, id: null});
     this.msg = "";
+  }
+
+  sendWhisper(id) {
+    this.socket.emit("whisper", {msg: this.msg, id});
+    this.whisper = "";
   }
   removeRoom() {
     this.socket.emit("remove room");

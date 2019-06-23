@@ -11,7 +11,35 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-        {{p.name}}
+        {{p.name}} <a (click)="whisperBoxVis = true">DM</a> <a>Call</a>
+        <p-dialog header="DM" [(visible)]="whisperBoxVis"
+    positionTop="100" [closable]="false">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h3>{{p.name}}</h3>
+                <form id="nameForm">
+                    <div class="ui-g-12">
+                        <div id="chat-div" *ngIf="whispers.length > 0" #scrollMe2>
+                            <ul>
+                              <li *ngFor="let msg of whispers">
+                                <span [style.color]="'white'"> {{ msg.from }}: </span>
+                                <span [style.color]="msg.color">{{ msg.msg }}</span>
+                               <span style="float: right;color:white">{{ msg.time }}</span>
+                              </li>
+                            </ul>
+
+                          </div>
+                        <div class="ui-g-offset-1 ui-inputgroup">
+                            <input (keydown.enter)="sendWhisper(p.id)" pInputText required type="text"
+                                [(ngModel)]="whisper" placeholder="Whisper" name="whisper" />
+                            <button type="button" pButton (click)="sendWhisper(p.id)" name="send" [disabled]="!whisper"
+                                label="Enter"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </p-dialog>
         </div>
       </div>
 
