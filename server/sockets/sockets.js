@@ -231,7 +231,8 @@ module.exports = io => {
               people[socket.id].owns = null;
               people[socket.id].inroom = null;
               room.owner = room.people[0]
-              console.log(room)
+              let roomCount = _.size(rooms);
+        io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
