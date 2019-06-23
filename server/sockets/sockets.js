@@ -230,7 +230,8 @@ module.exports = io => {
               sockets[i].leave(room.name);
               people[socket.id].owns = null;
               people[socket.id].inroom = null;
-              console.log(people[socket.id])
+              room.owner = null;
+              console.log(room)
             }
           }
         }
