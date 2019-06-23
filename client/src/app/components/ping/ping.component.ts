@@ -66,6 +66,7 @@ export class PingComponent {
   }
 
   chosenNameFn(event){
+    console.log(event)
     if(event.name){
       this.chosenName = event.name;
     }
