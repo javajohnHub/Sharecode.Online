@@ -30,7 +30,7 @@ export class NameComponent {
       this.socket.on("exists", proposedName => {
         this.name = proposedName.proposedName;
         this.nameDialogVis = true;
-        this.messageService.add({severity:'warning', summary:'Name already exists', detail:'Try ' + this.name});
+        this.messageService.add({severity:'info', summary:'Name already exists', detail:'Try ' + this.name});
       });
 
     });
