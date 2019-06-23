@@ -1,8 +1,8 @@
 <app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
-        <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button><br />
-        <button pButton type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button><br />
-        <div *ngIf="!inRoom">
+      <div *ngIf="!inRoom">
+          <button pButton type="button" [disabled]="!room" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button><br />
+          <button pButton type="button" [disabled]="!room" (click)="peopleDisplay = true" label="People {{peopleCount}}"></button><br />
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" /><br/>
         <p-spinner [(ngModel)]="limit"></p-spinner><br/>
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
@@ -59,6 +59,18 @@
       </button>
     </div>
     </ng-container>
+    <ng-container *ngFor="let rm of rms" >
+        <div *ngIf="person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
+        </button>
+        <div *ngFor="let people of rm.people">
+            <div *ngFor="let peep of peeps">
+                <div *ngFor="let p of [peep]">
+                  <div *ngIf="p.id === people">{{p.name}}</div>
+                </div>
+              </div>
+          </div>
+      </div>
+      </ng-container>
     </p-sidebar>
     <p-sidebar [(visible)]="peepDisplay" (onHide)="hide()" [blockScroll]="true">
         <h3>People:</h3>
