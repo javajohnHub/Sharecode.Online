@@ -1,4 +1,4 @@
-import { Component, HostListener, EventEmitter } from "@angular/core";
+import { Component, HostListener, EventEmitter, Output } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import {MessageService} from 'primeng/api';
 import * as Peer from "peerjs_fork_firefox40";
@@ -14,7 +14,7 @@ export class NameComponent {
   device;
   peerId;
   nameDialogVis = true;
-  nameChosen: EventEmitter<any> = new EventEmitter();
+  @Output() nameChosen: EventEmitter<any> = new EventEmitter<any>();
   constructor(private messageService: MessageService) {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
