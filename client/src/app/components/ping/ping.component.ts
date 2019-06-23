@@ -1,5 +1,6 @@
 import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: "app-ping",
   templateUrl: `./ping.component.html`
@@ -64,6 +65,12 @@ export class PingComponent {
     this.socket.emit("disconnected");
   }
 
+  chosenNameFn(event){
+    if(event.name){
+      this.chosenName = event.name;
+    }
+
+  }
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
     this.inRoom = true;

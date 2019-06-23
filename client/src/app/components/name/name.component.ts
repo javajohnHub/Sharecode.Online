@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, EventEmitter } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import {MessageService} from 'primeng/api';
 import * as Peer from "peerjs_fork_firefox40";
@@ -14,6 +14,7 @@ export class NameComponent {
   device;
   peerId;
   nameDialogVis = true;
+  nameChosen: EventEmitter<any> = new EventEmitter();
   constructor(private messageService: MessageService) {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -30,6 +31,7 @@ export class NameComponent {
       this.socket.on("exists", proposedName => {
         this.name = proposedName.proposedName;
         this.nameDialogVis = true;
+        this.nameChosen.emit({name: null});
         this.messageService.add({severity:'info', summary:'Name already exists', detail:'Try ' + this.name});
       });
 
@@ -52,6 +54,7 @@ export class NameComponent {
     }
     this.socket.emit("send name", { name: this.name, device: this.device });
     this.nameDialogVis = false;
+    this.nameChosen.emit({name: this.name});
   }
 
 }

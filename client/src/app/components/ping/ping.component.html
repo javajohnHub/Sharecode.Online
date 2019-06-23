@@ -1,6 +1,4 @@
-
-
-    <app-name></app-name>
+<app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
       <div>
         <input type="text" placeholder="Room Name" [(ngModel)]="room" /><br />
