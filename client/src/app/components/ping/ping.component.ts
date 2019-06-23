@@ -75,15 +75,9 @@ export class PingComponent {
 
   }
 
-  whisperBox(person){
-   console.log(person)
-   this.whisperBoxVis = true;
-   this.toName = person.name;
-  }
-
-  sendWhisper(){
-    this.socket.emit("whisper", {msg: this.whisper});
-    this.whisper = "";
+  whisperBox(p){
+    console.log(p)
+    this.whisperBoxVis = true;
   }
   sendRoom() {
     this.socket.emit("create room", { name: this.room, limit: this.limit });
