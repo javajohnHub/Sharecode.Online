@@ -101,9 +101,8 @@ export class PingComponent {
     this.msg = "";
   }
 
-  sendWhisper(msg) {
-    console.log(msg)
-    this.socket.emit("whisper", {msg: this.whisper, id: msg.id, from: this.person});
+  sendWhisper() {
+    this.socket.emit("whisper", {msg: this.whisper, id: this.whisperId, from: this.person.name});
     this.whisper = "";
   }
   whisperBox(person){

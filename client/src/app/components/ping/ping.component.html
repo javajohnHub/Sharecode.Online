@@ -30,9 +30,9 @@
 
                           </div>
                         <div class="ui-g-offset-1 ui-inputgroup">
-                            <input (keydown.enter)="sendWhisper(whisperId)" pInputText required type="text"
+                            <input (keydown.enter)="sendWhisper()" pInputText required type="text"
                                 [(ngModel)]="whisper" placeholder="Whisper" name="whisper" />
-                            <button type="button" pButton (click)="sendWhisper(whisperId)" name="send" [disabled]="!whisper"
+                            <button type="button" pButton (click)="sendWhisper()" name="send" [disabled]="!whisper"
                                 label="Enter"></button>
                         </div>
                     </div>
