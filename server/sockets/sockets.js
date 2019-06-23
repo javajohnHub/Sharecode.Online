@@ -230,7 +230,7 @@ module.exports = io => {
               sockets[i].leave(room.name);
               people[socket.id].owns = null;
               people[socket.id].inroom = null;
-              room.owner = room.people[0]
+              rooms[id].owner = room.people[0]
               let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
             }
