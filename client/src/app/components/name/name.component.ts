@@ -4,7 +4,8 @@ import {MessageService} from 'primeng/api';
 import * as Peer from "peerjs_fork_firefox40";
 @Component({
   selector: "app-name",
-  templateUrl: `./name.component.html`
+  templateUrl: `./name.component.html`,
+  providers: [MessageService]
 })
 export class NameComponent {
   socket: any;
