@@ -228,6 +228,8 @@ module.exports = io => {
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
               sockets[i].leave(room.name);
+              people[socket.id].owns = null;
+              people[socket.id].inroom = null;
               console.log(people[socket.id])
             }
           }
