@@ -18,14 +18,12 @@
       <hr/>
       <span style="color: lightblue">Rooms:</span> {{ roomCount }}
       <ng-container *ngIf="!inRoom">
-      <div *ngFor="let rm of rms" ><button type="button" [disabled]="!chosenName" (click)="joinRoom(rm.id)">
-        Join {{ rm.name }}
+      <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
       </button>
     </div>
     </ng-container>
     <ng-container *ngFor="let rm of rms" >
-      <div *ngIf="person.inroom === rm.id" ><button type="button" (click)="leaveRoom(rm.id)">
-        Leave {{ rm.name }}
+      <div *ngIf="person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
       </button>
       <div *ngFor="let people of rm.people">
           <div *ngFor="let peep of peeps">
