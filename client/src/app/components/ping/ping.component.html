@@ -74,8 +74,11 @@
         </ul>
 
       </div>
-      <input type="text" pInputText  [(ngModel)]="msg" />
-      <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
+      <div *ngIf="messages.length > 0 && inRoom">
+          <input type="text" pInputText  [(ngModel)]="msg" />
+          <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
+      </div>
+
 
 
       <br />
