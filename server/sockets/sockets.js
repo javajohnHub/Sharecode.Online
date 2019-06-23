@@ -197,7 +197,6 @@ module.exports = io => {
                 time: new Date().toLocaleTimeString()
               });
 
-              people[socket.id].inroom = null;
             }
           }
         }
@@ -232,7 +231,7 @@ module.exports = io => {
               people[socket.id].inroom = null;
               rooms[id].owner = room.people[0]
               let roomCount = _.size(rooms);
-        io.sockets.emit("update-rooms", { rooms, roomCount });
+      io.sockets.emit("update-rooms", { rooms, roomCount });
             }
           }
         }
