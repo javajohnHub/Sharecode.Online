@@ -52,7 +52,7 @@ export class PingComponent {
       }
     });
     this.socket.on("whisper", msg => {
-      this.messages.push(msg);
+      this.whispers.push(msg);
 
       let shouldScroll =
         this.myScrollContainer2.nativeElement.scrollTop +
