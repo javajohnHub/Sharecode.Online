@@ -105,6 +105,10 @@ export class PingComponent {
     this.socket.emit("whisper", {msg: this.whisper, id});
     this.whisper = "";
   }
+  whisperBox(person){
+    this.whisperBoxVis = true;
+    console.log(person)
+  }
   removeRoom() {
     this.socket.emit("remove room");
   }

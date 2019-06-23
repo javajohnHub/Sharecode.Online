@@ -11,7 +11,7 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <a (click)="whisperBoxVis = true; whisperId = p.id">DM</a> <a>Call</a>
+        {{p.name}} <a (click)="whisperBox(p)">DM</a> <a>Call</a>
         <p-dialog header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
