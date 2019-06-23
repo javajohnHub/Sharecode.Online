@@ -263,6 +263,14 @@ module.exports = io => {
     });
 
     socket.on("whisper", data => {
+      if (socket.id === data.to) {
+        socket.emit("whisper", {
+          from: "Admin",
+          msg: "You can't whisper to yourself.",
+          time: new Date().toLocaleTimeString(),
+          color: adminColor
+        });
+      }
       io.sockets.connected[data.to].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
