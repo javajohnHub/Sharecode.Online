@@ -38,7 +38,7 @@
         <div *ngFor="let people of rm.people">
           <div *ngFor="let peep of peeps">
             <div *ngFor="let p of [peep]">
-             <div *ngIf="p.id === people">{{p.peerId}}</div>
+             <div *ngIf="p.id === people">{{p.name}}</div>
             </div>
           </div>
         </div>
