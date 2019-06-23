@@ -9,10 +9,10 @@
       <span style="color: lightblue">People:</span> {{ peopleCount }}
 
       <br />
-      <div *ngFor="let peep of peeps">
+      <div *ngFor="let peep of peeps;let last=last">
         <div *ngFor="let p of [peep]">
         {{p.name}} <a (click)="whisperBox(p)">DM</a> <a>Call</a>
-        <p-dialog header="DM" [(visible)]="whisperBoxVis"
+        <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
             <div class="ui-g-12">
