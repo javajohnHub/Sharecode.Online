@@ -19,13 +19,7 @@
       <br />
       <div *ngFor="let peep of peeps">
         <div *ngFor="let p of [peep]">
-        <div (click)="toggleMsg()">{{p.name}}</div>
-        <div *ngIf="whisperVis">
-            <input type="text" [(ngModel)]="whisper"/>
-            <button type="button" (click)="sendWhisper(p.id)">
-                Whisper
-              </button>
-          </div>
+        {{p.name}}
         </div>
       </div>
 
