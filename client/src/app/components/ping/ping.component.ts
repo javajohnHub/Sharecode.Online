@@ -84,7 +84,7 @@ export class PingComponent {
   }
   sendWhisper(){
     console.log(this.chosenDm, this.whisper, this.person)
-    this.socket.emit("whisper", {msg: this.whisper, id: this.chosenDm.id, from: this.toName});
+    this.socket.emit("whisper", {msg: this.whisper, to: this.chosenDm.id, from: this.person.id});
     this.msg = "";
   }
   sendRoom() {

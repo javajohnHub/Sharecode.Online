@@ -264,10 +264,10 @@ module.exports = io => {
 
     socket.on("whisper", data => {
       console.log(data)
-      io.sockets.connected[data.id].emit("whisper", {
+      io.sockets.connected[data.to.id].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
-        from: people[socket.id].name,
+        from: data.from.id,
         time: new Date().toLocaleTimeString()
       });
     });
