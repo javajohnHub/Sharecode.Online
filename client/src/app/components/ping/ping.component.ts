@@ -146,8 +146,8 @@ toggleMsg(){
 }
 
 sendWhisper(id){
-  this.socket.emit("mwhisper", {msg: this.whisper, id});
-    this.msg = "";
+  this.socket.emit("whisper", {msg: this.whisper, id});
+    this.whisper = "";
 }
   scrollToBottom(): void {
     try {
