@@ -43,6 +43,7 @@ export class PingComponent {
   settingsVis = false;
   msgForm: FormGroup;
   emojis;
+  hov = false;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor(private fb: FormBuilder) {
@@ -105,14 +106,6 @@ export class PingComponent {
     })
   }
 
-  replaceEmoji(key){
-    if(this.msg.startsWith(':')){
-      this.msg = ":" + key + ":";
-    }else{
-      this.msg = this.msg + ":" + key + ":";
-    }
-    this.socket.emit('get emojis', "")
-  }
   createForm() {
     this.msgForm = this.fb.group({
       msg: ['']
@@ -152,6 +145,7 @@ export class PingComponent {
   sendMsg() {
     this.socket.emit("message", {msg: this.msg, id: null});
     this.msg = "";
+    this.emojis = [];
   }
 
   removeRoom() {

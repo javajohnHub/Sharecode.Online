@@ -19,6 +19,7 @@ import {DialogModule} from 'primeng/dialog';
 import {SpinnerModule} from 'primeng/spinner';
 import {InputTextModule} from 'primeng/inputtext';
 import {SidebarModule} from 'primeng/sidebar';
+import {TooltipModule} from 'primeng/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import {SidebarModule} from 'primeng/sidebar';
     InputTextModule,
     SidebarModule,
     ReactiveFormsModule,
+    TooltipModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
