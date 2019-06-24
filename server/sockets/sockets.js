@@ -10,6 +10,7 @@ module.exports = io => {
   let adminColor = "rgb(255,255,255)";
   let peerId;
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(timezone)
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
     let roomCount = _.size(rooms);
