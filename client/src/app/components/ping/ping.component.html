@@ -56,7 +56,7 @@
       </div>
       </ng-container>
     </p-sidebar>
-    <p-sidebar [(visible)]="peepDisplay" (onHide)="hide()" [blockScroll]="true">
+    <p-sidebar [(visible)]="peepDisplay" (onHide)="hide()" (onShow)="show()" [blockScroll]="true">
         <h3>People: {{ peopleCount }}</h3>
 
       <br />

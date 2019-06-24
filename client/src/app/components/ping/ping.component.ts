@@ -90,7 +90,6 @@ export class PingComponent {
   }
 
   whisperBox(p){
-    console.log(p)
     this.toName = p.name;
     this.chosenDm = p;
     this.whisperBoxVis = true;
@@ -138,6 +137,10 @@ export class PingComponent {
 
   hide(){
     this.peepDisplay = false;
+  }
+
+  show(){
+    this.newMsgs = false;
   }
 
   call(id){
