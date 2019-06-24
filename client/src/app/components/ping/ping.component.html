@@ -16,11 +16,11 @@
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
         <div>
-          <span *ngFor="let msg of messages">
+          <div *ngFor="let msg of messages">
             <span [style.color]="'white'"> {{ msg.from }}: </span>
             <span [style.color]="msg.color">{{ msg.msg }}</span>
            <span style="float: right;color:white">{{ msg.time }}</span>
-          </span>
+          </div>
         </div>
 
       </div>
@@ -74,11 +74,11 @@
                     <div class="ui-g-12">
                         <div id="chat-div"  #scrollMe2>
                             <div>
-                              <span *ngFor="let msg of whispers">
+                              <div *ngFor="let msg of whispers">
                                 <span [style.color]="'white'"> {{ msg.from }}: </span>
                                 <span [style.color]="msg.color">{{ msg.msg }}</span>
                                <span style="float: right;color:white">{{ msg.time }}</span>
-                              </span>
+                              </div>
                             </div>
 
                           </div>
