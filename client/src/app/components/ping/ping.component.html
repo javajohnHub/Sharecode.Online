@@ -45,7 +45,7 @@
     </div>
     </ng-container>
     <ng-container *ngFor="let rm of rms" >
-        <div *ngIf="person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
+        <div *ngIf="person && person.inroom === rm.id" ><button pButton type="button" class="ui-button-warning" (click)="leaveRoom(rm.id)" label="Leave {{ rm.name }}">
         </button>
         <div *ngFor="let people of rm.people">
             <div *ngFor="let peep of peeps">
