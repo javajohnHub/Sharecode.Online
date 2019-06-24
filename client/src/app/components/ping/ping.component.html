@@ -9,7 +9,7 @@
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
       </div>
       <hr/>
-      <div [ngStyle]="{'border': newMsgs ? '1px solid green' : '1px solid red' }">Messages</div>
+      <span [ngStyle]="{'border': newMsgs ? '1px solid green' : '1px solid red' }">Messages</span>
 
       <hr/>
 
@@ -39,8 +39,6 @@
     <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
 
         <h3>Rooms: {{ roomCount }}</h3>
-        <span style="color: lightblue">Rooms:</span>
-
       <br />
       <ng-container *ngIf="!inRoom">
       <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
@@ -61,8 +59,7 @@
       </ng-container>
     </p-sidebar>
     <p-sidebar [(visible)]="peepDisplay" (onHide)="hide()" [blockScroll]="true">
-        <h3>People:</h3>
-        <span style="color: lightblue">People:</span> {{ peopleCount }}
+        <h3>People: {{ peopleCount }}</h3>
 
       <br />
       <div *ngFor="let peep of peeps;let last=last">
