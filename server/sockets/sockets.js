@@ -9,8 +9,7 @@ module.exports = io => {
   let sockets = [];
   let adminColor = "rgb(255,255,255)";
   let peerId;
-  const timezone = moment.tz.guess()//Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(timezone)
+  let timezone;
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
     let roomCount = _.size(rooms);
@@ -20,6 +19,7 @@ module.exports = io => {
     socket.on("peerId", id => {
       peerId = id;
       socket.on("send name", data => {
+        timezone = data.timezone;
         let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
         let exists = false;
         _.find(people, key => {
