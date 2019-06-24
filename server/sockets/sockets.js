@@ -9,7 +9,7 @@ module.exports = io => {
   let sockets = [];
   let adminColor = "rgb(255,255,255)";
   let peerId;
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const timezone = moment.tz.guess()//Intl.DateTimeFormat().resolvedOptions().timeZone;
   console.log(timezone)
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
