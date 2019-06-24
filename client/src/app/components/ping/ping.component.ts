@@ -40,6 +40,7 @@ export class PingComponent {
   red;
   blue;
   green;
+  settingsVis = false;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
@@ -153,6 +154,9 @@ export class PingComponent {
     this.newMsgs = false;
   }
 
+  settings(){
+    this.settingsVis = true;
+  }
   changeColor(){
     this.socket.emit('change color', {red: this.red, blue: this.blue, green: this.green})
   }
