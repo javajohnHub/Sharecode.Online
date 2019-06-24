@@ -340,7 +340,7 @@ module.exports = io => {
     })
 
     socket.on('get emojis', (val) => {
-      console.log(val)
+      console.log(val.substring(1))
       socket.emit('recieve emojis', emoji.find(val.substring(1)))
     })
     socket.on("disconnect", () => {
