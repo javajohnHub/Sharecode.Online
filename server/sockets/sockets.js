@@ -338,6 +338,10 @@ module.exports = io => {
       peopleCount = _.size(people);
       io.sockets.emit("update-people", { people, peopleCount });
     })
+
+    socket.on('get emojis', (val) => {
+      socket.emit('recieve emojis', emojis.find(val))
+    })
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {
