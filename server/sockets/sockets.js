@@ -277,14 +277,14 @@ module.exports = io => {
         return
       }
       io.sockets.connected[data.from].emit("whisper", {
-        msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
+        msg: emoji.emojify(decodeURI(data.msg.replace(/(<([^>]+)>)/ig,""))),
         color: people[socket.id].color,
         from: people[data.from].name,
         time: moment().tz(timezone).format('h:mm:ss a'),
         to: people[data.to].name
       });
       io.sockets.connected[data.to].emit("whisper", {
-        msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
+        msg: emoji.emojify(decodeURI(data.msg.replace(/(<([^>]+)>)/ig,""))),
         color: people[socket.id].color,
         from: people[data.from].name,
         time: moment().tz(timezone).format('h:mm:ss a'),
