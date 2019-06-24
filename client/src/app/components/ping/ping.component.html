@@ -13,8 +13,6 @@
 
       <hr/>
 
-
-
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
         <ul>
           <li *ngFor="let msg of messages">
@@ -33,7 +31,7 @@
 
 
       <br />
-
+      {{peerId}}
     </div>
 
     <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
