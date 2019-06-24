@@ -1,8 +1,9 @@
 <app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
+        <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button><br />
+        <button pButton type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button><br />
       <div *ngIf="!inRoom">
-          <button pButton type="button" [disabled]="!room" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button><br />
-          <button pButton type="button" [disabled]="!room" (click)="peopleDisplay = true" label="People {{peopleCount}}"></button><br />
+
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" /><br/>
         <p-spinner [(ngModel)]="limit"></p-spinner><br/>
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
@@ -79,7 +80,7 @@
       <br />
       <div *ngFor="let peep of peeps;let last=last">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <a *ngIf="p.id !== person.id" (click)="whisperBox(p)">DM</a> <!--<a>Call</a>-->
+        {{p.name}} <a *ngIf="person && p.id !== person.id" (click)="whisperBox(p)">DM</a> <!--<a>Call</a>-->
         <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
