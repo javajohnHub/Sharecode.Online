@@ -39,7 +39,7 @@ module.exports = io => {
             });
           } while (!exists);
           socket.emit("exists", {
-            msg: "The username already exists, please pick another one." + emoji.get('coffee'),
+            msg: "The username already exists, please pick another one.",
             proposedName: proposedName
           });
         } else {
@@ -53,7 +53,7 @@ module.exports = io => {
             id: socket.id
           };
           socket.emit("admin chat", {
-            msg: "You have connected to the server.",
+            msg: "You have connected to the server."  + emoji.get('coffee'),
             from: "Admin",
             color: adminColor,
             time: moment().tz(timezone).format('h:mm:ss a')
