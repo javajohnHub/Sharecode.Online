@@ -188,6 +188,7 @@ module.exports = io => {
               people[socket.id].inroom = id;
               socket.room = room.name;
               socket.join(socket.room);
+              socket.emit('join succeeded', id)
             } else {
 
               socket.emit("admin chat", {
@@ -196,7 +197,7 @@ module.exports = io => {
                 color: adminColor,
                 time: new Date().toLocaleTimeString()
               });
-
+              socket.emit('join failed')
             }
           }
         }
