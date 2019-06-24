@@ -144,7 +144,7 @@ export class PingComponent {
   }
 
   hide(){
-    console.log('hidden')
+    this.peepDisplay = false;
   }
 
   call(id){

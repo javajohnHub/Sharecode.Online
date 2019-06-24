@@ -9,7 +9,7 @@
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
       </div>
       <hr/>
-      <span [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }">Messages</span>
+      <span [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" (click)="peepDisplay = true">Messages</span>
 
       <hr/>
 
@@ -62,8 +62,8 @@
       <br />
       <div *ngFor="let peep of peeps;let last=last">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <button pButton *ngIf="person && p.id !== person.id" (click)="whisperBox(p)" label="DM"></button>
-        <button *ngIf="person && p.id !== person.id" (click)="call(p.id)" label="Call"></button>
+        {{p.name}}<button  [ngStyle]="{'border': chosenDm && p.name === chosenDm.name ? '4px solid green' : '4px solid red' }" pButton *ngIf="person && p.id !== person.id" (click)="whisperBox(p)" label="DM"></button>
+        <button pButton *ngIf="person && p.id !== person.id" (click)="call(p.id)" label="Call"></button>
         <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">
