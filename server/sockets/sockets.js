@@ -3,6 +3,7 @@ let _ = require("underscore")._;
 let uuid = require("node-uuid");
 let Room = require("../room.js");
 let moment = require('moment-timezone')
+var emoji = require('node-emoji')
 module.exports = io => {
   let people = {};
   let rooms = {};
@@ -38,7 +39,7 @@ module.exports = io => {
             });
           } while (!exists);
           socket.emit("exists", {
-            msg: "The username already exists, please pick another one.",
+            msg: "The username already exists, please pick another one." + emoji.get('coffee'),
             proposedName: proposedName
           });
         } else {

@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "emojify.js": "^1.1.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
     "peerjs_fork_firefox40": "^0.3.15",
