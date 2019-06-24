@@ -341,7 +341,9 @@ module.exports = io => {
 
     socket.on('get emojis', (val) => {
       console.log(val.substring(1))
-      socket.emit('recieve emojis', emoji.find(val.substring(1)))
+      let emojis = emoji.find(val.substring(1))
+      console.log(emojis)
+      socket.emit('recieve emojis', emojis)
     })
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
