@@ -1,14 +1,13 @@
 <app-name (nameChosen)="chosenNameFn($event)"></app-name>
     <div *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
-        <button pButton type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
-      <div *ngIf="!inRoom">
+        <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
+      <span *ngIf="!inRoom">
 
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" />
-        <p-spinner [(ngModel)]="limit"></p-spinner>
-        <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br />
-        <span [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" (click)="peepDisplay = true">Messages</span>
-      </div>
+        <p-spinner placeholder="Room Limit" [(ngModel)]="limit"></p-spinner>
+        <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button>
+      </span>
       <hr/>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
@@ -72,8 +71,8 @@
                             <div>
                               <div *ngFor="let msg of whispers">
                                 <span [style.color]="'white'"> {{ msg.from }}: </span>
-                                <span [style.color]="msg.color">{{ msg.msg }}</span>
-                               <span style="float: right;color:white">{{ msg.time }}</span>
+                                <span [style.color]="msg.color">{{ msg.msg }} </span>
+                               <span style="float: right;color:white">To: {{msg.to}} {{ msg.time }}</span>
                               </div>
                             </div>
 

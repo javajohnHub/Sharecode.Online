@@ -19,7 +19,7 @@ export class PingComponent {
   roomCount;
   rooms;
   room;
-  limit = 2;
+  limit;
   rms;
   peeps;
   msg;
@@ -36,6 +36,7 @@ export class PingComponent {
   newMsgs = false;
   peepDisplay = false;
   roomDisplay = false;
+  from;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor() {
@@ -54,8 +55,16 @@ export class PingComponent {
         this.scrollToBottom();
       }
     });
+
+    this.socket.on('join succeeded', (id) => {
+      this.inRoom = true;
+      this.chosenRoom = this.rooms[id].name;
+    })
+    this.socket.on('join failed', () => {
+      this.inRoom = false;
+      this.chosenRoom = null;
+    })
     this.socket.on("whisper", msg => {
-      console.log(msg)
       this.whispers.push(msg);
       this.scrollToBottom();
     });
@@ -95,7 +104,6 @@ export class PingComponent {
     this.whisperBoxVis = true;
   }
   sendWhisper(){
-    console.log(this.chosenDm, this.whisper, this.person)
     this.socket.emit("whisper", {msg: this.whisper, to: this.chosenDm.id, from: this.person.id});
     this.whisper = "";
     this.newMsgs = false;
@@ -117,8 +125,7 @@ export class PingComponent {
 
   joinRoom(id) {
     this.socket.emit("join room", id);
-    this.inRoom = true;
-    this.chosenRoom = this.rooms[id].name;
+
   }
 
   leaveRoom(id) {
