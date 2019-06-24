@@ -19,7 +19,8 @@
           <div [formGroup]="msgForm">
           <input type="text" pInputText  formControlName="msg" [(ngModel)]="msg"/>
           <button type="button" pButton [disabled]="!inRoom || msg && msg.value === ''" (click)="sendMsg()" label="Send Msg"></button><br />
-      </div>
+      <div *ngFor="let emoji of emojis" (click)="replaceEmoji(emoji.key)">{{emoji.emoji}}</div>
+        </div>
         </div>
 
 

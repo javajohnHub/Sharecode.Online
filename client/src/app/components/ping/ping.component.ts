@@ -42,6 +42,7 @@ export class PingComponent {
   green;
   settingsVis = false;
   msgForm: FormGroup;
+  emojis;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
   constructor(private fb: FormBuilder) {
@@ -100,10 +101,14 @@ export class PingComponent {
     });
 
     this.socket.on('recieve emojis', (emojis) => {
-      console.log(emojis)
+      this.emojis = emojis;
     })
   }
 
+  replaceEmoji(key){
+    this.msg = ":" + key + ":";
+    this.emojis = [];
+  }
   createForm() {
     this.msgForm = this.fb.group({
       msg: ['']
