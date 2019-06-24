@@ -2,7 +2,7 @@ let sanitize = require("validator");
 let _ = require("underscore")._;
 let uuid = require("node-uuid");
 let Room = require("../room.js");
-let moment = require('moment')
+let moment = require('moment-timezone')
 module.exports = io => {
   let people = {};
   let rooms = {};
