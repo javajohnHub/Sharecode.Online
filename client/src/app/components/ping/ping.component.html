@@ -2,7 +2,7 @@
     <div *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
-      <button pButton type="button"  (click)="settings()" label="Settings"></button>
+      <button pButton type="button" style="float: right" (click)="settings()" label="Settings"></button>
       <hr/>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
