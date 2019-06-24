@@ -62,11 +62,10 @@
         <div *ngFor="let p of [peep]">
         {{p.name}}<button  [ngStyle]="{'border': chosenDm && p.name === chosenDm.name ? '4px solid green' : '4px solid red' }" pButton *ngIf="person && p.id !== person.id" (click)="whisperBox(p)" label="DM"></button>
         <button pButton *ngIf="person && p.id !== person.id" (click)="call(p.id)" label="Call"></button>
-        <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
-    positionTop="100" (onShow)="show()">
+        <p-dialog *ngIf="last" header="{{toName}}" [(visible)]="whisperBoxVis"
+    positionTop="100" (onShow)="show()" [contentStyle]="{'width':'500px'}">
         <div class="ui-g">
             <div class="ui-g-12">
-                <h3>{{toName}}</h3>
                 <form id="nameForm">
                     <div class="ui-g-12">
                         <div id="chat-div"  #scrollMe2>
