@@ -340,7 +340,7 @@ module.exports = io => {
     })
 
     socket.on('get emojis', (val) => {
-      socket.emit('recieve emojis', emojis.find(val))
+      socket.emit('recieve emojis', emoji.find(val))
     })
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
