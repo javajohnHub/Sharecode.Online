@@ -9,6 +9,7 @@ module.exports = io => {
   let sockets = [];
   let adminColor = "rgb(255,255,255)";
   let peerId;
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   io.sockets.on("connection", socket => {
     let peopleCount = _.size(people);
     let roomCount = _.size(rooms);
@@ -53,13 +54,13 @@ module.exports = io => {
             msg: "You have connected to the server.",
             from: "Admin",
             color: adminColor,
-            time: new Date().toLocaleTimeString()
+            time: moment().tz(timezone).format()
           });
           io.sockets.emit("admin chat", {
             from: "Admin",
             msg: people[socket.id].name + " is online.",
             color: adminColor,
-            time: new Date().toLocaleTimeString()
+            time: moment().tz(timezone).format()
           });
           peopleCount = _.size(people);
           io.sockets.emit("update-people", { people, peopleCount });
@@ -77,7 +78,7 @@ module.exports = io => {
           msg:
             "You are already in a room. Please leave it first to create your own.",
           color: adminColor,
-          time: new Date().toLocaleTimeString()
+          time: moment().tz(timezone).format()
         });
       } else if (people[socket.id] && !people[socket.id].owns) {
         let id = uuid.v4();
@@ -95,7 +96,7 @@ module.exports = io => {
           from: "Admin",
           msg: "Welcome to " + room.name,
           color: adminColor,
-          time: new Date().toLocaleTimeString()
+          time: moment().tz(timezone).format()
         });
 
         peopleCount = _.size(people);
@@ -108,7 +109,7 @@ module.exports = io => {
           from: "Admin",
           msg: "You are not logged in",
           color: adminColor,
-          time: new Date().toLocaleTimeString()
+          time: moment().tz(timezone).format()
         });
       }
     });
@@ -126,7 +127,7 @@ module.exports = io => {
             from: "Admin",
             msg: "Only the owner can remove a room.",
             color: adminColor,
-            time: new Date().toLocaleTimeString()
+            time: moment().tz(timezone).format()
           });
         }
       });
@@ -145,7 +146,7 @@ module.exports = io => {
             msg:
               "You are the owner of this room and you have already been joined.",
             color: adminColor,
-            time: new Date().toLocaleTimeString()
+            time: moment().tz(timezone).format()
           });
         } else {
           if (_.contains(room.people, socket.id)) {
@@ -154,7 +155,7 @@ module.exports = io => {
               from: "Admin",
               msg: "You have already joined this room.",
               color: adminColor,
-              time: new Date().toLocaleTimeString()
+              time: moment().tz(timezone).format()
             });
           } else {
             if (people[socket.id].inroom !== null) {
@@ -166,7 +167,7 @@ module.exports = io => {
                   decodeURI(rooms[people[socket.id].name]) +
                   "), please leave it first to join another room.",
                 color: adminColor,
-                time: new Date().toLocaleTimeString()
+                time: moment().tz(timezone).format()
               });
             }
             if (room.people.length < room.limit) {
@@ -176,13 +177,13 @@ module.exports = io => {
                 from: "Admin",
                 msg: user.name + " has connected to " + decodeURI(room.name),
                 color: adminColor,
-                time: new Date().toLocaleTimeString()
+                time: moment().tz(timezone).format()
               });
               socket.emit("admin chat", {
                 from: "Admin",
                 msg: "Welcome to " + decodeURI(room.name) + ".",
                 color: adminColor,
-                time: new Date().toLocaleTimeString()
+                time: moment().tz(timezone).format()
               });
               room.addPerson(socket.id);
               people[socket.id].inroom = id;
@@ -195,7 +196,7 @@ module.exports = io => {
                 from: "Admin",
                 msg: "The room is full.",
                 color: adminColor,
-                time: new Date().toLocaleTimeString()
+                time: moment().tz(timezone).format()
               });
               socket.emit('join failed')
             }
@@ -212,7 +213,7 @@ module.exports = io => {
           from: "Admin",
           msg: "Please enter a valid name first.",
           color: adminColor,
-          time: new Date().toLocaleTimeString()
+          time: moment().tz(timezone).format()
         });
       }
       let roomCount = _.size(rooms);
@@ -259,7 +260,7 @@ module.exports = io => {
         msg: decodeURI(msg.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[socket.id].name,
-        time: new Date().toLocaleTimeString()
+        time: moment().tz(timezone).format()
       });
     });
 
@@ -268,7 +269,7 @@ module.exports = io => {
         socket.emit("whisper", {
           from: "Admin",
           msg: "You can't whisper to yourself.",
-          time: new Date().toLocaleTimeString(),
+          time: moment().tz(timezone).format(),
           color: adminColor
         });
         return
@@ -277,14 +278,14 @@ module.exports = io => {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[data.from].name,
-        time: new Date().toLocaleTimeString(),
+        time: moment().tz(timezone).format(),
         to: people[data.to].name
       });
       io.sockets.connected[data.to].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[data.from].name,
-        time: new Date().toLocaleTimeString(),
+        time: moment().tz(timezone).format(),
         to: people[data.to].name
       });
       io.sockets.connected[data.to].emit("open dialog", {});
