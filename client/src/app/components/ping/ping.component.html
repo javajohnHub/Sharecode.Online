@@ -39,6 +39,9 @@
     <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
 
         <h3>Rooms: {{ roomCount }}</h3>
+        <span style="color: lightblue">Rooms:</span>
+
+      <br />
       <ng-container *ngIf="!inRoom">
       <div *ngFor="let rm of rms" ><button pButton type="button" class="ui-button-info" [disabled]="!chosenName" (click)="joinRoom(rm.id)" label="Join {{ rm.name }}">
       </button>
