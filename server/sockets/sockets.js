@@ -329,6 +329,12 @@ module.exports = io => {
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
+
+    socket.on('change color', rgb => {
+      people[socket.id].color = "rgb(" + rgb.red + "," + rgb.green + "," + rgb.blue + ")";
+      peopleCount = _.size(people);
+      io.sockets.emit("update-people", { people, peopleCount });
+    })
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {
