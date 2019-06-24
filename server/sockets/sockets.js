@@ -277,13 +277,15 @@ module.exports = io => {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[data.from].name,
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        to: data.to
       });
       io.sockets.connected[data.to].emit("whisper", {
         msg: decodeURI(data.msg.replace(/(<([^>]+)>)/ig,"")),
         color: people[socket.id].color,
         from: people[data.from].name,
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        to: data.to
       });
       io.sockets.connected[data.to].emit("open dialog", {});
     });
