@@ -107,7 +107,7 @@ export class PingComponent {
 
   replaceEmoji(key){
     this.msg = ":" + key + ":";
-    this.emojis = [];
+    this.socket.emit('get emojis', "")
   }
   createForm() {
     this.msgForm = this.fb.group({
