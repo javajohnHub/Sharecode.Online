@@ -106,7 +106,7 @@ export class PingComponent {
   }
 
   replaceEmoji(key){
-    this.msg = ":" + key + ":";
+    this.msg = this.msg + ":" + key + ":";
     this.socket.emit('get emojis', "")
   }
   createForm() {
