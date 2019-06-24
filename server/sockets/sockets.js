@@ -259,7 +259,7 @@ module.exports = io => {
     socket.on("message", msg => {
       console.log(msg);
       io.sockets.in(socket.room).emit("message", {
-        msg: decodeURI(msg.msg.replace(/(<([^>]+)>)/ig,"")),
+        msg: emoji.emojify(decodeURI(msg.msg.replace(/(<([^>]+)>)/ig,""))),
         color: people[socket.id].color,
         from: people[socket.id].name,
         time: moment().tz(timezone).format('h:mm:ss a')
