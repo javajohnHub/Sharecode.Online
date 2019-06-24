@@ -82,6 +82,8 @@
                                 [(ngModel)]="whisper" placeholder="Whisper" name="whisper" />
                             <button type="button" pButton (click)="sendWhisper()" name="send" [disabled]="!whisper"
                                 label="Enter"></button>
+                                <button type="button" pButton (click)="whispers = []" name="clear"
+                                label="Clear"></button>
                         </div>
                     </div>
                 </form>
