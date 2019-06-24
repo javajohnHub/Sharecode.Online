@@ -57,14 +57,7 @@ export class PingComponent {
     this.socket.on("whisper", msg => {
       console.log(msg)
       this.whispers.push(msg);
-
-      let shouldScroll =
-        this.myScrollContainer2.nativeElement.scrollTop +
-          this.myScrollContainer2.nativeElement.clientHeight ===
-        this.myScrollContainer2.nativeElement.scrollHeight;
-      if (!shouldScroll) {
-        this.scrollToBottom();
-      }
+      this.scrollToBottom();
     });
 
     this.socket.on("open dialog", msg => {
@@ -153,6 +146,7 @@ export class PingComponent {
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      this.myScrollContainer2.nativeElement.scrollTop = this.myScrollContainer2.nativeElement.scrollHeight;
     } catch (err) {}
   }
 }
