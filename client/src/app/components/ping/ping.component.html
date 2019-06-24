@@ -9,7 +9,11 @@
         <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button>
       </span>
       <hr/>
+      <p-spinner placeholder="Red" [(ngModel)]="red" [min]="0" [max]="255"></p-spinner>
+      <p-spinner placeholder="Green" [(ngModel)]="green" [min]="0" [max]="255"></p-spinner>
+      <p-spinner placeholder="Blue" [(ngModel)]="blue" [min]="0" [max]="255"></p-spinner>
 
+      <button pButton type="button" (click)="changeColor()" label="Change Color"></button>
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
         <div>
           <div *ngFor="let msg of messages">

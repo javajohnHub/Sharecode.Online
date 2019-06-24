@@ -2,6 +2,7 @@ import { Component, HostListener, EventEmitter, Output } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import {MessageService} from 'primeng/api';
 import * as Peer from "peerjs_fork_firefox40";
+import * as moment from 'moment-timezone';
 @Component({
   selector: "app-name",
   templateUrl: `./name.component.html`,
@@ -52,7 +53,8 @@ export class NameComponent {
     ) {
       this.device = "mobile";
     }
-    this.socket.emit("send name", { name: this.name, device: this.device });
+    let timezone = moment.tz.guess();
+    this.socket.emit("send name", { name: this.name, device: this.device, timezone });
     this.nameChosen.emit({name: this.name});
     this.nameDialogVis = false;
 
