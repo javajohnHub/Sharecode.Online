@@ -55,7 +55,7 @@ module.exports = io => {
             msg: "You have connected to the server.",
             from: "Admin",
             color: adminColor,
-            time: moment().tz(timezone).format('ha z')
+            time: moment().tz(timezone).format('h:mm:ss a')
           });
           io.sockets.emit("admin chat", {
             from: "Admin",
