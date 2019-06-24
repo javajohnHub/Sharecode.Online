@@ -16,9 +16,11 @@
 
       </div>
       <div *ngIf="messages.length > 0 && inRoom">
-          <input type="text" pInputText  [(ngModel)]="msg" />
-          <button type="button" pButton [disabled]="!inRoom || !msg" (click)="sendMsg()" label="Send Msg"></button><br />
+          <div [formGroup]="msgForm">
+          <input type="text" pInputText  formControlName="msg" [(ngModel)]="msg"/>
+          <button type="button" pButton [disabled]="!inRoom || msg && msg.value === ''" (click)="sendMsg()" label="Send Msg"></button><br />
       </div>
+        </div>
 
 
 

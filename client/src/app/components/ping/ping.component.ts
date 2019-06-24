@@ -1,6 +1,6 @@
 import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
-
+import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: "app-ping",
   templateUrl: `./ping.component.html`
@@ -41,9 +41,10 @@ export class PingComponent {
   blue;
   green;
   settingsVis = false;
+  msgForm: FormGroup;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
-  constructor() {
+  constructor(private fb: FormBuilder) {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
       this.messages.push(msg);
@@ -90,8 +91,24 @@ export class PingComponent {
       this.rms = Object.values(this.rooms);
     });
     this.scrollToBottom();
+    this.createForm();
+
+    this.msgForm.valueChanges.subscribe(val => {
+      if(val.msg && val.msg.includes(':')){
+        this.socket.emit('get emojis', val.msg)
+      }
+    });
+
+    this.socket.on('recieve emojis', (emojis) => {
+      console.log(emojis)
+    })
   }
 
+  createForm() {
+    this.msgForm = this.fb.group({
+      msg: ['']
+    });
+  }
   @HostListener("window:beforeunload", ["$event"])
   unloadHandler(event: Event) {
     this.socket.emit("disconnected");
