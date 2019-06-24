@@ -31,7 +31,7 @@
 
 
       <br />
-      {{peerId}}
+
     </div>
 
     <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
@@ -62,7 +62,8 @@
       <br />
       <div *ngFor="let peep of peeps;let last=last">
         <div *ngFor="let p of [peep]">
-        {{p.name}} <a *ngIf="person && p.id !== person.id" (click)="whisperBox(p)">DM</a> <!--<a>Call</a>-->
+        {{p.name}} <button pButton *ngIf="person && p.id !== person.id" (click)="whisperBox(p)" label="DM"></button>
+        <button *ngIf="person && p.id !== person.id" (click)="call(p.id)" label="Call"></button>
         <p-dialog *ngIf="last" header="DM" [(visible)]="whisperBoxVis"
     positionTop="100">
         <div class="ui-g">

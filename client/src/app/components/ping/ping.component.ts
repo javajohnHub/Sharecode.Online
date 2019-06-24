@@ -146,6 +146,10 @@ export class PingComponent {
   hide(){
     console.log('hidden')
   }
+
+  call(id){
+    console.log(id)
+  }
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
