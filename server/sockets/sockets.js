@@ -17,8 +17,8 @@ module.exports = io => {
     io.sockets.emit("update-people", { people, peopleCount });
     io.sockets.emit("update-rooms", { rooms, roomCount });
 
-    socket.on("peerId", id => {
-      peerId = id;
+    socket.on("peerId", peer => {
+      peerId = peer.id;
       socket.on("send name", data => {
         timezone = data.timezone;
         let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
@@ -49,6 +49,7 @@ module.exports = io => {
             inroom: null,
             device: data.device,
             peerId: peerId,
+            peer: peer,
             color: getRandomColor(),
             id: socket.id
           };
@@ -342,6 +343,29 @@ module.exports = io => {
     socket.on('get emojis', (val) => {
       socket.emit('recieve emojis', emoji.search(val.substring(1)))
     })
+
+    //CALLS
+    socket.on("call_request", data => {
+        console.log("calling", data);
+        // socket.emit("request", {
+        //   msg: "You requested a call from",
+        //   to: people[data.id].name
+        // });
+        // io.sockets.connected[callId].emit("request", {
+        //   person: people[socket.id].name,
+        //   msg: " is requesting a video chat",
+        //   peerId: people[socket.id].peerId,
+        //   caller: people[socket.id],
+        //   callee: people[callId],
+        //   caller_socket: callId
+        // });
+
+    });
+    socket.on("call rejected", data => {
+      console.log(data)
+     // io.sockets.connected[data.to].emit("call rejected", {});
+    });
+
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {
