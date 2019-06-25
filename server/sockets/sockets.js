@@ -364,7 +364,7 @@ module.exports = io => {
     });
     socket.on("call rejected", data => {
       console.log(data)
-      io.sockets.connected[data.to].emit("call rejected", {});
+      io.sockets.connected[data.callee.id].emit("call rejected", {});
     });
 
     socket.on("disconnect", () => {
