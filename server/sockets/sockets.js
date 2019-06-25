@@ -347,11 +347,6 @@ module.exports = io => {
 
     //CALLS
     socket.on("call_request", data => {
-        console.log("calling", data);
-        // io.sockets.connected[data].emit("request", {
-        //   msg: "You requested a call from",
-        //   to: people[data].name
-        // });
         io.sockets.connected[data].emit("request", {
           person: people[socket.id].name,
           msg: " is requesting a video chat",

@@ -16,6 +16,7 @@ export class NameComponent {
   peerId;
   nameDialogVis = true;
   @Output() nameChosen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() peerOut: EventEmitter<any> = new EventEmitter<any>();
   constructor(private messageService: MessageService) {
     this.socket = SocketService.getInstance();
     this.peer = new Peer({
@@ -27,8 +28,8 @@ export class NameComponent {
     });
     this.peer.on("open", () => {
       this.peerId = this.peer.id;
-      this.socket.emit("peerId", this.peer.id);
-
+      this.socket.emit("peerId", this.peerId);
+      this.peerOut.emit(this.peer)
       this.socket.on("exists", proposedName => {
         this.name = proposedName.proposedName;
         this.nameDialogVis = true;

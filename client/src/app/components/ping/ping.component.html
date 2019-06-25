@@ -1,4 +1,4 @@
-<app-name (nameChosen)="chosenNameFn($event)"></app-name>
+<app-name (nameChosen)="chosenNameFn($event)" (peerOut)="peerObj($event)"></app-name>
     <div *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
@@ -111,3 +111,22 @@
             </div>
         </div>
     </p-dialog>
+    <div class="ui-g">
+
+        <div class="ui-g-12">
+            <video #localVideo muted="muted" volume="0" autoplay height="200"></video>
+        </div>
+        <div class="ui-g-12">
+          <video #theirVideo autoplay height="200"></video>
+        </div>
+
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+
+        <p-dialog header="sharecode.online" [(visible)]="callRejectedVis" positionTop="100">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h1>Call Rejected</h1>
+                </div>
+            </div>
+        </p-dialog>
+    </div>

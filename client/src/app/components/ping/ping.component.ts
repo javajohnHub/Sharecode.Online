@@ -1,9 +1,11 @@
 import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ConfirmationService } from "primeng/api";
 @Component({
   selector: "app-ping",
-  templateUrl: `./ping.component.html`
+  templateUrl: `./ping.component.html`,
+  providers: [ConfirmationService]
 })
 export class PingComponent {
   socket: any;
@@ -44,9 +46,14 @@ export class PingComponent {
   msgForm: FormGroup;
   emojis;
   hov = false;
+  @ViewChild("localVideo", {static: false})
+  localVideo: any;
+  @ViewChild("theirVideo", {static: false})
+  theirVideo: any;
+  callRejectedVis = false;
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
   @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private confirmationService: ConfirmationService) {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
       this.messages.push(msg);
@@ -104,6 +111,15 @@ export class PingComponent {
     this.socket.on('recieve emojis', (emojis) => {
       this.emojis = emojis;
     })
+
+    this.socket.on("call rejected", data => {
+      this.callRejectedVis = true;
+    });
+
+    this.socket.on("request", data => {
+      console.log("request", data);
+      this.confirm(data);
+    });
   }
 
   createForm() {
@@ -185,8 +201,11 @@ export class PingComponent {
   changeColor(){
     this.socket.emit('change color', {red: this.red, blue: this.blue, green: this.green})
   }
-  call(id){
-    console.log(id)
+    peerObj(peer){
+      this.peer = peer;
+  }
+  call(from){
+    this.socket.emit('call_request', from)
   }
   scrollToBottom(): void {
     try {
@@ -194,4 +213,48 @@ export class PingComponent {
       this.myScrollContainer2.nativeElement.scrollTop = this.myScrollContainer2.nativeElement.scrollHeight;
     } catch (err) {}
   }
+
+  confirm(data) {
+    console.log(data)
+    this.confirmationService.confirm({
+      message: "Would you like to accept a call from " + data.person + "?",
+      accept: () => {
+        this.videoconnect(data);
+      },
+      reject: () => {
+        this.videoReject(data);
+      }
+    });
+}
+
+videoReject(data) {
+  this.socket.emit("call rejected", data);
+}
+
+videoconnect(data) {
+  console.log(data)
+  var n = <any>navigator;
+
+  n.getUserMedia =
+    n.getUserMedia ||
+    n.webkitGetUserMedia ||
+    n.mozGetUserMedia ||
+    n.msGetUserMedia;
+
+  n.getUserMedia(
+    { video: true, audio: true },
+    stream => {
+      var call = this.peer.call(data.caller.peer, stream);
+      call.on("stream", remotestream => {
+        this.theirVideo.nativeElement.src = URL.createObjectURL(remotestream);
+        this.theirVideo.nativeElement.play();
+        this.localVideo.nativeElement.src = URL.createObjectURL(stream);
+        this.localVideo.nativeElement.play();
+      });
+    },
+    (err) => {
+      console.log("Failed to get stream", err);
+    }
+  );
+}
 }

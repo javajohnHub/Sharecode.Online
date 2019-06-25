@@ -20,12 +20,15 @@ import {SpinnerModule} from 'primeng/spinner';
 import {InputTextModule} from 'primeng/inputtext';
 import {SidebarModule} from 'primeng/sidebar';
 import {TooltipModule} from 'primeng/tooltip';
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+
 @NgModule({
   declarations: [
     AppComponent,
     NoContentComponent,
     PingComponent,
     NameComponent
+
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import {TooltipModule} from 'primeng/tooltip';
     SidebarModule,
     ReactiveFormsModule,
     TooltipModule,
+    ConfirmDialogModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
