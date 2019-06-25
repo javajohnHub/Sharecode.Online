@@ -348,23 +348,23 @@ module.exports = io => {
     //CALLS
     socket.on("call_request", data => {
         console.log("calling", data);
-        // socket.emit("request", {
-        //   msg: "You requested a call from",
-        //   to: people[data.id].name
-        // });
-        // io.sockets.connected[callId].emit("request", {
-        //   person: people[socket.id].name,
-        //   msg: " is requesting a video chat",
-        //   peerId: people[socket.id].peerId,
-        //   caller: people[socket.id],
-        //   callee: people[callId],
-        //   caller_socket: callId
-        // });
+        socket.emit("request", {
+          msg: "You requested a call from",
+          to: people[data].name
+        });
+        io.sockets.connected[data].emit("request", {
+          person: people[socket.id].name,
+          msg: " is requesting a video chat",
+          peerId: people[socket.id].peerId,
+          caller: people[socket.id],
+          callee: people[data],
+          caller_socket: data
+        });
 
     });
     socket.on("call rejected", data => {
       console.log(data)
-     // io.sockets.connected[data.to].emit("call rejected", {});
+      io.sockets.connected[data].emit("call rejected", {});
     });
 
     socket.on("disconnect", () => {
