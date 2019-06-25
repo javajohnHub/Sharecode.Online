@@ -18,6 +18,7 @@ module.exports = io => {
     io.sockets.emit("update-rooms", { rooms, roomCount });
 
     socket.on("peerId", peer => {
+      console.log(peer)
       peerId = peer.id;
       socket.on("send name", data => {
         timezone = data.timezone;
