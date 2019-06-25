@@ -46,14 +46,19 @@ export class PingComponent {
   msgForm: FormGroup;
   emojis;
   hov = false;
-  @ViewChild("localVideo", {static: false})
+  @ViewChild("localVideo", { static: false })
   localVideo: any;
-  @ViewChild("theirVideo", {static: false})
+  @ViewChild("theirVideo", { static: false })
   theirVideo: any;
   callRejectedVis = false;
-  @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
-  @ViewChild('scrollMe2', {static: false}) private myScrollContainer2: ElementRef;
-  constructor(private fb: FormBuilder,private confirmationService: ConfirmationService) {
+  @ViewChild("scrollMe", { static: false })
+  private myScrollContainer: ElementRef;
+  @ViewChild("scrollMe2", { static: false })
+  private myScrollContainer2: ElementRef;
+  constructor(
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
+  ) {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
       this.messages.push(msg);
@@ -70,14 +75,14 @@ export class PingComponent {
       }
     });
 
-    this.socket.on('join succeeded', (id) => {
+    this.socket.on("join succeeded", id => {
       this.inRoom = true;
       this.chosenRoom = this.rooms[id].name;
-    })
-    this.socket.on('join failed', () => {
+    });
+    this.socket.on("join failed", () => {
       this.inRoom = false;
       this.chosenRoom = null;
-    })
+    });
     this.socket.on("whisper", msg => {
       this.whispers.push(msg);
       this.scrollToBottom();
@@ -103,14 +108,14 @@ export class PingComponent {
     this.createForm();
 
     this.msgForm.valueChanges.subscribe(val => {
-      if(val.msg && val.msg.includes(':')){
-        this.socket.emit('get emojis', val.msg)
+      if (val.msg && val.msg.includes(":")) {
+        this.socket.emit("get emojis", val.msg);
       }
     });
 
-    this.socket.on('recieve emojis', (emojis) => {
+    this.socket.on("recieve emojis", emojis => {
       this.emojis = emojis;
-    })
+    });
 
     this.socket.on("call rejected", data => {
       this.callRejectedVis = true;
@@ -124,7 +129,7 @@ export class PingComponent {
 
   createForm() {
     this.msgForm = this.fb.group({
-      msg: ['']
+      msg: [""]
     });
   }
   @HostListener("window:beforeunload", ["$event"])
@@ -132,23 +137,26 @@ export class PingComponent {
     this.socket.emit("disconnected");
   }
 
-  chosenNameFn(event){
+  chosenNameFn(event) {
     this.chosenName = event.name;
-
   }
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, function (url) {
-      return '<a href="' + url + '" target="_blank">' + url + '</a>';
-    })
+    return text.replace(urlRegex, function(url) {
+      return '<a href="' + url + '" target="_blank">' + url + "</a>";
+    });
   }
-  whisperBox(p){
+  whisperBox(p) {
     this.toName = p.name;
     this.chosenDm = p;
     this.whisperBoxVis = true;
   }
-  sendWhisper(){
-    this.socket.emit("whisper", {msg: this.whisper, to: this.chosenDm.id, from: this.person.id});
+  sendWhisper() {
+    this.socket.emit("whisper", {
+      msg: this.whisper,
+      to: this.chosenDm.id,
+      from: this.person.id
+    });
     this.whisper = "";
     this.newMsgs = false;
   }
@@ -159,7 +167,7 @@ export class PingComponent {
   }
 
   sendMsg() {
-    this.socket.emit("message", {msg: this.msg, id: null});
+    this.socket.emit("message", { msg: this.msg, id: null });
     this.msg = "";
     this.emojis = [];
   }
@@ -170,42 +178,76 @@ export class PingComponent {
 
   joinRoom(id) {
     this.socket.emit("join room", id);
-
   }
 
   leaveRoom(id) {
-    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.socket.id))
+    console.log(
+      this.rooms[id].people,
+      this.rooms[id].people.includes(this.socket.socket.id)
+    );
     this.socket.emit("leave room", id);
-    console.log(this.rooms[id].people, this.rooms[id].people.includes(this.socket.socket.id))
-    this.rms.forEach((room) => {
-
-      if(room.people.includes(this.socket.socket.id)){
+    console.log(
+      this.rooms[id].people,
+      this.rooms[id].people.includes(this.socket.socket.id)
+    );
+    this.rms.forEach(room => {
+      if (room.people.includes(this.socket.socket.id)) {
         this.inRoom = false;
         this.chosenRoom = null;
       }
-    })
+    });
     this.messages = [];
   }
 
-  hide(){
+  hide() {
     this.peepDisplay = false;
   }
 
-  show(){
+  show() {
     this.newMsgs = false;
   }
 
-  settings(){
+  settings() {
     this.settingsVis = true;
   }
-  changeColor(){
-    this.socket.emit('change color', {red: this.red, blue: this.blue, green: this.green})
+  changeColor() {
+    this.socket.emit("change color", {
+      red: this.red,
+      blue: this.blue,
+      green: this.green
+    });
   }
-    peerObj(peer){
-      this.peer = peer;
+  peerObj(peer) {
+    this.peer = peer;
+    var n = <any>navigator;
+    n.getUserMedia =
+      n.getUserMedia ||
+      n.webkitGetUserMedia ||
+      n.mozGetUserMedia ||
+      n.msGetUserMedia;
+    this.peer.on("call", call => {
+      console.log(call)
+      n.getUserMedia(
+        { video: true, audio: true },
+        stream => {
+          call.answer(stream);
+          call.on("stream", remotestream => {
+            this.theirVideo.nativeElement.srcObject = remotestream
+
+            this.theirVideo.nativeElement.play();
+            this.localVideo.nativeElement.srcObject = stream;
+            this.localVideo.nativeElement.play();
+          });
+        },
+        function(err) {
+          this.call = false;
+          console.log("Failed to get stream", err);
+        }
+      );
+    });
   }
-  call(from){
-    this.socket.emit('call_request', from)
+  call(from) {
+    this.socket.emit("call_request", from);
   }
   scrollToBottom(): void {
     try {
@@ -215,7 +257,7 @@ export class PingComponent {
   }
 
   confirm(data) {
-    console.log(data)
+    console.log(data);
     this.confirmationService.confirm({
       message: "Would you like to accept a call from " + data.person + "?",
       accept: () => {
@@ -225,36 +267,36 @@ export class PingComponent {
         this.videoReject(data);
       }
     });
-}
+  }
 
-videoReject(data) {
-  this.socket.emit("call rejected", data);
-}
+  videoReject(data) {
+    this.socket.emit("call rejected", data);
+  }
 
-videoconnect(data) {
-  console.log(data)
-  var n = <any>navigator;
+  videoconnect(data) {
+    console.log(data);
+    var n = <any>navigator;
 
-  n.getUserMedia =
-    n.getUserMedia ||
-    n.webkitGetUserMedia ||
-    n.mozGetUserMedia ||
-    n.msGetUserMedia;
+    n.getUserMedia =
+      n.getUserMedia ||
+      n.webkitGetUserMedia ||
+      n.mozGetUserMedia ||
+      n.msGetUserMedia;
 
-  n.getUserMedia(
-    { video: true, audio: true },
-    stream => {
-      var call = this.peer.call(data.caller.peer, stream);
-      call.on("stream", remotestream => {
-        this.theirVideo.nativeElement.src = URL.createObjectURL(remotestream);
-        this.theirVideo.nativeElement.play();
-        this.localVideo.nativeElement.src = URL.createObjectURL(stream);
-        this.localVideo.nativeElement.play();
-      });
-    },
-    (err) => {
-      console.log("Failed to get stream", err);
-    }
-  );
-}
+    n.getUserMedia(
+      { video: true, audio: true },
+      stream => {
+        var call = this.peer.call(data.caller.peer, stream);
+        call.on("stream", remotestream => {
+          this.theirVideo.nativeElement.srcObject = remotestream;
+          this.theirVideo.nativeElement.play();
+          this.localVideo.nativeElement.srcObject = stream
+          this.localVideo.nativeElement.play();
+        });
+      },
+      err => {
+        console.log("Failed to get stream", err);
+      }
+    );
+  }
 }
