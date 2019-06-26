@@ -1,5 +1,6 @@
 import { Directive, Renderer, Input } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
+import { AppService } from 'src/app/shared/app.service';
 declare var CodeMirror: any;
 
 @Directive({
@@ -10,7 +11,7 @@ export class EditorDirective {
   socket: any;
   @Input()
   selectedTheme: any = {};
-  constructor(private _renderer: Renderer) {}
+  constructor(private _renderer: Renderer, private appService: AppService) {}
 
   ngAfterViewInit() {
     this.socket = SocketService.getInstance();
@@ -46,6 +47,7 @@ export class EditorDirective {
     });
     this.socket.on("disable", data => {
       console.log('disabled')
+      this.appService.disabled = true;
       this.editor.setOption("readOnly", true);
     });
     this.editor.on("change", (i, op) => {
@@ -59,6 +61,7 @@ export class EditorDirective {
      });
 
      this.socket.on('enable', () => {
+      this.appService.disabled = false;
       this.editor.setOption("readOnly",false);
      })
   }

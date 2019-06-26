@@ -1,5 +1,5 @@
 <app-name (nameChosen)="chosenNameFn($event)" (peerOut)="peerObj($event)"></app-name>
-    <div *ngIf="chosenName">
+    <div class="ui-g-12" *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
       <button pButton type="button" style="float: right" (click)="settings()" label="Settings"></button>
@@ -23,11 +23,22 @@
         </div>
         </div>
         <app-editor *ngIf="inRoom" id="editor"></app-editor>
+        <video class="small-vid" #localVideo muted="muted" volume="0" autoplay height="200"></video>
+        <video class="big-vid" #theirVideo autoplay height="400"></video>
+      </div>
+      <button *ngIf="inCall && this.stream && this.remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
 
+        <div class="ui-g-12">
 
-      <br />
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
 
-    </div>
+        <p-dialog header="sharecode.online" [(visible)]="callRejectedVis" positionTop="100">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h1>Call Rejected</h1>
+                </div>
+            </div>
+        </p-dialog>
 
     <p-sidebar [(visible)]="roomDisplay" [blockScroll]="true">
 
@@ -111,21 +122,5 @@
             </div>
         </div>
     </p-dialog>
-    <div class="ui-g">
 
-        <div class="ui-g-12 vid-container">
-            <video class="small-vid" #localVideo muted="muted" volume="0" autoplay height="200"></video>
-          <video class="big-vid" #theirVideo autoplay height="600"></video>
-        </div>
-        <button *ngIf="inCall && this.stream && this.remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button><br/>
-        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
-
-        <p-dialog header="sharecode.online" [(visible)]="callRejectedVis" positionTop="100">
-            <div class="ui-g">
-                <div class="ui-g-12">
-                    <h1>Call Rejected</h1>
-                </div>
-            </div>
-        </p-dialog>
-    </div>
 

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
+import { AppService } from 'src/app/shared/app.service';
 declare var CodeMirror: any;
 @Component({
   selector: "app-editor",
@@ -11,7 +12,10 @@ export class EditorComponent {
   socket: any;
   themes;
   languages;
-  constructor() {
+  disabled;
+  constructor(private appService: AppService) {
+    this.disabled = this.appService.disabled;
+    console.log(this.disabled)
     this.socket = SocketService.getInstance();
     this.selectedTheme = "ambiance";
     this.themes = [

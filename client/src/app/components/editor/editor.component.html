@@ -3,6 +3,11 @@
     <p-dropdown [options]="languages" [(ngModel)]="selectedMode" (ngModelChange)="onModeChange($event)"></p-dropdown>
     <textarea editor id="code" name="code">
 
+</div>
+<div class="ui-g-12">
+<div *ngIf="disabled">disabled</div>
+    <div *ngIf="!disabled">enabled</div>
+  </div>
 
 
 
