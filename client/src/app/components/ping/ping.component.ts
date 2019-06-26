@@ -49,6 +49,7 @@ export class PingComponent {
   stream;
   remotestream;
   inCall = false;
+  addRoomVis;
   @ViewChild("localVideo", { static: false })
   localVideo: any;
   @ViewChild("theirVideo", { static: false })

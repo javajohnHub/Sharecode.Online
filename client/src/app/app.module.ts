@@ -24,7 +24,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {SidebarModule} from 'primeng/sidebar';
 import {TooltipModule} from 'primeng/tooltip';
 import { ConfirmDialogModule } from "primeng/confirmdialog";
-
+import {SplitButtonModule} from 'primeng/splitbutton';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +50,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     TooltipModule,
     ConfirmDialogModule,
     DropdownModule,
+    SplitButtonModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
