@@ -113,11 +113,9 @@
     </p-dialog>
     <div class="ui-g">
 
-        <div class="ui-g-12">
-            <video #localVideo muted="muted" volume="0" autoplay height="200"></video>
-        </div>
-        <div class="ui-g-12">
-          <video #theirVideo autoplay height="200"></video>
+        <div class="ui-g-12 vid-container">
+            <video class="small-vid" #localVideo muted="muted" volume="0" autoplay height="200"></video>
+          <video class="big-vid" #theirVideo autoplay height="600"></video>
         </div>
         <button *ngIf="inCall && this.stream && this.remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button><br/>
         <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

@@ -16,3 +16,21 @@ body{
     list-style: none;
   }
 }
+
+.vid-container{
+  position: relative;
+}
+
+.small-vid{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: 0;
+  right:0;
+}
+
+.large-vid{
+  position: absolute;
+  width: 500px;
+  height: 500px;
+}
