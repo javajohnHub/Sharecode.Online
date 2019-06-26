@@ -375,6 +375,7 @@ module.exports = io => {
           op.origin == "+delete"
         ) {
           socket.broadcast.to(socket.room).emit("change", op);
+          socket.broadcast.to(socket.room).emit("disable");
         }
 
     });
