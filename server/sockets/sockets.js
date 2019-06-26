@@ -363,8 +363,6 @@ module.exports = io => {
     });
 
     socket.on("change", op => {
-      console.log("socket on change", socket.room);
-      if (socket.room != undefined) {
         if (
           op.origin == "+input" ||
           op.origin == "paste" ||
@@ -372,7 +370,7 @@ module.exports = io => {
         ) {
           socket.broadcast.to(socket.room).emit("change", op);
         }
-      }
+
     });
     socket.on("theme", data => {
       socket.emit("send theme", data);

@@ -22,7 +22,7 @@
       <span *ngFor="let emoji of emojis" pTooltip="{{emoji.key}}">{{emoji.emoji}}</span>
         </div>
         </div>
-
+        <app-editor *ngIf="inRoom" id="editor"></app-editor>
 
 
       <br />
@@ -128,3 +128,4 @@
             </div>
         </p-dialog>
     </div>
+

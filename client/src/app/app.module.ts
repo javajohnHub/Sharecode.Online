@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {ButtonModule} from 'primeng/button';
+import { EditorComponent } from "./components/editor/editor.component";
+import { EditorDirective } from "./components/editor/editor.directive";
+import { DropdownModule } from "primeng/dropdown";
 import {
   LocationStrategy,
   HashLocationStrategy
@@ -27,7 +30,9 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     AppComponent,
     NoContentComponent,
     PingComponent,
-    NameComponent
+    NameComponent,
+    EditorComponent,
+    EditorDirective
 
   ],
   imports: [
@@ -44,6 +49,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     ReactiveFormsModule,
     TooltipModule,
     ConfirmDialogModule,
+    DropdownModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
