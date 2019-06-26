@@ -194,6 +194,7 @@ module.exports = io => {
               socket.room = room.name;
               socket.join(socket.room);
               socket.emit('join succeeded', id)
+              socket.emit("refresh", room.body);
             } else {
 
               socket.emit("admin chat", {
