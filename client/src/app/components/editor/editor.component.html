@@ -1,6 +1,6 @@
 <div class="ui-g-12">
-    <div *ngIf="disabled" [style.color]="'red'">disabled</div>
-        <div *ngIf="!disabled" [style.color]="'green'">enabled</div>
+    <div *ngIf="disabled" [style.color]="'red'">Editing Disabled</div>
+        <div *ngIf="!disabled" [style.color]="'green'">Editable</div>
       </div>
 <div class="ui-g-12">
     <p-dropdown [options]="themes" [(ngModel)]="selectedTheme" (ngModelChange)="onThemeChange($event)"></p-dropdown>
