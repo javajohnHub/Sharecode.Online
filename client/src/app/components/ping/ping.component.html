@@ -2,8 +2,8 @@
     <div class="ui-g-12" *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton class="ui-button-success" type="button" (click)="addRoomVis = true" icon="pi pi-plus"></button>
-        <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
-      <button pButton type="button" style="float: right; margin-left:20px;" (click)="settings()" label="Settings"></button>
+        <button pButton style="margin-left:20px;" [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
+      <button pButton type="button" style="float: right;" (click)="settings()" label="Settings"></button>
       <hr/>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
