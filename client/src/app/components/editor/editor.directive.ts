@@ -47,7 +47,7 @@ export class EditorDirective {
     });
     this.socket.on("disable", data => {
       console.log('disabled')
-      this.appService.disabled = true;
+      this.appService.setDisabled(true);
       this.editor.setOption("readOnly", true);
     });
     this.editor.on("change", (i, op) => {
@@ -61,7 +61,7 @@ export class EditorDirective {
      });
 
      this.socket.on('enable', () => {
-      this.appService.disabled = false;
+      this.appService.setDisabled(false)
       this.editor.setOption("readOnly",false);
      })
   }

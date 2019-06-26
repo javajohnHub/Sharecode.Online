@@ -14,7 +14,9 @@ export class EditorComponent {
   languages;
   disabled;
   constructor(private appService: AppService) {
-    this.disabled = this.appService.disabled;
+    this.appService.getDisabled().subscribe((dis) => {
+      this.disabled = dis;
+    });
     console.log(this.disabled)
     this.socket = SocketService.getInstance();
     this.selectedTheme = "ambiance";
