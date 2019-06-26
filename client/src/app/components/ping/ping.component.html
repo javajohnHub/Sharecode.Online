@@ -2,8 +2,9 @@
     <div class="ui-g-12" *ngIf="chosenName">
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton class="ui-button-success" type="button" (click)="addRoomVis = true" icon="pi pi-plus"></button>
-        <button pButton style="margin-left:20px;" [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
-      <button pButton type="button" style="float: right;" (click)="settings()" label="Settings"></button>
+        <button pButton style="margin-left:20px;"  type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
+        <button pButton class="ui-button-success" type="button" (click)="peepDisplay = true" icon="pi pi-check" [ngStyle]="{'background-color': newMsgs ? 'green' : 'red' }"></button>
+        <button pButton type="button" style="float: right;" (click)="settings()" label="Settings"></button>
       <hr/>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
@@ -27,7 +28,7 @@
         <video class="small-vid" #localVideo muted="muted" volume="0" autoplay height="200"></video>
         <video class="big-vid" #theirVideo autoplay height="400"></video>
       </div>
-      <button *ngIf="inCall && this.stream && this.remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
+      <button *ngIf="inCall && stream && remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
 
         <div class="ui-g-12">
 
