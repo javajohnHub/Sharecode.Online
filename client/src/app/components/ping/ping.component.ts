@@ -46,6 +46,9 @@ export class PingComponent {
   msgForm: FormGroup;
   emojis;
   hov = false;
+  stream;
+  remotestream;
+  inCall = false;
   @ViewChild("localVideo", { static: false })
   localVideo: any;
   @ViewChild("theirVideo", { static: false })
@@ -230,8 +233,10 @@ export class PingComponent {
       n.getUserMedia(
         { video: true, audio: true },
         stream => {
+          this.stream = stream;
           call.answer(stream);
           call.on("stream", remotestream => {
+            this.remotestream = remotestream;
             this.theirVideo.nativeElement.srcObject = remotestream
 
             this.theirVideo.nativeElement.play();
@@ -248,6 +253,21 @@ export class PingComponent {
   }
   call(from) {
     this.socket.emit("call_request", from);
+    this.inCall = true;
+  }
+
+  endCall(){
+    if (this.inCall && this.stream && this.remotestream) {
+      let tracks = this.stream.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+      });
+      let remoteTracks = this.remotestream.getTracks();
+      remoteTracks.forEach(track => {
+        track.stop();
+      });
+      this.inCall = false;
+    }
   }
   scrollToBottom(): void {
     try {
@@ -274,7 +294,6 @@ export class PingComponent {
   }
 
   videoconnect(data) {
-    console.log(data);
     var n = <any>navigator;
 
     n.getUserMedia =
@@ -288,6 +307,7 @@ export class PingComponent {
       stream => {
         var call = this.peer.call(data.caller.peer, stream);
         call.on("stream", remotestream => {
+          this.inCall = true;
           this.theirVideo.nativeElement.srcObject = remotestream;
           this.theirVideo.nativeElement.play();
           this.localVideo.nativeElement.srcObject = stream
