@@ -26,6 +26,7 @@ export class EditorDirective {
         }
       }
     );
+
     this.editor.setOption("theme", "ambiance");
     this.socket.on("refresh", data => {
       this.editor.setValue(data);

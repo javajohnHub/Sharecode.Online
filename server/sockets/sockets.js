@@ -362,6 +362,12 @@ module.exports = io => {
       io.sockets.connected[data.caller.id].emit("call rejected", {});
     });
 
+    socket.on("refresh", body => {
+      let room = rooms[people[socket.id].inroom];
+      if (room) {
+        room.body = body;
+      }
+    });
     socket.on("change", op => {
         if (
           op.origin == "+input" ||
