@@ -362,6 +362,25 @@ module.exports = io => {
       io.sockets.connected[data.caller.id].emit("call rejected", {});
     });
 
+    socket.on("change", op => {
+      console.log("socket on change", socket.room);
+      if (socket.room != undefined) {
+        if (
+          op.origin == "+input" ||
+          op.origin == "paste" ||
+          op.origin == "+delete"
+        ) {
+          socket.broadcast.to(socket.room).emit("change", op);
+        }
+      }
+    });
+    socket.on("theme", data => {
+      socket.emit("send theme", data);
+    });
+    socket.on("mode", data => {
+      socket.emit("send mode", data);
+    });
+
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {
