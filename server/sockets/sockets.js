@@ -379,6 +379,10 @@ module.exports = io => {
         }
 
     });
+
+    socket.on('enable', () => {
+      socket.broadcast.to(socket.room).emit("enable");
+    })
     socket.on("theme", data => {
       socket.emit("send theme", data);
     });
