@@ -375,13 +375,13 @@ module.exports = io => {
           op.origin == "+delete"
         ) {
           socket.broadcast.to(socket.room).emit("change", op);
-          socket.broadcast.to(socket.room).emit("disable");
+          socket.broadcast.to(socket.room).emit("disable", true);
         }
 
     });
 
     socket.on('enable', () => {
-      socket.broadcast.to(socket.room).emit("enable");
+      socket.broadcast.to(socket.room).emit('enable', false);
     })
     socket.on("theme", data => {
       socket.emit("send theme", data);
