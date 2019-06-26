@@ -105,7 +105,7 @@
       </div>
     </p-sidebar>
     <p-dialog header="Add Room" [(visible)]="addRoomVis"
-    positionTop="100" [contentStyle]="{'width':'500px'}">
+    positionTop="100">
     <span *ngIf="!inRoom">
 
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" /><br/>
@@ -114,7 +114,7 @@
       </span>
   </p-dialog>
     <p-dialog header="Settings" [(visible)]="settingsVis"
-    positionTop="100" [contentStyle]="{'width':'500px'}">
+    positionTop="100">
         <div class="ui-g">
             <div class="ui-g-12">
 
