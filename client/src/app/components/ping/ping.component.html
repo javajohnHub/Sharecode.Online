@@ -3,7 +3,7 @@
         <button pButton type="button" (click)="roomDisplay = true" label="Rooms {{roomCount}}"></button>
         <button pButton class="ui-button-success" type="button" (click)="addRoomVis = true" icon="pi pi-plus"></button>
         <button pButton [ngStyle]="{'border': newMsgs ? '4px solid green' : '4px solid red' }" type="button" (click)="peepDisplay = true" label="People {{peopleCount}}"></button>
-      <button pButton type="button" style="float: right" (click)="settings()" label="Settings"></button>
+      <button pButton type="button" style="float: right; margin-left:20px;" (click)="settings()" label="Settings"></button>
       <hr/>
 
       <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
@@ -109,7 +109,7 @@
 
         <input pInputText type="text" placeholder="Room Name" [(ngModel)]="room" /><br/>
         <p-spinner placeholder="Room Limit" [(ngModel)]="limit" [min]="1"></p-spinner><br/>
-        <button pButton type="button" [disabled]="!room" (click)="sendRoom()" label="Create room"></button><br/>
+        <button pButton type="button" [disabled]="!room" (click)="sendRoom();addRoomVis = false" label="Create room"></button><br/>
       </span>
   </p-dialog>
     <p-dialog header="Settings" [(visible)]="settingsVis"
