@@ -18,6 +18,8 @@ export class EditorDirective {
       this._renderer.selectRootElement("[editor]"),
       {
         lineNumbers: true,
+            styleActiveLine: true,
+            matchBrackets: true,
         lineWrapping: true,
         tabSize: 4,
         mode: {
@@ -42,9 +44,22 @@ export class EditorDirective {
     this.socket.on("send mode", data => {
       this.editor.setOption("mode", data);
     });
+    this.socket.on("disable", data => {
+      console.log('disabled')
+      this.editor.setOption("readOnly", true);
+    });
     this.editor.on("change", (i, op) => {
      this.socket.emit("change", op);
       this.socket.emit("refresh", this.editor.getValue());
+
     });
+    this.editor.on("blur", () => {
+      console.log('enabled')
+      this.socket.emit("enable");
+     });
+
+     this.socket.on('enable', () => {
+      this.editor.setOption("readOnly",false);
+     })
   }
 }
