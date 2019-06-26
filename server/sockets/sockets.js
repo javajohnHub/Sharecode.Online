@@ -364,10 +364,9 @@ module.exports = io => {
 
     socket.on("refresh", body => {
       let room = rooms[people[socket.id].inroom];
-      if (room) {
-        room.body = body;
-      }
+      room.body = body;
     });
+
     socket.on("change", op => {
         if (
           op.origin == "+input" ||
