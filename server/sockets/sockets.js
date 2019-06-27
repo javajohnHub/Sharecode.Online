@@ -235,6 +235,7 @@ module.exports = io => {
           if ((_.contains(socketids), room.people)) {
             if (socket.id === room.owner) {
               sockets[i].leave(room.name);
+              console.log(i, " left the room")
             }
 
           }
