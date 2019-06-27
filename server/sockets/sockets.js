@@ -227,21 +227,8 @@ module.exports = io => {
 
     socket.on("leave room", id => {
       let room = rooms[id];
-      if (room) {
-        let socketids = [];
-
-        for (let i = 0; i < sockets.length; i++) {
-          socketids.push(sockets[i].id);
-          if ((_.contains(socketids), room.people)) {
-            if (socket.id === room.owner) {
-              sockets[i].leave(room.name);
-              console.log(i, " left the room")
-            }
-
-          }
-
-        }
-
+      sockets[socket.id].leave(room.name);
+      console.log(sockets[socket.id], " left the room")
         people[socket.id].owns = null;
         people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
