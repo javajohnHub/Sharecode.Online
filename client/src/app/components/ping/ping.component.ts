@@ -2,6 +2,7 @@ import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from "primeng/api";
+import { AppService } from 'src/app/shared/app.service';
 @Component({
   selector: "app-ping",
   templateUrl: `./ping.component.html`,
@@ -61,7 +62,8 @@ export class PingComponent {
   private myScrollContainer2: ElementRef;
   constructor(
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private appService: AppService
   ) {
     this.socket = SocketService.getInstance();
     this.socket.on("admin chat", msg => {
@@ -201,6 +203,11 @@ export class PingComponent {
       }
     });
     this.messages = [];
+    this.appService.setDisabled(false)
+    this.appService.getEditor().subscribe((editor) => {
+      editor.setOption("readOnly",false);
+    })
+    this.socket.emit("enable");
   }
 
   hide() {

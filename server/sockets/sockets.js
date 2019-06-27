@@ -228,7 +228,12 @@ module.exports = io => {
     socket.on("leave room", id => {
       let room = rooms[id];
       socket.leave(room.name);
-      console.log(socket.id, " left the room")
+      socket.broadcast.to(socket.room).emit("admin chat", {
+        from: "Admin",
+        msg: `${people[socket.id].name} has left the room`,
+        color: adminColor,
+        time: moment().tz(timezone).format('h:mm:ss a')
+      });
         people[socket.id].owns = null;
         people[socket.id].inroom = null;
         room.people = _.without(room.people, socket.id); //remove people from the room:people{}collection
