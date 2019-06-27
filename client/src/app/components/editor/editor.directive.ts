@@ -1,4 +1,4 @@
-import { Directive, Renderer, Input } from "@angular/core";
+import { Directive, Renderer, Input, HostListener } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import { AppService } from 'src/app/shared/app.service';
 declare var CodeMirror: any;
@@ -64,5 +64,11 @@ export class EditorDirective {
       this.appService.setDisabled(false)
       this.editor.setOption("readOnly",false);
      })
+  }
+  @HostListener("window:beforeunload", ["$event"])
+  unloadHandler(event: Event) {
+    console.log('triggered')
+    this.appService.setDisabled(false);
+      this.editor.setOption("readOnly",false);
   }
 }
