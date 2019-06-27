@@ -402,6 +402,12 @@ module.exports = io => {
               let personIndex = room.people.indexOf(socket.id);
               room.people.splice(personIndex, 1);
               socket.leave(room.name);
+              socket.broadcast.to(socket.room).emit("admin chat", {
+                from: "Admin",
+                msg: `${people[socket.id].name} has left the room`,
+                color: adminColor,
+                time: moment().tz(timezone).format('h:mm:ss a')
+              });
             }
             delete people[socket.id];
             console.log(room.people.length);
