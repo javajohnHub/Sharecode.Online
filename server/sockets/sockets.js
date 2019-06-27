@@ -245,7 +245,6 @@ module.exports = io => {
         io.sockets.emit("update-people", { people, peopleCount });
         let roomCount = _.size(rooms);
         io.sockets.emit("update-rooms", { rooms, roomCount });
-      }
     });
     socket.on("message", msg => {
       console.log(msg);
