@@ -22,7 +22,8 @@
         <span *ngFor="let emoji of emojis" pTooltip="{{emoji.key}}">{{emoji.emoji}}</span>
     </div>
 </div>
-<app-editor class="ui-g-7" id="editor"></app-editor>
+<div class="ui-g-7" *ngIf="!inRoom"></div>
+<app-editor class="ui-g-7" *ngIf="inRoom" id="editor"></app-editor>
         <video class="ui-g-5 top" #localVideo muted="muted" volume="0" autoplay></video>
 
  </div>
