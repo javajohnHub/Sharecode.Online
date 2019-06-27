@@ -55,20 +55,14 @@ export class EditorDirective {
       this.socket.emit("refresh", this.editor.getValue());
 
     });
-    this.editor.on("blur", () => {
+    this.editor.on("changes", () => {
       console.log('enabled')
       this.socket.emit("enable");
      });
 
-     this.socket.on('enable', () => {
-      this.appService.setDisabled(false)
-      this.editor.setOption("readOnly",false);
-     })
-  }
-  @HostListener("window:beforeunload", ["$event"])
-  unloadHandler(event: Event) {
-    console.log('triggered')
-    this.appService.setDisabled(false);
-      this.editor.setOption("readOnly",false);
+     this.socket.on("enable", () => {
+       this.appService.setDisabled(false);
+       this.editor.setOption("readOnly", false);
+     });
   }
 }
