@@ -29,11 +29,11 @@ export class EditorDirective {
         }
       }
     );
-
+    this.appService.setEditor(this.editor);
     this.editor.setOption("theme", "ambiance");
     this.socket.on("refresh", data => {
-      this.editor.setValue(data);
-    });
+    this.editor.setValue(data);
+      });
 
     this.socket.on("change", data => {
       this.editor.replaceRange(data.text, data.from, data.to);
@@ -55,14 +55,14 @@ export class EditorDirective {
       this.socket.emit("refresh", this.editor.getValue());
 
     });
-    this.editor.on("changes", () => {
+    this.editor.on("blur", () => {
       console.log('enabled')
       this.socket.emit("enable");
      });
 
-     this.socket.on("enable", () => {
-       this.appService.setDisabled(false);
-       this.editor.setOption("readOnly", false);
-     });
+     this.socket.on('enable', () => {
+      this.appService.setDisabled(false)
+      this.editor.setOption("readOnly",false);
+     })
   }
 }

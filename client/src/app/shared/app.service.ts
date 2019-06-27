@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export class AppService  {
   disabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  editor: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor() {
 
   }
@@ -14,6 +15,13 @@ export class AppService  {
     this.disabled.next(dis);
   }
 
+  setEditor(editor) {
+    this.editor.next(editor);
+  }
+
+  getEditor() {
+    return this.editor;
+  }
   getDisabled() {
     return this.disabled;
   }

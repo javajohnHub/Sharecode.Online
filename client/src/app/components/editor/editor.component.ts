@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, HostListener } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
 import { AppService } from 'src/app/shared/app.service';
 declare var CodeMirror: any;
@@ -17,7 +17,6 @@ export class EditorComponent {
     this.appService.getDisabled().subscribe((dis) => {
       this.disabled = dis;
     });
-    console.log(this.disabled)
     this.socket = SocketService.getInstance();
     this.selectedTheme = "ambiance";
     this.themes = [
@@ -95,5 +94,16 @@ export class EditorComponent {
   onModeChange(newValue) {
     this.selectedMode = newValue;
     this.socket.emit("mode", this.selectedMode);
+  }
+  @HostListener("window:beforeunload", ["$event"])
+  unloadHandler(event: Event) {
+    this.reset()
+  }
+  reset(){
+    this.appService.setDisabled(false)
+    this.appService.getEditor().subscribe((editor) => {
+      editor.setOption("readOnly",false);
+    })
+    this.socket.emit("enable");
   }
 }
