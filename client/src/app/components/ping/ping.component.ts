@@ -243,6 +243,7 @@ export class PingComponent {
             this.theirVideo.nativeElement.play();
             this.localVideo.nativeElement.srcObject = stream;
             this.localVideo.nativeElement.play();
+
           });
         },
         function(err) {
@@ -254,7 +255,6 @@ export class PingComponent {
   }
   call(from) {
     this.socket.emit("call_request", from);
-    this.inCall = true;
   }
 
   endCall(){
@@ -267,7 +267,6 @@ export class PingComponent {
       remoteTracks.forEach(track => {
         track.stop();
       });
-      this.inCall = false;
     }
   }
   scrollToBottom(): void {

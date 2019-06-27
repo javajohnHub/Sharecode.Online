@@ -27,7 +27,7 @@
         <video class="ui-g-5 top" #localVideo muted="muted" volume="0" autoplay></video>
 
  </div>
-      <button *ngIf="inCall && stream && remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
+      <button *ngIf="stream && remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
 
         <div class="ui-g-12">
 
