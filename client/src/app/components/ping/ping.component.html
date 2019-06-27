@@ -6,28 +6,26 @@
         <button pButton *ngIf="newMsgs" class="ui-button-success" type="button" (click)="peepDisplay = true" icon="pi pi-check" [ngStyle]="{'background-color': newMsgs ? 'green' : 'red' }"></button>
         <button pButton type="button" style="float: right;" (click)="settings()" label="Settings"></button>
       <hr/>
-
-      <div id="chat-div" *ngIf="messages.length > 0" #scrollMe>
-        <div>
-          <div *ngFor="let msg of messages">
-            <span [style.color]="'white'"> {{ msg.from }}: </span>
-            <span [style.color]="msg.color" [innerHTML]="urlify(msg.msg)"></span>
-           <span style="float: right;color:white">{{ msg.time }}</span>
-          </div>
+<div class="ui-g">
+    <div class="ui-g-7" id="chat-div" *ngIf="messages.length > 0" #scrollMe>
+        <div *ngFor="let msg of messages">
+          <span [style.color]="'white'"> {{ msg.from }}: </span>
+          <span [style.color]="msg.color" [innerHTML]="urlify(msg.msg)"></span>
+         <span style="float: right;color:white">{{ msg.time }}</span>
         </div>
 
-      </div>
-      <div *ngIf="messages.length > 0 && inRoom">
-          <div [formGroup]="msgForm">
-          <input type="text" pInputText  formControlName="msg" [(ngModel)]="msg"/>
-          <button type="button" pButton [disabled]="!inRoom || msg && msg.value === ''" (click)="sendMsg()" label="Send Msg"></button><br />
-      <span *ngFor="let emoji of emojis" pTooltip="{{emoji.key}}">{{emoji.emoji}}</span>
-        </div>
-        </div>
-        <app-editor *ngIf="inRoom" id="editor"></app-editor>
-        <video class="small-vid" #localVideo muted="muted" volume="0" autoplay height="200"></video>
-        <video class="big-vid" #theirVideo autoplay height="400"></video>
-      </div>
+    </div>
+    <video class="ui-g-5 top" #theirVideo autoplay></video>
+    <div class="ui-g-12" *ngIf="messages.length > 0 && inRoom" [formGroup]="msgForm">
+        <input type="text" pInputText  formControlName="msg" [(ngModel)]="msg"/>
+        <button type="button" pButton [disabled]="!inRoom || msg && msg.value === ''" (click)="sendMsg()" label="Send Msg"></button><br />
+        <span *ngFor="let emoji of emojis" pTooltip="{{emoji.key}}">{{emoji.emoji}}</span>
+    </div>
+</div>
+<app-editor class="ui-g-7" id="editor"></app-editor>
+        <video class="ui-g-5 top" #localVideo muted="muted" volume="0" autoplay></video>
+
+ </div>
       <button *ngIf="inCall && stream && remotestream" pButton type="button" class="ui-btn-danger" (click)="endCall()" label="End Call"></button>
 
         <div class="ui-g-12">
@@ -75,8 +73,7 @@
         <p-dialog *ngIf="last" header="{{toName}}" [(visible)]="whisperBoxVis"
     positionTop="100" (onShow)="show()" [contentStyle]="{'width':'500px'}">
         <div class="ui-g">
-            <div class="ui-g-12">
-                <form id="nameForm">
+
                     <div class="ui-g-12">
                         <div id="chat-div"  #scrollMe2>
                             <div>
@@ -97,8 +94,7 @@
                                 label="Clear"></button>
                         </div>
                     </div>
-                </form>
-            </div>
+
         </div>
     </p-dialog>
         </div>
