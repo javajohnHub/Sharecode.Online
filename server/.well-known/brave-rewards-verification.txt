@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: sharecode.online
+Token: ec598a8de04fe0e8d173fa888435d15f27ea634b4b7d0e1bbc430e95f64ff127
