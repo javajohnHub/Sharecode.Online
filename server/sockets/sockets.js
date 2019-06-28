@@ -274,6 +274,7 @@ module.exports = io => {
             request('https://blockchain.info/ticker', function (error, response, body) {
               console.log('error:', error); // Print the error if one occurred and handle it
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+              console.log(msgs[1].toUpperCase())
               console.log(body[msgs[1].toUpperCase()])
         });
         break;
