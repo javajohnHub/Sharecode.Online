@@ -275,6 +275,7 @@ module.exports = io => {
               console.log('error:', error); // Print the error if one occurred and handle it
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
               let curr = msgs[1].toUpperCase();
+              body = JSON.parse(body)
               socket.emit('btc', {body, curr})
         });
         break;
