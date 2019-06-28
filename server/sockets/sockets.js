@@ -252,7 +252,10 @@ module.exports = io => {
         io.sockets.emit("update-rooms", { rooms, roomCount });
     });
     socket.on("message", msg => {
-      console.log(msg);
+      if(msg.msg.startsWith('/')){
+        return chatHandler(msg.msg);
+
+      }
       io.sockets.in(socket.room).emit("message", {
         msg: emoji.emojify(decodeURI(msg.msg.replace(/(<([^>]+)>)/ig,""))),
         color: people[socket.id].color,
@@ -261,6 +264,9 @@ module.exports = io => {
       });
     });
 
+    chatHandler = (msg) => {
+      console.log(msg)
+    }
     socket.on("whisper", data => {
       if (socket.id === data.to) {
         socket.emit("whisper", {
