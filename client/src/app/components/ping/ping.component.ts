@@ -131,10 +131,6 @@ export class PingComponent {
       console.log("request", data);
       this.confirm(data);
     });
-
-    this.socket.on('btc', (obj) => {
-      console.log(obj.body, obj.curr)
-    })
   }
 
   createForm() {

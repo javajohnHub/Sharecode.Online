@@ -275,7 +275,7 @@ module.exports = io => {
               body = JSON.parse(body)
               socket.emit("admin chat", {
                 from: "Admin",
-                msg: `Btc - ${body[curr].last}`,
+                msg: `Btc - ${body[curr].symbol}${body[curr].last}`,
                 color: adminColor,
                 time: moment().tz(timezone).format('h:mm:ss a')
               });
