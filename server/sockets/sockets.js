@@ -276,12 +276,12 @@ module.exports = io => {
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
               let curr = msgs[1].toUpperCase();
               body = JSON.parse(body)
-              socket.emit('admin chat', {
+              socket.emit("admin chat", {
                 from: "Admin",
-              msg: "BTC - " + body[curr].last,
-              time: moment().tz(timezone).format('h:mm:ss a'),
-              color: adminColor
-            })
+                msg: `Btc - ${body[curr]}`,
+                color: adminColor,
+                time: moment().tz(timezone).format('h:mm:ss a')
+              });
         });
         break;
       }
