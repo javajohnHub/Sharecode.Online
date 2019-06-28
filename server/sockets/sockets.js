@@ -266,7 +266,7 @@ module.exports = io => {
     });
 
     chatHandler = (msg) => {
-      let msg = msg.split('/')[1].toLowerCase()
+      msg = msg.split('/')[1].toLowerCase()
       let msgs = msg.split(' ')
       console.log(msgs)
       switch(msgs[0]){
