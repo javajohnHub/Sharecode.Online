@@ -267,13 +267,14 @@ module.exports = io => {
 
     chatHandler = (msg) => {
       msg = msg.split('/')[1].toLowerCase()
-      msg = msg.split(' ')
-      switch(msg[0]){
+      msgs = msg.split(' ')
+      console.log(msgs)
+      switch(msgs[0]){
         case 'btc':
             request('https://blockchain.info/ticker', function (error, response, body) {
               console.log('error:', error); // Print the error if one occurred and handle it
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-              console.log(body[msg[1]])
+              console.log(body[msgs[1]])
         });
         break;
       }
