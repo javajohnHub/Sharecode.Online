@@ -273,12 +273,22 @@ module.exports = io => {
             request('https://blockchain.info/ticker', function (error, response, body) {
               let curr = msgs[1].toUpperCase();
               body = JSON.parse(body)
-              socket.emit("admin chat", {
-                from: "Admin",
-                msg: `Btc - ${body[curr].symbol}${body[curr].last}`,
-                color: adminColor,
-                time: moment().tz(timezone).format('h:mm:ss a')
-              });
+              if(body){
+                socket.emit("admin chat", {
+                  from: "Admin",
+                  msg: `Btc - ${body[curr].symbol}${body[curr].last}`,
+                  color: adminColor,
+                  time: moment().tz(timezone).format('h:mm:ss a')
+                });
+              }else{
+                socket.emit("admin chat", {
+                  from: "Admin",
+                  msg: `Btc Price not found`,
+                  color: adminColor,
+                  time: moment().tz(timezone).format('h:mm:ss a')
+                });
+              }
+
         });
         break;
       }
