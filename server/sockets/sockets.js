@@ -276,7 +276,7 @@ module.exports = io => {
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
               let curr = msgs[1].toUpperCase();
               console.log(curr)
-              console.log(body[curr])
+              console.log(body, curr)
         });
         break;
       }
