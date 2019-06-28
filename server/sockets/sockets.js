@@ -273,7 +273,7 @@ module.exports = io => {
             request('https://blockchain.info/ticker', function (error, response, body) {
               let curr = msgs[1].toUpperCase();
               body = JSON.parse(body)
-              if(body){
+              if(body[curr]){
                 socket.emit("admin chat", {
                   from: "Admin",
                   msg: `Btc - ${body[curr].symbol}${body[curr].last}`,
