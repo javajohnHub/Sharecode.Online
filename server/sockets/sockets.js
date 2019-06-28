@@ -4,6 +4,7 @@ let uuid = require("node-uuid");
 let Room = require("../room.js");
 let moment = require('moment-timezone')
 var emoji = require('node-emoji')
+var request = require('request');
 module.exports = io => {
   let people = {};
   let rooms = {};
