@@ -7,7 +7,7 @@
         <button pButton type="button" style="float: right;" (click)="settings()" label="Settings"></button>
       <hr/>
 <div class="ui-g">
-    <div [ngClass]="{'ui-g-7': person.device === 'desktop', 'ui-g-12': person.device !== 'desktop'}" id="chat-div" *ngIf="messages.length > 0" #scrollMe>
+    <div [ngClass]="{'ui-g-7': person && person.device === 'desktop', 'ui-g-12':person && person.device !== 'desktop'}" id="chat-div" *ngIf="messages.length > 0" #scrollMe>
         <div *ngFor="let msg of messages">
           <span [style.color]="'white'"> {{ msg.from }}: </span>
           <span [style.color]="msg.color" [innerHTML]="urlify(msg.msg)"></span>
@@ -23,8 +23,8 @@
     </div>
 </div>
 
-<div [ngClass]="{'ui-g-7': person.device === 'desktop', 'ui-g-12': person.device !== 'desktop'}" *ngIf="!inRoom"></div>
-<app-editor [ngClass]="{'ui-g-7': person.device === 'desktop', 'ui-g-12': person.device !== 'desktop'}" *ngIf="inRoom" id="editor"></app-editor>
+<div [ngClass]="{'ui-g-7': person && person.device === 'desktop', 'ui-g-12': person && person.device !== 'desktop'}" *ngIf="!inRoom"></div>
+<app-editor [ngClass]="{'ui-g-7': person && person.device === 'desktop', 'ui-g-12': person && person.device !== 'desktop'}" *ngIf="inRoom" id="editor"></app-editor>
         <video class="ui-g-5 top" #localVideo muted="muted" volume="0" autoplay></video>
 
  </div>
