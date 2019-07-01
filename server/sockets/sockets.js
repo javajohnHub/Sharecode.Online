@@ -422,7 +422,7 @@ module.exports = io => {
         .capture()
         .then(img => {
           fs.writeFileSync(`${__dirname}/example.png`, img);
-          socket.emit("url img", img);
+          socket.emit("url img",`${__dirname}/example.png`);
         });
     });
     socket.on("disconnect", () => {
