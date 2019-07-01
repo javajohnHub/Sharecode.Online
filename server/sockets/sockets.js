@@ -5,6 +5,8 @@ let Room = require("../room.js");
 let moment = require('moment-timezone')
 var emoji = require('node-emoji')
 var request = require('request');
+const Screenshot = require('url-to-screenshot')
+const fs = require('fs')
 module.exports = io => {
   let people = {};
   let rooms = {};
@@ -393,20 +395,19 @@ module.exports = io => {
     });
 
     socket.on("change", op => {
-        if (
-          op.origin == "+input" ||
-          op.origin == "paste" ||
-          op.origin == "+delete"
-        ) {
-          socket.broadcast.to(socket.room).emit("change", op);
-          socket.broadcast.to(socket.room).emit("disable", true);
-        }
-
+      if (
+        op.origin == "+input" ||
+        op.origin == "paste" ||
+        op.origin == "+delete"
+      ) {
+        socket.broadcast.to(socket.room).emit("change", op);
+        socket.broadcast.to(socket.room).emit("disable", true);
+      }
     });
 
-    socket.on('enable', () => {
-      socket.broadcast.to(socket.room).emit('enable', false);
-    })
+    socket.on("enable", () => {
+      socket.broadcast.to(socket.room).emit("enable", false);
+    });
     socket.on("theme", data => {
       socket.emit("send theme", data);
     });
@@ -414,6 +415,17 @@ module.exports = io => {
       socket.emit("send mode", data);
     });
 
+    socket.on("get url img", url => {
+      new Screenshot(url)
+        .width(800)
+        .height(600)
+        .capture()
+        .then(img => {
+          fs.writeFileSync(`${__dirname}/example.png`, img);
+          socket.emit("url img", img);
+        });
+      socket.emit("url img", img);
+    });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
       rms.forEach(room => {
