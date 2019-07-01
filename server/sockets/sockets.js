@@ -415,11 +415,13 @@ module.exports = io => {
     });
 
     socket.on("get url img", url => {
-      urlToImage(url, `${url}.png`).then(function() {
-    // now google.png exists and contains screenshot of google.com
-}).catch(function(err) {
-    console.error(err);
-});
+      urlToImage(url, `${url}.png`)
+        .then(function() {
+          // now google.png exists and contains screenshot of google.com
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
     });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
