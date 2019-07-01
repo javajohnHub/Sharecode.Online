@@ -5,8 +5,7 @@ let Room = require("../room.js");
 let moment = require('moment-timezone')
 var emoji = require('node-emoji')
 var request = require('request');
-const Screenshot = require('url-to-screenshot')
-const fs = require('fs')
+var urlToImage = require('url-to-image');
 module.exports = io => {
   let people = {};
   let rooms = {};
@@ -416,13 +415,11 @@ module.exports = io => {
     });
 
     socket.on("get url img", url => {
-      new Screenshot(url)
-        .width(800)
-        .height(600)
-        .capture()
-        .then(img => {
-          fs.writeFileSync(`${__dirname}/example.png`, img);
-        });
+      urlToImage(url, `${url}.png`).then(function() {
+    // now google.png exists and contains screenshot of google.com
+}).catch(function(err) {
+    console.error(err);
+});
     });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
