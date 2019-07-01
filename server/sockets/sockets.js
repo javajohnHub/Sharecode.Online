@@ -417,7 +417,7 @@ module.exports = io => {
     socket.on("get url img", url => {
       urlToImage(url, `${url}.png`)
         .then(function() {
-          // now google.png exists and contains screenshot of google.com
+         console.log('finished')
         })
         .catch(function(err) {
           console.error(err);
