@@ -424,7 +424,6 @@ module.exports = io => {
           fs.writeFileSync(`${__dirname}/example.png`, img);
           socket.emit("url img", img);
         });
-      socket.emit("url img", img);
     });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
