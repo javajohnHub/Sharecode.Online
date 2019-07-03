@@ -5,7 +5,7 @@ let Room = require("../room.js");
 let moment = require('moment-timezone')
 var emoji = require('node-emoji')
 var request = require('request');
-var urlToImage = require('url-to-image');
+let grabity = require("grabity");
 module.exports = io => {
   let people = {};
   let rooms = {};
@@ -415,13 +415,11 @@ module.exports = io => {
     });
 
     socket.on("get url img", url => {
-      urlToImage(url, `${url}.png`)
-        .then(function() {
-         console.log('finished')
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
+      (async () => {
+        let it = await grabity.grabIt(url);
+
+        console.log(it);
+      })();
     });
     socket.on("disconnect", () => {
       let rms = Object.values(rooms);
