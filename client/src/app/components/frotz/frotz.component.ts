@@ -7,7 +7,7 @@ import {SelectItem} from 'primeng/api';
     <p-dropdown [options]="games" [(ngModel)]="chosen_game" (onChange)="game_chosen()"></p-dropdown>
     <button pButton type="button" label="Clear"(click)="clear()"></button>
     <div *ngIf="game_data" [innerHTML]="game_data"></div><br/>
-    <input type="text" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send" (keydown.enter)="send()" (click)="send()"></button>
+    <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
   `
 })
 export class FrotzComponent {
