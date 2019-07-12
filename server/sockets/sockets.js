@@ -498,7 +498,7 @@ module.exports = io => {
               fs.access(save_path, fs.F_OK, (err) => {
                 if (err) {
 
-                  fs.writeFile(save_path, (err) => {
+                  fs.writeFile(save_path, '', (err) => {
                     console.log(err)
                     if (err) throw err;
                     console.log('Saved!');
