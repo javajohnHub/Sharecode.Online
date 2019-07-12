@@ -6,6 +6,10 @@ let moment = require('moment-timezone')
 var emoji = require('node-emoji')
 var request = require('request');
 let grabity = require("grabity");
+const fs = require('fs')
+const path = require('path');
+const spawn = require('child_process').spawn;
+let child;
 module.exports = io => {
   let people = {};
   let rooms = {};
@@ -465,6 +469,71 @@ module.exports = io => {
       let roomCount = _.size(rooms);
       io.sockets.emit("update-rooms", { rooms, roomCount });
     });
+
+
+
+    let game_files = [];
+        socket.on('get games', () => {
+            const directoryPath = path.join(__dirname, 'games');
+
+            fs.readdir(directoryPath, function (err, files) {
+                //handling error
+                if (err) {
+                    return console.log('Unable to scan directory: ' + err);
+                }
+                //listing all files using forEach
+                files.forEach(function (file) {
+                  game_files.push(file)
+
+                });
+                socket.emit('send games', game_files)
+              });
+
+
+            });
+
+            socket.on('game chosen', (game) => {
+              const save_path = `../saves/${game}.sav`;
+              const game_path = `../games/${game}.DAT`;
+              fs.access(save_path, fs.F_OK, (err) => {
+                if (err) {
+
+                  fs.writeFile(save_path, '', (err) => {
+                    console.log(err)
+                    if (err) throw err;
+                    console.log('Saved!');
+                  });
+                }
+
+
+ child = spawn(`../dfrotz`, [game_path, '-L', save_path]);
+ child.stdout.on('data', function (data) {
+   data = data.toString().split('\n')
+    socket.emit('game output', data)
+
+
+   });
+ child.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+   });
+ child.on('close', function (code) {
+      console.log('child process exited with code ' + code);
+      child.stdin.end()
+   });
+
+console.log(child.pid)
+
+
+
+
+            socket.on('command', (com) => {
+              child.stdout.pipe(process.stdout);
+              child.stdin.write(`${com}\n`);
+
+            })
+            })
+             })
+
   });
 };
 

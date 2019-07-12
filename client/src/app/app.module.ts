@@ -25,6 +25,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import {TooltipModule} from 'primeng/tooltip';
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import {SplitButtonModule} from 'primeng/splitbutton';
+import { FrotzComponent } from './components/frotz/frotz.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     PingComponent,
     NameComponent,
     EditorComponent,
-    EditorDirective
+    EditorDirective,
+    FrotzComponent
 
   ],
   imports: [
