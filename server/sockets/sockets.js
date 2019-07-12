@@ -474,7 +474,7 @@ module.exports = io => {
 
     let game_files = [];
         socket.on('get games', () => {
-            const directoryPath = path.join('../games');
+            const directoryPath = path.join(__dirname, '../games');
 
             fs.readdir(directoryPath, function (err, files) {
                 //handling error
