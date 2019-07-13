@@ -501,7 +501,7 @@ module.exports = io => {
                   fs.writeFile(save_path, '', (err) => {
                     console.log(err)
                     if (err) throw err;
-                    console.log('Saved!');
+                    console.log('Saved!', save_path);
                   });
                 }
 
@@ -520,8 +520,6 @@ module.exports = io => {
       console.log('child process exited with code ' + code);
       child.stdin.end()
    });
-
-console.log(child)
 
 
 
