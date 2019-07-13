@@ -510,7 +510,6 @@ module.exports = io => {
  child.stdout.on('data', function (data) {
    data = data.toString().split('\n')
     socket.emit('game output', data)
-console.log()
 
    });
  child.stderr.on('data', function (data) {
@@ -525,7 +524,7 @@ console.log()
 
 
             socket.on('command', (com) => {
-              child.stdout.pipe(process.stdout);
+              //child.stdout.pipe(process.stdout);
               child.stdin.write(`${com}\n`);
 
             })
