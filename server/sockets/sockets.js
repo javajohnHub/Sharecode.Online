@@ -507,7 +507,7 @@ module.exports = io => {
 
 
  child = spawn('dfrotz', [game_path, '-L', save_path]);
- console.log(child.path)
+ console.log(child)
  child.stdout.on('data', function (data) {
    data = data.toString().split('\n')
     socket.emit('game output', data)
