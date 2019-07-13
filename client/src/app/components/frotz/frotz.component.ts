@@ -7,10 +7,11 @@ import * as uuid from 'uuid';
   template: `
     <p-dropdown [options]="games" [(ngModel)]="chosen_game" (onChange)="game_chosen()"></p-dropdown>
     <button pButton type="button" label="Clear"(click)="clear()"></button>
-    <div *ngIf="game_data" [innerHTML]="game_data"></div><br/>
-    <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button pButton type="button" label="Load Game"  (click)="load()"></button>
+    <div style="height:500px;overflow: scroll;border:1px solid black" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
+    <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
+
   `
 })
 export class FrotzComponent {
@@ -41,7 +42,10 @@ export class FrotzComponent {
 
     this.socket.on('game output', (out) => {
         out.forEach((line) => {
-          this.game_data += line + '<br/>'
+          if(line !== '>'){
+            this.game_data += line + '<br/>'
+          }
+
         })
       })
   }
@@ -66,5 +70,6 @@ export class FrotzComponent {
  load(){
   this.socket.emit('command', 'restore');
   this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
+  this.socket.emit('command', 'L');
  }
 }
