@@ -521,7 +521,7 @@ module.exports = io => {
       child.stdin.end()
    });
 
-console.log(child.pid)
+console.log(child)
 
 
 
