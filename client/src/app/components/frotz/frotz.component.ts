@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild} from '@angular/core';
 import {SocketService} from '../../shared/socket.service';
 import {SelectItem} from 'primeng/api';
 import * as uuid from 'uuid';
@@ -9,7 +9,7 @@ import * as uuid from 'uuid';
     <button pButton type="button" label="Clear"(click)="clear()"></button>
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button pButton type="button" label="Load Game"  (click)="load()"></button>
-    <div style="height:500px;overflow: scroll;border:1px solid black" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
+    <div #scrollMe style="height:500px;overflow: scroll;border:1px solid black" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
     <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
 
   `
@@ -21,6 +21,8 @@ export class FrotzComponent {
   game_data = '';
   command: string;
   myId;
+  @ViewChild("scrollMe", { static: false })
+  private myScrollContainer: ElementRef;
   constructor() {
     this.socket = SocketService.getInstance();
     this.socket.emit('get games');
@@ -47,6 +49,7 @@ export class FrotzComponent {
           }
 
         })
+        this.game_data += '<hr/>';
       })
   }
  game_chosen(){
@@ -72,4 +75,10 @@ export class FrotzComponent {
   this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
   this.socket.emit('command', 'L');
  }
+
+ scrollToBottom(): void {
+  try {
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+  } catch (err) {}
+}
 }
