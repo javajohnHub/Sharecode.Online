@@ -40,7 +40,7 @@ export class FrotzComponent {
  }
  clear(){
    this.game_data = '';
-   this.socket.emit('command', 'look')
+   this.socket.emit('command', 'brief')
  }
 
  send(){
