@@ -53,6 +53,7 @@ export class FrotzComponent {
 
         })
         this.game_data += '<hr/>';
+        this.scrollToBottom();
       })
   }
  game_chosen(){
