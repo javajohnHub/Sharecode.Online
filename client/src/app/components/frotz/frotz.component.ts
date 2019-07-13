@@ -6,10 +6,9 @@ import * as uuid from 'uuid';
   selector: 'app-frotz',
   template: `
     <p-dropdown [options]="games" [(ngModel)]="chosen_game" (onChange)="game_chosen()"></p-dropdown>
-    <button pButton type="button" label="Clear"(click)="clear()"></button>
     <button pButton type="button" label="Save"  (click)="save()"></button>
-    <button pButton type="button" label="Load Game"  (click)="load()"></button>
-    <div #scrollMe style="height:500px;overflow: scroll;border:1px solid black">
+    <button *ngIf="chosen_game" pButton type="button" label="Load Game"  (click)="load()"></button>
+    <div #scrollMe style="padding:20px;height:400px;overflow-y: scroll;border:1px solid black">
     <div  *ngIf="game_data" [innerHTML]="game_data"></div><br/>
     </div>
 
@@ -46,14 +45,14 @@ export class FrotzComponent {
     });
 
     this.socket.on('game output', (out) => {
+      this.game_data = '';
         out.forEach((line) => {
           if(line !== '>'){
             this.game_data += line + '<br/>'
           }
-
         })
         this.game_data += '<hr/>';
-        this.scrollToBottom();
+
       })
   }
  game_chosen(){
@@ -82,7 +81,7 @@ export class FrotzComponent {
 
  scrollToBottom(): void {
   try {
-    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight + 200;
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
   } catch (err) {}
 }
 }
