@@ -494,7 +494,7 @@ module.exports = io => {
 
             socket.on('game chosen', (game) => {
               const save_path = `save/${game}.sav`;
-              const game_path = `games/${game}.DAT`;
+              const game_path = `games/${game}`;
               fs.access(save_path, fs.F_OK, (err) => {
                 if (err) {
 
