@@ -12,7 +12,7 @@ import * as uuid from 'uuid';
     <div  *ngIf="game_data" [innerHTML]="game_data"></div><br/>
     </div>
 
-    <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
+    <input type="text" [disabled]="inputDisabled" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
 
   `
 })
@@ -23,6 +23,7 @@ export class FrotzComponent {
   game_data = '';
   command: string;
   myId;
+  inputDisabled = false;
   @ViewChild("scrollMe", { static: false })
   private myScrollContainer: ElementRef;
   constructor() {
@@ -50,6 +51,20 @@ export class FrotzComponent {
           if(line !== '>'){
             this.game_data += line + '<br/>'
           }
+          if(line.startsWith('Please enter a filename')){
+            console.log('line','Please')
+            this.command = 'save/' + this.chosen_game + '_' + this.myId + '.sav';
+            this.inputDisabled = true;
+          }
+          if(line === 'Ok.'){
+            console.log('line','Ok.')
+            this.command = 'Look'
+          }
+          if(line.startsWith('Overwrite existing file?')){
+            console.log('line','Overwrite existing file?')
+            this.command = 'yes'
+          }
+
         })
         this.game_data += '<hr/>';
 
@@ -59,24 +74,20 @@ export class FrotzComponent {
    this.game_data = '';
    this.socket.emit('game chosen', this.chosen_game)
  }
- clear(){
-   this.game_data = '';
-   this.socket.emit('command', 'L')
- }
 
  send(){
    this.socket.emit('command', this.command)
    this.command = '';
+   this.inputDisabled = false;
  }
 
  save(){
   this.socket.emit('command', 'save');
-  this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
+
  }
  load(){
   this.socket.emit('command', 'restore');
-  this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
-  this.socket.emit('command', 'L');
+  this.command = 'save/' + this.chosen_game + '_' + this.myId + '.sav';
  }
 
  scrollToBottom(): void {
