@@ -26,7 +26,13 @@ export class FrotzComponent {
   }
 
   ngOnInit(){
-    this.myId = uuid.v4();
+    if(!localStorage.getItem('id')){
+      this.myId = uuid.v4();
+      localStorage.setItem('id', this.myId)
+    }else{
+      this.myId = localStorage.getItem('id');
+    }
+
     this.socket.on('send games', (games) => {
       games.forEach(game => {
         this.games.push({label: game.split('.')[0], value: game.split('.')[0] })
@@ -55,10 +61,10 @@ export class FrotzComponent {
 
  save(){
   this.socket.emit('command', 'save');
-  localStorage.setItem('id', this.myId)
   this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
  }
  load(){
   this.socket.emit('command', 'restore');
+  this.socket.emit('command', 'save/' + this.chosen_game + '_' + this.myId + '.sav')
  }
 }
