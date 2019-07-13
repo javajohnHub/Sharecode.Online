@@ -9,7 +9,10 @@ import * as uuid from 'uuid';
     <button pButton type="button" label="Clear"(click)="clear()"></button>
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button pButton type="button" label="Load Game"  (click)="load()"></button>
-    <div #scrollMe style="height:500px;overflow: scroll;border:1px solid black" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
+    <div #scrollMe style="height:500px;overflow: scroll;border:1px solid black">
+    <div  *ngIf="game_data" [innerHTML]="game_data"></div><br/>
+    </div>
+
     <input type="text" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
 
   `
