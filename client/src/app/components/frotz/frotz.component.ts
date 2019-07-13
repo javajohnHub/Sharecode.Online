@@ -41,7 +41,7 @@ export class FrotzComponent {
 
     this.socket.on('send games', (games) => {
       games.forEach(game => {
-        this.games.push({label: game.split, value: game })
+        this.games.push({label: game.split('.')[0], value: game })
       })
     });
 
