@@ -520,28 +520,24 @@ module.exports = io => {
                 })
 
  child = spawn('dfrotz', [game_path, '-L', save_path], {detached: true});
-})
  child.stdout.on('data', function (data) {
-   data = data.toString().split('\n')
-    socket.emit('game output', data)
+  data = data.toString().split('\n')
+   socket.emit('game output', data)
 
-   });
- child.stderr.on('data', function (data) {
-      console.log('stderr: ' + data);
-   });
- child.on('close', function (code) {
-      console.log('child process exited with code ' + code);
-   });
+  });
+child.stderr.on('data', function (data) {
+     console.log('stderr: ' + data);
+  });
+child.on('close', function (code) {
+     console.log('child process exited with code ' + code);
+  });
+  socket.on('command', (com) => {
+    //child.stdout.pipe(process.stdout);
+    child.stdin.write(`${com}\n`);
 
-
-
-
-            socket.on('command', (com) => {
-              //child.stdout.pipe(process.stdout);
-              child.stdin.write(`${com}\n`);
-
-            })
-            })
+  })
+})
+ })
 };
 
 getRandomColor = ranges => {
