@@ -8,11 +8,11 @@ import * as uuid from 'uuid';
     <p-dropdown [options]="games" [(ngModel)]="chosen_game" (onChange)="game_chosen()"></p-dropdown>
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button *ngIf="chosen_game" pButton type="button" label="Load Game"  (click)="load()"></button>
-    <div #scrollMe style="min-height:200px;overflow-y: scroll;">
+    <div #scrollMe style="min-height:200px;">
     <div  style="border: 1px solid white;padding:20px;" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
 
 
-    <input type="text" [disabled]="inputDisabled" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
+    <input class="ui-g-10" type="text" [disabled]="inputDisabled" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button class="ui-g-2" pButton type="button" label="Send"  (click)="send()"></button>
     </div>
   `
 })
