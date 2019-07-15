@@ -9,7 +9,7 @@ import * as uuid from 'uuid';
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button *ngIf="chosen_game" pButton type="button" label="Load Game"  (click)="load()"></button>
     <div #scrollMe style="padding:20px;height:400px;overflow-y: scroll;">
-    <div  *ngIf="game_data" [innerHTML]="game_data"></div><br/>
+    <div  style="border: 1px solid white;" *ngIf="game_data" [innerHTML]="game_data"></div><br/>
     </div>
 
     <input type="text" [disabled]="inputDisabled" (keydown.enter)="send()" pInputText [(ngModel)]="command"/><button pButton type="button" label="Send"  (click)="send()"></button>
