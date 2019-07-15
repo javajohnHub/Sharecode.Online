@@ -9,6 +9,7 @@ let grabity = require("grabity");
 const fs = require('fs')
 const path = require('path');
 const spawn = require('child_process').spawn;
+
 let child;
 process.setMaxListeners(Infinity);
 module.exports = io => {
@@ -495,8 +496,7 @@ module.exports = io => {
 
             socket.on('game chosen', (game) => {
               if(child){
-                child.stdin.pause();
-                child.kill();
+                process.kill(-child.pid);
               }
               const save_path = `save/${game}.sav`;
               const game_path = `games/${game}`;
@@ -512,12 +512,11 @@ module.exports = io => {
 
                 socket.on('disconnected child', () => {
                   if(child){
-                    child.stdin.pause();
-                    child.kill();
+                    process.kill(-child.pid);
                   }
                 })
 
- child = spawn('dfrotz', [game_path, '-L', save_path]);
+ child = spawn('dfrotz', [game_path, '-L', save_path], {detached: true});
  child.stdout.on('data', function (data) {
    data = data.toString().split('\n')
     socket.emit('game output', data)
