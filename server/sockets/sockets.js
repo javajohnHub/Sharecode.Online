@@ -531,11 +531,12 @@ child.stderr.on('data', function (data) {
 child.on('close', function (code) {
      console.log('child process exited with code ' + code);
   });
-  socket.on('command', (com) => {
-    //child.stdout.pipe(process.stdout);
-    child.stdin.write(`${com}\n`);
 
-  })
+})
+socket.on('command', (com) => {
+  //child.stdout.pipe(process.stdout);
+  child.stdin.write(`${com}\n`);
+
 })
  })
 };
