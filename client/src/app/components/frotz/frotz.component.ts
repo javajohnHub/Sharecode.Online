@@ -8,7 +8,7 @@ import * as uuid from 'uuid';
     <p-dropdown [options]="games" [(ngModel)]="chosen_game" (onChange)="game_chosen()"></p-dropdown>
     <button pButton type="button" label="Save"  (click)="save()"></button>
     <button *ngIf="chosen_game" pButton type="button" label="Load Game"  (click)="load()"></button>
-    <div #scrollMe style="padding:20px;height:400px;overflow-y: scroll;border:1px solid black">
+    <div #scrollMe style="padding:20px;height:400px;overflow-y: scroll;">
     <div  *ngIf="game_data" [innerHTML]="game_data"></div><br/>
     </div>
 
@@ -66,7 +66,7 @@ export class FrotzComponent {
           }
 
         })
-        this.game_data += '<hr/>';
+
 
       })
 
