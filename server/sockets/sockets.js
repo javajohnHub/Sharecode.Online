@@ -476,6 +476,7 @@ module.exports = io => {
 
     let game_files = [];
     let game_path;
+    let save_path;
         socket.on('get games', () => {
             const directoryPath = path.join(__dirname, '../games');
 
@@ -499,7 +500,7 @@ module.exports = io => {
               if(child){
                 child.kill()
               }
-              const save_path = `save/${game}.sav`;
+              save_path = `save/${game}.sav`;
               game_path = `games/${game}`;
               fs.access(save_path, fs.F_OK, (err) => {
                 if (err) {
