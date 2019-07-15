@@ -496,7 +496,7 @@ module.exports = io => {
 
             socket.on('game chosen', (game) => {
               if(child){
-                process.exit()
+                child.kill()
               }
               const save_path = `save/${game}.sav`;
               const game_path = `games/${game}`;
@@ -509,10 +509,10 @@ module.exports = io => {
                     console.log('Saved!', save_path);
                   });
                 }
-
+              })
                 socket.on('disconnected child', () => {
                   if(child){
-                    process.exit()
+                    child.kill()
                   }
                 })
 
@@ -539,8 +539,6 @@ module.exports = io => {
             })
             })
              })
-
-  });
 };
 
 getRandomColor = ranges => {
