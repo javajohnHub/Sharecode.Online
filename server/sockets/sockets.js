@@ -493,6 +493,9 @@ module.exports = io => {
             });
 
             socket.on('game chosen', (game) => {
+              if(child){
+                child.kill('SIGINT');
+              }
               const save_path = `save/${game}.sav`;
               const game_path = `games/${game}`;
               fs.access(save_path, fs.F_OK, (err) => {
@@ -517,7 +520,6 @@ module.exports = io => {
    });
  child.on('close', function (code) {
       console.log('child process exited with code ' + code);
-      child.stdin.end()
    });
 
 
