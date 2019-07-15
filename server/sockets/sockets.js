@@ -512,7 +512,7 @@ module.exports = io => {
                   });
                 }
               })
-            })
+
                 socket.on('disconnected child', () => {
                   if(child){
                     child.kill()
@@ -520,6 +520,7 @@ module.exports = io => {
                 })
 
  child = spawn('dfrotz', [game_path, '-L', save_path], {detached: true});
+})
  child.stdout.on('data', function (data) {
    data = data.toString().split('\n')
     socket.emit('game output', data)
