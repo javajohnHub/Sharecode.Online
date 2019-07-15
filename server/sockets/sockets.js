@@ -510,6 +510,7 @@ module.exports = io => {
                   });
                 }
               })
+            })
                 socket.on('disconnected child', () => {
                   if(child){
                     child.kill()
@@ -538,7 +539,6 @@ module.exports = io => {
 
             })
             })
-             })
 };
 
 getRandomColor = ranges => {
