@@ -10,6 +10,7 @@ const fs = require('fs')
 const path = require('path');
 const spawn = require('child_process').spawn;
 let child;
+process.setMaxListeners(Infinity);
 module.exports = io => {
   let people = {};
   let rooms = {};
