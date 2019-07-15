@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener} from '@angular/core';
 import {SocketService} from '../../shared/socket.service';
 import {SelectItem} from 'primeng/api';
 import * as uuid from 'uuid';
@@ -69,6 +69,13 @@ export class FrotzComponent {
         this.game_data += '<hr/>';
 
       })
+
+
+  }
+
+  @HostListener("window:beforeunload", ["$event"])
+  unloadHandler(event: Event) {
+    this.socket.emit("disconnected child");
   }
  game_chosen(){
    this.game_data = '';

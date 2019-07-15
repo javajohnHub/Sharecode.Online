@@ -508,6 +508,11 @@ module.exports = io => {
                   });
                 }
 
+                socket.on('disconnected child', () => {
+                  if(child){
+                    child.kill('SIGINT');
+                  }
+                })
 
  child = spawn('dfrotz', [game_path, '-L', save_path]);
  child.stdout.on('data', function (data) {
