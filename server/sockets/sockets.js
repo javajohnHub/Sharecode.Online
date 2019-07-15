@@ -495,7 +495,7 @@ module.exports = io => {
 
             socket.on('game chosen', (game) => {
               if(child){
-                child.kill('SIGINT');
+                child.kill();
               }
               const save_path = `save/${game}.sav`;
               const game_path = `games/${game}`;
@@ -511,7 +511,7 @@ module.exports = io => {
 
                 socket.on('disconnected child', () => {
                   if(child){
-                    child.kill('SIGINT');
+                    child.kill();
                   }
                 })
 
