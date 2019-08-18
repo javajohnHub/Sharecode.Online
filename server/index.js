@@ -1,7 +1,7 @@
 var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://heroku_vgdc5sxs:MongoPW1234@ds053310.mlab.com:53310/heroku_vgdc5sxs";
+var url = "mongodb://heroku_john:MongoPW1234@ds053310.mlab.com:53310/heroku_vgdc5sxs";
 
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
