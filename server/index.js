@@ -1,11 +1,11 @@
 var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
-//var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://127.0.0.1:27017/sharecode";
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 mongoose.connect(url);
-
+ var Blog = require('/models/Blog.model');
+console.log(new Blog());
 // Certificate
 const privateKey = fs.readFileSync(
   "/etc/letsencrypt/live/sharecode.online/privkey.pem",
