@@ -11,6 +11,7 @@ MongoClient.connect(url, function(err, db) {
   }else{
     console.log(err);
   }
+  db.close();
 });
 
 
