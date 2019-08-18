@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "peer": "0.2.10",
-    "mongodb": "3.3.0"
+    "express-https-redirect": "^1.0.0",
+    "mongodb": "3.3.0",
+    "peer": "0.2.10"
   }
 }
