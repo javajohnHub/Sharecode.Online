@@ -13,6 +13,7 @@
     "mongodb": "3.3.0",
     "peer": "0.2.10",
     "socket.io": "^2.2.0",
+    "underscore": "^1.9.1",
     "validator": "^11.1.0"
   }
 }
