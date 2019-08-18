@@ -1,7 +1,7 @@
 var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://heroku_Owner:MongoPW1234@ds053310.mlab.com:53310/sharecode";
+var url = "mongodb://127.0.0.1:27017/sharecode";
 var MongoClient = require('mongodb').MongoClient;
 
 // Connect to the db
