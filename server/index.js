@@ -1,19 +1,10 @@
 var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://127.0.0.1:27017/sharecode";
-var MongoClient = require('mongodb').MongoClient;
-
-// Connect to the db
-MongoClient.connect(url, function(err, db) {
-  if(!err) {
-    console.log("We are connected");
-  }else{
-    console.log(err);
-  }
-  db.close();
-});
-
+var mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+mongoose.connect(url);
 
 // Certificate
 const privateKey = fs.readFileSync(
