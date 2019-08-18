@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express-https-redirect": "^1.0.0",
+    "grabity": "^1.0.5",
     "moment-timezone": "^0.5.26",
     "mongodb": "3.3.0",
     "node-emoji": "^1.10.0",
