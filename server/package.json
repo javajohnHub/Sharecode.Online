@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express-https-redirect": "^1.0.0",
+    "moment-timezone": "^0.5.26",
     "mongodb": "3.3.0",
     "node-uuid": "^1.4.8",
     "peer": "0.2.10",
