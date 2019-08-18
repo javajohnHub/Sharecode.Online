@@ -11,6 +11,7 @@
   "dependencies": {
     "express-https-redirect": "^1.0.0",
     "mongodb": "3.3.0",
-    "peer": "0.2.10"
+    "peer": "0.2.10",
+    "socket.io": "^2.2.0"
   }
 }
