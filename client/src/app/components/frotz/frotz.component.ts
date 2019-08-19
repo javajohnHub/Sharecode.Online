@@ -48,7 +48,7 @@ export class FrotzComponent {
     this.socket.on('game output', (out) => {
       this.game_data = '';
         out.forEach((line) => {
-          if(line !== '>'){
+          if(line !== '>' && line !== '>>'){
             this.game_data += line + '<br/>'
           }
           if(line.startsWith('Please enter a filename')){
