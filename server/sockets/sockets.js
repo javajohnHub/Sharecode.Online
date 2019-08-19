@@ -542,13 +542,7 @@ socket.on('command', (com) => {
 
 socket.on('get all posts', () => {
   Post.find({}, function(err, posts) {
-    var postMap = {};
-
-    posts.forEach(function(post) {
-      postMap[post._id] = post;
-    });
-
-    socket.emit('send all posts', {posts: postMap });
+    socket.emit('send all posts', {posts: posts });
   });
 })
 
