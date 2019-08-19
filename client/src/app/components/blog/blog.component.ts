@@ -19,7 +19,7 @@ export class BlogComponent {
   ngOnInit(){
     this.socket.emit('get all posts');
     this.socket.on('send all posts', (posts) => {
-      this.posts = posts;
+      this.posts = posts.posts;
     })
   }
 

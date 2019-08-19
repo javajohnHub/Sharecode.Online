@@ -1,1 +1,4 @@
-{{posts | json}}
+<div *ngFor="let post of posts">
+  {{post.title}} - {{post.author}}<br/>
+{{post.body}}
+</div>
