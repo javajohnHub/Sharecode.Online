@@ -558,6 +558,7 @@ socket.on('create post', (post) => {
     "author": post.author,
     "body": post.body
    })
+   newPost.save()
   });
 })
 
