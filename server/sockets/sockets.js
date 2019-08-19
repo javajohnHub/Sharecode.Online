@@ -556,7 +556,7 @@ socket.on('create post', (post) => {
   });
 
   socket.on('delete post', (id) => {
-    Post.deleteOne({id: id}, (err) =>{
+    Post.deleteOne({_id: id}, (err) =>{
       console.log(err)
     }).then(() => {
       Post.find({}, (err, posts) => {
