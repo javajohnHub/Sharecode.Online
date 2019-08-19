@@ -556,7 +556,7 @@ socket.on('create post', (post) => {
   });
 
   socket.on('delete post', (id) => {
-    Post.remove({id: id}, (err) =>{
+    Post.deleteOne({id: id}, (err) =>{
       console.log(err)
     }).then(() => {
       socket.emit('send all posts', posts);
