@@ -17,11 +17,6 @@ export class BlogComponent {
   }
 
   ngOnInit(){
-    const newPost: Post = new Post();
-    newPost.author = "John";
-    newPost.body = "dsrhsrthsdtfrhdsfh";
-    newPost.title = "new post";
-    this.socket.emit('create post', newPost);
     this.socket.emit('get all posts');
     this.socket.on('send all posts', (posts) => {
       this.posts = posts;
