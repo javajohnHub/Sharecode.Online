@@ -9,10 +9,11 @@ let grabity = require("grabity");
 const fs = require('fs')
 const path = require('path');
 const spawn = require('child_process').spawn;
+let Post = require('../models/blog.model');
 
 let child;
 process.setMaxListeners(Infinity);
-module.exports = io => {
+module.exports = (io) => {
   let people = {};
   let rooms = {};
   let sockets = [];
@@ -538,7 +539,28 @@ socket.on('command', (com) => {
   child.stdin.write(`${com}\n`);
 
 })
- })
+
+socket.on('get all posts', () => {
+  Post.find({}, function(err, posts) {
+    var postMap = {};
+
+    posts.forEach(function(post) {
+      postMap[post._id] = post;
+    });
+
+    socket.emit('send all posts', {posts: postMap });
+  });
+})
+
+socket.on('create post', (post) => {
+   let post = new Post({
+    "title": post.title,
+    "author": post.author,
+    "body": post.body
+   })
+  });
+})
+
 };
 
 getRandomColor = ranges => {

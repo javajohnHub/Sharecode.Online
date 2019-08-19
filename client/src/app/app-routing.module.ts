@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {NoContentComponent} from './components/no-content/no-content';
 import {PingComponent} from './components/ping/ping.component';
 import {FrotzComponent} from './components/frotz/frotz.component';
+import { BlogComponent } from './components/blog/blog.component';
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'frotz',
     component: FrotzComponent
+  },
+  {
+    path: 'blog',
+    component: BlogComponent
   },
   { path: '**',    component: NoContentComponent },
 ];

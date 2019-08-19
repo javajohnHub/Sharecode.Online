@@ -26,6 +26,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { FrotzComponent } from './components/frotz/frotz.component';
+import { BlogComponent } from './components/blog/blog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { FrotzComponent } from './components/frotz/frotz.component';
     NameComponent,
     EditorComponent,
     EditorDirective,
-    FrotzComponent
+    FrotzComponent,
+    BlogComponent
 
   ],
   imports: [

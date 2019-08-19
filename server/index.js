@@ -1,9 +1,10 @@
 var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
+let bodyParser = require('body-parser');
 var url = "mongodb://127.0.0.1:27017/sharecode";
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-mongoose.connect(url);
+mongoose.connect(url, { useNewUrlParser: true });
 
 // Certificate
 const privateKey = fs.readFileSync(
@@ -39,6 +40,17 @@ let express = require("express"),
   app2 = express(),
   httpServer = require("http").createServer(app2);
 httpsServer = require("https").createServer(credentials, app);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+app2.use(bodyParser.json());
+app2.use(bodyParser.urlencoded({
+    extended: false
+}));
+
 httpsServer.listen(443, function() {
   console.log("CONNECTED https");
 });

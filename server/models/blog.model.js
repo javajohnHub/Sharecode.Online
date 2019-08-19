@@ -1,19 +1,13 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
 
-  var blogSchema = new Schema({
-    title:  String,
-    author: String,
-    body:   String,
-    comments: [{ body: String, date: Date }],
-    date: { type: Date, default: Date.now },
-    hidden: Boolean,
-    meta: {
-      votes: Number,
-      favs:  Number
-    }
-  });
+var postSchema = new Schema({
+  title:  String,
+  author: String,
+  body:   String,
+  date: { type: Date, default: Date.now },
+});
 
-  var Blog = mongoose.model('Blog', blogSchema);
+  var Post = mongoose.model('Post', postSchema);
 
-  module.exports = Blog;
+  module.exports = Post;
