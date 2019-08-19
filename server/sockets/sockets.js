@@ -553,7 +553,7 @@ socket.on('get all posts', () => {
 })
 
 socket.on('create post', (post) => {
-   let post = new Post({
+   let newPost = new Post({
     "title": post.title,
     "author": post.author,
     "body": post.body
