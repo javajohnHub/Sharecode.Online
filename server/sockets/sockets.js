@@ -554,6 +554,14 @@ socket.on('create post', (post) => {
    })
    newPost.save()
   });
+
+  socket.on('delete post', (id) => {
+    Post.remove({id: id}, (err) =>{
+      console.log(err)
+    }).then(() => {
+      socket.emit('send all posts', posts);
+    })
+   });
 })
 
 };

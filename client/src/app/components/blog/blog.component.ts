@@ -19,4 +19,8 @@ export class BlogComponent {
     })
   }
 
+  delete(id){
+    this.socket.emit('delete post', id)
+  }
+
 }
