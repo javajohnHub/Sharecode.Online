@@ -1,6 +1,10 @@
 import { Component } from "@angular/core";
 import { SocketService } from "../../shared/socket.service";
-
+class Post {
+  author: string;
+  title: string;
+  body: string;
+}
 @Component({
   selector: "app-blog",
   templateUrl: "blog.component.html"
@@ -13,6 +17,11 @@ export class BlogComponent {
   }
 
   ngOnInit(){
+    const newPost: Post = new Post();
+    newPost.author = "John";
+    newPost.body = "dsrhsrthsdtfrhdsfh";
+    newPost.title = "new post";
+    this.socket.emit('create post', newPost)
     this.socket.emit('get all posts', (posts) => {
       this.posts = posts;
     });
