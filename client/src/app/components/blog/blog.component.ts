@@ -21,10 +21,11 @@ export class BlogComponent {
     newPost.author = "John";
     newPost.body = "dsrhsrthsdtfrhdsfh";
     newPost.title = "new post";
-    this.socket.emit('create post', newPost)
-    this.socket.emit('get all posts', (posts) => {
+    this.socket.emit('create post', newPost);
+    this.socket.emit('get all posts');
+    this.socket.on('send all posts', (posts) => {
       this.posts = posts;
-    });
+    })
   }
 
 }
