@@ -541,8 +541,8 @@ socket.on('command', (com) => {
 })
 
 socket.on('get all posts', () => {
-  Post.find({}, function(err, posts) {
-    socket.emit('send all posts', {posts: posts });
+  Post.find({}, (err, posts) => {
+    socket.emit('send all posts', posts);
   });
 })
 
