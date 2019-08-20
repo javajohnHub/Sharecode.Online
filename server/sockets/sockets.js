@@ -52,7 +52,7 @@ module.exports = (io) => {
             msg: "The username already exists, please pick another one.",
             proposedName: proposedName
           });
-          this.clean_name = null;
+          people[socket.id] = null;
         } else {
           people[socket.id] = {
             name: clean_name,

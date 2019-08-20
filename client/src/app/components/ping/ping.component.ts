@@ -326,7 +326,4 @@ export class PingComponent {
       }
     );
   }
-  ngOnDestroy(){
-    this.chosenName = '';
-  }
 }
