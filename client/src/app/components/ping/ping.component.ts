@@ -327,8 +327,6 @@ export class PingComponent {
     );
   }
   ngOnDestroy(){
-    this.socket.off();
-    this.socket.disconnect();
     this.chosenName = '';
   }
 }
