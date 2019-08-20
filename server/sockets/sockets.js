@@ -34,6 +34,7 @@ module.exports = (io) => {
         let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
         let exists = false;
         _.find(people, key => {
+          console.log(key.name);
           if (key.name.toLowerCase() === clean_name.toLowerCase())
             return (exists = true);
         });
@@ -52,7 +53,7 @@ module.exports = (io) => {
             msg: "The username already exists, please pick another one.",
             proposedName: proposedName
           });
-          people[socket.id] = null;
+
         } else {
           people[socket.id] = {
             name: clean_name,
