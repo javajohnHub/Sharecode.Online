@@ -27,6 +27,9 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { FrotzComponent } from './components/frotz/frotz.component';
 import { BlogComponent } from './components/blog/blog.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CallbackComponent } from './components/callback/callback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,10 @@ import { BlogComponent } from './components/blog/blog.component';
     EditorComponent,
     EditorDirective,
     FrotzComponent,
-    BlogComponent
+    BlogComponent,
+    NavbarComponent,
+    ProfileComponent,
+    CallbackComponent
 
   ],
   imports: [
