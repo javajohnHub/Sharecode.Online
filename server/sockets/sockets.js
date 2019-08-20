@@ -30,9 +30,9 @@ module.exports = (io) => {
       console.log(peer)
       peerId = peer.id;
       socket.on("send name", data => {
-
-        let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""))
-        console.log(data.name);
+        timezone = data.timezone;
+        let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""));
+        console.log(clean_name);
         let exists = false;
         _.find(people, key => {
 
