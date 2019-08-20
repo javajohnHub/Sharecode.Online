@@ -36,6 +36,8 @@ const credentials = {
 };
 let httpsRedirect = require("express-https-redirect");
 let express = require("express"),
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
   app = express(),
   app2 = express(),
   httpServer = require("http").createServer(app2);

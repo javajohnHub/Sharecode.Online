@@ -106,6 +106,7 @@ export class AuthService {
     // Response will be an array of user and login status
     const authCompleteSub = authComplete$.subscribe(([user, loggedIn]) => {
       // Redirect to target route after callback processing
+      console.log(user, loggedIn)
       this.router.navigate([targetRoute]);
       // Clean up subscription
       authCompleteSub.unsubscribe();
