@@ -32,7 +32,6 @@ module.exports = (io) => {
       socket.on("send name", data => {
         timezone = data.timezone;
         let clean_name = decodeURI(data.name.replace(/(<([^>]+)>)/ig,""));
-        console.log(clean_name);
         let exists = false;
         _.find(people, key => {
 
