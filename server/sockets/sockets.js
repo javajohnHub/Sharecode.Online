@@ -552,7 +552,8 @@ socket.on('create post', (post) => {
    let newPost = new Post({
     "title": post.title,
     "author": post.author,
-    "body": post.body
+    "body": post.body,
+    "snippets": post.snippets
    })
    newPost.save()
   });
@@ -561,6 +562,17 @@ socket.on('create post', (post) => {
     Post.deleteOne({_id: id}, (err) =>{
       console.log(err)
     }).then(() => {
+      Post.find({}, (err, posts) => {
+        socket.emit('send all posts', posts);
+      });
+    })
+   });
+
+   socket.on('update post', (post) => {
+    var query = {'_id': post.id};
+    Post.findOneAndUpdate(query, post, {upsert:true}, function(err, doc){
+      if (err) console.log(err);
+  }).then(() => {
       Post.find({}, (err, posts) => {
         socket.emit('send all posts', posts);
       });

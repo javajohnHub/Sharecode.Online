@@ -5,6 +5,7 @@ var postSchema = new Schema({
   title:  String,
   author: String,
   body:   String,
+  snippets: [String],
   date: { type: Date, default: Date.now },
 });
 
