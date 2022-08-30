@@ -25,7 +25,7 @@
     "codemirror": "^5.48.0",
     "emojify.js": "^1.1.0",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "peerjs_fork_firefox40": "^0.3.15",
     "primeicons": "^1.0.0",
     "primeng": "^8.0.0",
